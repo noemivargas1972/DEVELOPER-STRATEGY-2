@@ -1,2 +1,0 @@
-# DEVELOPER-STRATEGY-2
-cv

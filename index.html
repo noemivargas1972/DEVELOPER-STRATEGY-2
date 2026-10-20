@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creador de CV por Voz y Foto</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 15px; color: #333; }
+    .app-container { max-width: 800px; margin: auto; }
+    
+    /* Panel de Edición */
+    .editor-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 25px; }
+    h2 { color: #1B365D; text-align: center; margin-top: 0; }
+    
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .input-group { margin-bottom: 12px; }
+    label { font-weight: bold; font-size: 13px; color: #444; display: block; margin-bottom: 4px; }
+    
+    .field-row { display: flex; gap: 6px; }
+    input, textarea { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+    textarea { resize: vertical; }
+
+    /* Botones de Micrófono flotante por campo */
+    .btn-mic { background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; white-space: nowrap; }
+    .btn-mic.listening { background: #27ae60; animation: pulse 1.5s infinite; }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    /* Módulo Cámara */
+    .cam-box { text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px dashed #ccc; margin-bottom: 15px; }
+    #fotoPreview { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid #1B365D; display: block; margin: 10px auto; }
+    #videoElement { width: 100%; max-width: 220px; border-radius: 8px; display: none; margin: 10px auto; }
+    
+    .btn-action { background: #1B365D; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 5px; }
+
+    /* BANNER PAGO MERCADO PAGO */
+    .pago-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .btn-mp {
+      background: #009ee3;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .aviso-pago-ok {
+      display: none;
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    /* Barra de Botones compacta (Descargar y WhatsApp) */
+    .export-bar { display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px; margin-bottom: 15px; }
+    .btn-export { border: none; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .btn-pdf { background-color: #e74c3c; color: white; }
+    .btn-wsp { background-color: #25D366; color: white; }
+
+    /* VISTA PREVIA HOJA DE CV */
+    .cv-paper { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border-top: 8px solid #1B365D; position: relative; overflow: hidden; }
+    
+    /* MARCA DE AGUA CONDICIONAL */
+    .cv-paper.con-marca::after {
+      content: "MUESTRA GRATUITA - CV POR VOZ";
+      position: absolute;
+      top: 42%;
+      left: -25%;
+      width: 150%;
+      color: rgba(220, 38, 38, 0.16);
+      font-size: 26px;
+      font-weight: bold;
+      transform: rotate(-30deg);
+      pointer-events: none;
+      text-align: center;
+      z-index: 99;
+    }
+
+    .cv-header { display: flex; align-items: center; gap: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 20px; margin-bottom: 20px; }
+    .cv-header img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #1B365D; }
+    .cv-header-text h1 { margin: 0; color: #1B365D; font-size: 26px; }
+    .cv-header-text h3 { margin: 5px 0 0 0; color: #555; font-weight: 500; font-size: 16px; }
+    
+    .cv-section { margin-bottom: 18px; }
+    .cv-section h4 { color: #1B365D; border-bottom: 1px solid #1B365D; margin: 0 0 8px 0; padding-bottom: 4px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .cv-section p { margin: 4px 0; font-size: 14px; line-height: 1.4; color: #444; }
+    .contact-list { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #555; margin-top: 6px; }
+
+    /* Al imprimir / descargar PDF se oculta todo lo innecesario */
+    @media print {
+      .editor-card, .export-bar, .btn-mic, .pago-banner, .aviso-pago-ok { display: none !important; }
+      .cv-paper { box-shadow: none !important; border: none !important; padding: 0 !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  
+  <!-- PANEL DE EDICIÓN -->
+  <div class="editor-card">
+    <h2>📄 Creador de CV por Voz y Foto</h2>
+    
+    <!-- BANNER PAGO MERCADO PAGO -->
+    <div id="pagoBanner" class="pago-banner">
+      <div style="font-size:13px; color:#1e40af;">🔓 La previsualización incluye marca de agua. Aboná <strong>$2.000 ARS</strong> para habilitar descargas limpias.</div>
+      <button class="btn-mp" onclick="irAPagar()">💳 Pagar $2.000 por Mercado Pago</button>
+    </div>
+
+    <div id="avisoPagoOk" class="aviso-pago-ok">
+      ✅ ¡Pago Confirmado! Se removió la marca de agua y las descargas están listas.
+    </div>
+
+    <!-- FOTO -->
+    <div class="cam-box">
+      <label>Foto de Perfil</label>
+      <video id="videoElement" autoplay playsinline></video>
+      <img id="fotoPreview" src="https://via.placeholder.com/150?text=Tu+Foto" alt="Foto CV">
+      <canvas id="canvasElement" style="display:none;"></canvas>
+      
+      <button class="btn-action" id="btnCamara" onclick="iniciarCamara()">📷 Encender Cámara</button>
+      <button class="btn-action" id="btnCapturar" onclick="tomarFoto()" style="display:none; background:#e67e22;">📸 Sacar Foto</button>
+    </div>
+
+    <!-- DATOS PERSONALES -->
+    <div class="grid-2">
+      <div class="input-group">
+        <label>Nombre y Apellido</label>
+        <div class="field-row">
+          <input type="text" id="inNombre" placeholder="Ej: Noemí Vargas" oninput="actualizarCV()">
+          <button class="btn-mic" onclick="toggleDictado('inNombre', this)">🎙️</button>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Título / Puesto</label>
+        <div class="field-row">
+          <input type="text" id="inPuesto" placeholder="Ej: Coordinadora Logística" oninput="actualizarCV()">
+          <button class="btn-mic" onclick="toggleDictado('inPuesto', this)">🎙️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="input-group">
+        <label>Edad / Dirección</label>
+        <div class="field-row">
+          <input type="text" id="inDatosPersonales" placeholder="Ej: 42 años | CABA, Buenos Aires" oninput="actualizarCV()">
+          <button class="btn-mic" onclick="toggleDictado('inDatosPersonales', this)">🎙️</button>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Teléfono / WhatsApp</label>
+        <div class="field-row">
+          <input type="text" id="inTelefono" placeholder="Ej: +54 9 11 1234-5678" oninput="actualizarCV()">
+          <button class="btn-mic" onclick="toggleDictado('inTelefono', this)">🎙️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="input-group">
+        <label>Correo Electrónico</label>
+        <div class="field-row">
+          <input type="text" id="inEmail" placeholder="Ej: correo@email.com" oninput="actualizarCV()">
+          <button class="btn-mic" onclick="toggleDictado('inEmail', this)">🎙️</button>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Redes Sociales</label>
+        <div class="field-row">
+          <input type="text" id="inRedes" placeholder="Ej: @tu_usuario" oninput="actualizarCV()">
+          <button class="btn-mic" onclick="toggleDictado('inRedes', this)">🎙️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIONES DE TEXTO -->
+    <div class="input-group">
+      <label>Resumen & Fortalezas</label>
+      <div class="field-row">
+        <textarea id="inFortalezas" rows="3" placeholder="Dicta tus fortalezas y perfil..." oninput="actualizarCV()"></textarea>
+        <button class="btn-mic" onclick="toggleDictado('inFortalezas', this)">🎙️</button>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Experiencia Laboral</label>
+      <div class="field-row">
+        <textarea id="inExperiencia" rows="4" placeholder="Dicta tus empleos anteriores y tareas..." oninput="actualizarCV()"></textarea>
+        <button class="btn-mic" onclick="toggleDictado('inExperiencia', this)">🎙️</button>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Referencias Laborales</label>
+      <div class="field-row">
+        <input type="text" id="inReferencias" placeholder="Ej: Juan Pérez - Supervisor - Tel: 11-xxxx-xxxx" oninput="actualizarCV()">
+        <button class="btn-mic" onclick="toggleDictado('inReferencias', this)">🎙️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BARRA DE BOTONES REDUCIDOS -->
+  <div class="export-bar">
+    <button class="btn-export btn-pdf" onclick="guardarPDF()">📥 Descargar PDF</button>
+    <button class="btn-export btn-wsp" onclick="compartirWhatsApp()">💬 Enviar por WhatsApp</button>
+  </div>
+
+  <!-- VISTA PREVIA HOJA DE CV -->
+  <div class="cv-paper con-marca" id="cvHoja">
+    <div class="cv-header">
+      <img id="cvFoto" src="https://via.placeholder.com/150?text=Tu+Foto" alt="Foto">
+      <div class="cv-header-text">
+        <h1 id="outNombre">Nombre y Apellido</h1>
+        <h3 id="outPuesto">Título Profesional</h3>
+        <div class="contact-list">
+          <span id="outDatosPersonales">📍 Edad / Ubicación</span>
+          <span id="outTelefono">📞 Teléfono</span>
+          <span id="outEmail">✉️ Email</span>
+          <span id="outRedes">🌐 Redes</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cv-section">
+      <h4>Perfil & Fortalezas</h4>
+      <p id="outFortalezas">Resumen de virtudes y fortalezas profesionales.</p>
+    </div>
+
+    <div class="cv-section">
+      <h4>Experiencia Laboral</h4>
+      <p id="outExperiencia" style="white-space: pre-line;">Detalle de empleos anteriores y tareas realizadas.</p>
+    </div>
+
+    <div class="cv-section">
+      <h4>Referencias</h4>
+      <p id="outReferencias">Contactos de referencia laboral.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let streamCamara = null;
+  let fotoDataUrl = "";
+
+  // IDs de todos los campos del formulario para localStorage
+  const camposIds = ['inNombre', 'inPuesto', 'inDatosPersonales', 'inTelefono', 'inEmail', 'inRedes', 'inFortalezas', 'inExperiencia', 'inReferencias'];
+
+  // INICIALIZACIÓN Y PERSISTENCIA AL CARGAR
+  window.addEventListener('DOMContentLoaded', () => {
+    cargarBorrador();
+
+    // Verificación de pago por URL o Memoria local
+    const params = new URLSearchParams(window.location.search);
+    const estado = params.get('pago') || params.get('status') || params.get('collection_status');
+
+    if (estado === 'aprobado' || estado === 'approved' || localStorage.getItem('cv_pagado') === 'true') {
+      document.getElementById('cvHoja').classList.remove('con-marca');
+      document.getElementById('pagoBanner').style.display = 'none';
+      document.getElementById('avisoPagoOk').style.display = 'block';
+      localStorage.setItem('cv_pagado', 'true');
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    actualizarCV();
+  });
+
+  function irAPagar() {
+    guardarBorradorEnMemoria();
+    window.location.href = "https://mpago.li/1YZVG9u";
+  }
+
+  function guardarBorradorEnMemoria() {
+    const datos = {};
+    camposIds.forEach(id => {
+      datos[id] = document.getElementById(id).value;
+    });
+    datos['fotoDataUrl'] = fotoDataUrl;
+    localStorage.setItem('cv_voz_borrador', JSON.stringify(datos));
+  }
+
+  function cargarBorrador() {
+    const guardado = localStorage.getItem('cv_voz_borrador');
+    if (guardado) {
+      try {
+        const datos = JSON.parse(guardado);
+        camposIds.forEach(id => {
+          if (datos[id] !== undefined) {
+            document.getElementById(id).value = datos[id];
+          }
+        });
+        if (datos['fotoDataUrl']) {
+          fotoDataUrl = datos['fotoDataUrl'];
+          document.getElementById('fotoPreview').src = fotoDataUrl;
+          document.getElementById('cvFoto').src = fotoDataUrl;
+        }
+      } catch (e) {
+        console.error("Error al cargar borrador", e);
+      }
+    }
+  }
+
+  // CÁMARA
+  async function iniciarCamara() {
+    try {
+      const video = document.getElementById('videoElement');
+      streamCamara = await navigator.mediaDevices.getUserMedia({ video: true });
+      video.srcObject = streamCamara;
+      video.style.display = 'block';
+      document.getElementById('fotoPreview').style.display = 'none';
+      document.getElementById('btnCamara').style.display = 'none';
+      document.getElementById('btnCapturar').style.display = 'block';
+    } catch (err) {
+      alert("Asegúrate de permitir el acceso a la cámara.");
+    }
+  }
+
+  function tomarFoto() {
+    const video = document.getElementById('videoElement');
+    const canvas = document.getElementById('canvasElement');
+    const fotoPreview = document.getElementById('fotoPreview');
+    const cvFoto = document.getElementById('cvFoto');
+
+    canvas.width = video.videoWidth || 300;
+    canvas.height = video.videoHeight || 300;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    fotoDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+    fotoPreview.src = fotoDataUrl;
+    cvFoto.src = fotoDataUrl;
+
+    fotoPreview.style.display = 'block';
+    video.style.display = 'none';
+
+    if (streamCamara) {
+      streamCamara.getTracks().forEach(track => track.stop());
+    }
+    document.getElementById('btnCapturar').style.display = 'none';
+    document.getElementById('btnCamara').style.display = 'block';
+    document.getElementById('btnCamara').innerText = "🔄 Tomar Otra Foto";
+    guardarBorradorEnMemoria();
+  }
+
+  // DICTADO CONTINUO (MICRÓFONO ON/OFF)
+  let reconocimientos = {};
+  let escuchandoCampo = null;
+
+  function toggleDictado(idCampo, btn) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Tu navegador no soporta dictado por voz. Usa Google Chrome.");
+      return;
+    }
+
+    if (escuchandoCampo === idCampo) {
+      reconocimientos[idCampo].stop();
+      escuchandoCampo = null;
+      btn.classList.remove('listening');
+      btn.innerText = '🎙️';
+      guardarBorradorEnMemoria();
+      return;
+    }
+
+    if (escuchandoCampo && reconocimientos[escuchandoCampo]) {
+      reconocimientos[escuchandoCampo].stop();
+      document.querySelectorAll('.btn-mic').forEach(b => {
+        b.classList.remove('listening');
+        b.innerText = '🎙️';
+      });
+    }
+
+    const rec = new SpeechRecognition();
+    rec.lang = 'es-AR';
+    rec.continuous = true;
+    rec.interimResults = true;
+
+    const inputTarget = document.getElementById(idCampo);
+    let textoInicial = inputTarget.value;
+
+    rec.onresult = (e) => {
+      let transcripcion = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        transcripcion += e.results[i][0].transcript;
+      }
+      inputTarget.value = (textoInicial ? textoInicial + ' ' : '') + transcripcion;
+      actualizarCV();
+      guardarBorradorEnMemoria();
+    };
+
+    rec.onend = () => {
+      if (escuchandoCampo === idCampo) {
+        btn.classList.remove('listening');
+        btn.innerText = '🎙️';
+        escuchandoCampo = null;
+        guardarBorradorEnMemoria();
+      }
+    };
+
+    rec.start();
+    reconocimientos[idCampo] = rec;
+    escuchandoCampo = idCampo;
+    btn.classList.add('listening');
+    btn.innerText = '⏹️ Parar';
+  }
+
+  // ACTUALIZACIÓN DEL CV Y GUARDADO AUTOMÁTICO
+  function actualizarCV() {
+    guardarBorradorEnMemoria();
+
+    document.getElementById('outNombre').innerText = document.getElementById('inNombre').value || "Nombre y Apellido";
+    document.getElementById('outPuesto').innerText = document.getElementById('inPuesto').value || "Título Profesional";
+    document.getElementById('outDatosPersonales').innerText = document.getElementById('inDatosPersonales').value ? "📍 " + document.getElementById('inDatosPersonales').value : "📍 Edad / Ubicación";
+    document.getElementById('outTelefono').innerText = document.getElementById('inTelefono').value ? "📞 " + document.getElementById('inTelefono').value : "📞 Teléfono";
+    document.getElementById('outEmail').innerText = document.getElementById('inEmail').value ? "✉️ " + document.getElementById('inEmail').value : "✉️ Email";
+    document.getElementById('outRedes').innerText = document.getElementById('inRedes').value ? "🌐 " + document.getElementById('inRedes').value : "🌐 Redes";
+    
+    document.getElementById('outFortalezas').innerText = document.getElementById('inFortalezas').value || "Resumen de virtudes y fortalezas profesionales.";
+    document.getElementById('outExperiencia').innerText = document.getElementById('inExperiencia').value || "Detalle de empleos anteriores y tareas realizadas.";
+    document.getElementById('outReferencias').innerText = document.getElementById('inReferencias').value || "Contactos de referencia laboral.";
+  }
+
+  // DESCARGAR PDF
+  function guardarPDF() {
+    actualizarCV();
+    window.print();
+  }
+
+  // ENVIAR WHATSAPP
+  function compartirWhatsApp() {
+    actualizarCV();
+    const nombre = document.getElementById('inNombre').value || "Mi CV";
+    const puesto = document.getElementById('inPuesto').value || "";
+    const telefono = document.getElementById('inTelefono').value || "";
+    
+    const mensaje = `Hola! Adjunto la presentación de mi Currículum Vitae:%0A%0A` +
+                    `👤 *Nombre:* ${nombre}%0A` +
+                    `💼 *Puesto:* ${puesto}%0A` +
+                    `📞 *Contacto:* ${telefono}%0A%0A` +
+                    `_Generado desde la App de CV por Voz y Foto._`;
+                    
+    window.open(`https://api.whatsapp.com/send?text=${mensaje}`, '_blank');
+  }
+</script>
+
+</body>
+</html>
