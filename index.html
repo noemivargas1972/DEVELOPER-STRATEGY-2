@@ -1,469 +1,510 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Creador de CV por Voz y Foto</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 15px; color: #333; }
-    .app-container { max-width: 800px; margin: auto; }
-    
-    /* Panel de Edición */
-    .editor-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 25px; }
-    h2 { color: #1B365D; text-align: center; margin-top: 0; }
-    
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .input-group { margin-bottom: 12px; }
-    label { font-weight: bold; font-size: 13px; color: #444; display: block; margin-bottom: 4px; }
-    
-    .field-row { display: flex; gap: 6px; }
-    input, textarea { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
-    textarea { resize: vertical; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Nexus Studio - Versión Visual y Guiada</title>
+    <!-- Librería para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #818cf8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #cbd5e1;
+        }
 
-    /* Botones de Micrófono flotante por campo */
-    .btn-mic { background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; white-space: nowrap; }
-    .btn-mic.listening { background: #27ae60; animation: pulse 1.5s infinite; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 15px;
+        }
 
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
+        .app-container {
+            max-width: 1100px;
+            margin: auto;
+        }
 
-    /* Módulo Cámara */
-    .cam-box { text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px dashed #ccc; margin-bottom: 15px; }
-    #fotoPreview { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid #1B365D; display: block; margin: 10px auto; }
-    #videoElement { width: 100%; max-width: 220px; border-radius: 8px; display: none; margin: 10px auto; }
-    
-    .btn-action { background: #1B365D; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 5px; }
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
 
-    /* BANNER PAGO MERCADO PAGO */
-    .pago-banner {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      padding: 14px;
-      border-radius: 8px;
-      margin-bottom: 18px;
-      text-align: center;
-    }
+        header h1 { margin: 0; font-size: 1.8rem; }
+        header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 1rem; }
 
-    .btn-mp {
-      background: #009ee3;
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 14px;
-      margin-top: 8px;
-      width: 100%;
-    }
+        /* Selector Visual de Modelos (8 Modelos) */
+        .models-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
 
-    .aviso-pago-ok {
-      display: none;
-      background: #dcfce7;
-      color: #166534;
-      border: 1px solid #bbf7d0;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 18px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: bold;
-    }
+        .models-section h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    /* Barra de Botones compacta (Descargar y WhatsApp) */
-    .export-bar { display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px; margin-bottom: 15px; }
-    .btn-export { border: none; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .btn-pdf { background-color: #e74c3c; color: white; }
-    .btn-wsp { background-color: #25D366; color: white; }
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
 
-    /* VISTA PREVIA HOJA DE CV */
-    .cv-paper { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border-top: 8px solid #1B365D; position: relative; overflow: hidden; }
-    
-    /* MARCA DE AGUA CONDICIONAL */
-    .cv-paper.con-marca::after {
-      content: "MUESTRA GRATUITA - CV POR VOZ";
-      position: absolute;
-      top: 42%;
-      left: -25%;
-      width: 150%;
-      color: rgba(220, 38, 38, 0.16);
-      font-size: 26px;
-      font-weight: bold;
-      transform: rotate(-30deg);
-      pointer-events: none;
-      text-align: center;
-      z-index: 99;
-    }
+        .model-card {
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
 
-    .cv-header { display: flex; align-items: center; gap: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 20px; margin-bottom: 20px; }
-    .cv-header img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #1B365D; }
-    .cv-header-text h1 { margin: 0; color: #1B365D; font-size: 26px; }
-    .cv-header-text h3 { margin: 5px 0 0 0; color: #555; font-weight: 500; font-size: 16px; }
-    
-    .cv-section { margin-bottom: 18px; }
-    .cv-section h4 { color: #1B365D; border-bottom: 1px solid #1B365D; margin: 0 0 8px 0; padding-bottom: 4px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .cv-section p { margin: 4px 0; font-size: 14px; line-height: 1.4; color: #444; }
-    .contact-list { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #555; margin-top: 6px; }
+        .model-card:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
 
-    /* Al imprimir / descargar PDF se oculta todo lo innecesario */
-    @media print {
-      .editor-card, .export-bar, .btn-mic, .pago-banner, .aviso-pago-ok { display: none !important; }
-      .cv-paper { box-shadow: none !important; border: none !important; padding: 0 !important; }
-    }
-  </style>
+        .model-card.active {
+            border-color: var(--primary-color);
+            background-color: #e0e7ff;
+            color: var(--primary-color);
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+
+        .layout-preview-box {
+            height: 45px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            background: #e2e8f0;
+        }
+
+        /* Panel Principal en Dos Columnas */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 850px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
+
+        .editor-card, .preview-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+
+        .input-with-voice {
+            display: flex;
+            gap: 8px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+
+        textarea { resize: vertical; height: 80px; }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .voice-btn {
+            background: #f1f5f9;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background 0.2s;
+        }
+
+        .voice-btn:hover { background: #e2e8f0; }
+        .voice-btn.recording { background: #fee2e2; border-color: #ef4444; animation: pulse 1.5s infinite; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        /* Vista Previa del CV */
+        .cv-preview-sheet {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 25px;
+            min-height: 500px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        /* Diseños de los 8 Modelos */
+        .model-1 { font-family: Arial, sans-serif; border-top: 4px solid #333; }
+        .model-2 { font-family: 'Segoe UI', sans-serif; text-align: center; background: #fff0f5; border-radius: 8px; padding: 15px;}
+        .model-3 { font-family: Georgia, serif; color: #5a3d28; background: #fffaf0; }
+        .model-4 { font-family: 'Verdana', sans-serif; border-left: 5px solid #005f73; padding-left: 12px; }
+        .model-5 { font-family: 'Tahoma', sans-serif; background: #f0f8ff; border: 1px solid #b0e0e6; }
+        .model-6 { font-family: 'Courier New', monospace; background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; }
+        .model-7 { font-family: 'Trebuchet MS', sans-serif; border-bottom: 3px double #2e8b57; }
+        .model-8 { font-family: 'Lucida Sans', sans-serif; background: #fdf5e6; border: 2px dashed #daa520; padding: 15px; }
+
+        .cv-header-prev { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 12px; }
+        .cv-avatar-prev { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; background: #cbd5e1; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; overflow: hidden; }
+        .cv-avatar-prev img { width: 100%; height: 100%; object-fit: cover; }
+
+        .actions-bar {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary { background: var(--primary-color); color: white; }
+        .btn-success { background: #10b981; color: white; }
+        .btn:hover { opacity: 0.9; }
+
+        /* Cámara Modal */
+        #cameraModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white; padding: 20px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%;
+        }
+        video { width: 100%; border-radius: 8px; background: #000; }
+    </style>
 </head>
 <body>
 
 <div class="app-container">
-  
-  <!-- PANEL DE EDICIÓN -->
-  <div class="editor-card">
-    <h2>📄 Creador de CV por Voz y Foto</h2>
-    
-    <!-- BANNER PAGO MERCADO PAGO -->
-    <div id="pagoBanner" class="pago-banner">
-      <div style="font-size:13px; color:#1e40af;">🔓 La previsualización incluye marca de agua. Aboná <strong>$2.000 ARS</strong> para habilitar descargas limpias.</div>
-      <button class="btn-mp" onclick="irAPagar()">💳 Pagar $2.000 por Mercado Pago</button>
-    </div>
+    <header>
+        <h1>🌟 CV Nexus Studio - Versión Visual Interactiva</h1>
+        <p>Elegí tu modelo ideal visualmente, dictá tus datos o sacate una foto al instante.</p>
+    </header>
 
-    <div id="avisoPagoOk" class="aviso-pago-ok">
-      ✅ ¡Pago Confirmado! Se removió la marca de agua y las descargas están listas.
-    </div>
-
-    <!-- FOTO -->
-    <div class="cam-box">
-      <label>Foto de Perfil</label>
-      <video id="videoElement" autoplay playsinline></video>
-      <img id="fotoPreview" src="https://via.placeholder.com/150?text=Tu+Foto" alt="Foto CV">
-      <canvas id="canvasElement" style="display:none;"></canvas>
-      
-      <button class="btn-action" id="btnCamara" onclick="iniciarCamara()">📷 Encender Cámara</button>
-      <button class="btn-action" id="btnCapturar" onclick="tomarFoto()" style="display:none; background:#e67e22;">📸 Sacar Foto</button>
-    </div>
-
-    <!-- DATOS PERSONALES -->
-    <div class="grid-2">
-      <div class="input-group">
-        <label>Nombre y Apellido</label>
-        <div class="field-row">
-          <input type="text" id="inNombre" placeholder="Ej: Noemí Vargas" oninput="actualizarCV()">
-          <button class="btn-mic" onclick="toggleDictado('inNombre', this)">🎙️</button>
+    <!-- Selector Visual de los 8 Modelos -->
+    <div class="models-section">
+        <h3>🎨 Seleccioná el estilo visual de tu CV (8 Modelos):</h3>
+        <div class="models-grid" id="modelSelector">
+            <div class="model-card active" onclick="cambiarModelo(1)">
+                <div class="layout-preview-box" style="background:#333"></div>
+                1. Blanco y Negro
+            </div>
+            <div class="model-card" onclick="cambiarModelo(2)">
+                <div class="layout-preview-box" style="background:#ffb6c1"></div>
+                2. Rosa Círculo
+            </div>
+            <div class="model-card" onclick="cambiarModelo(3)">
+                <div class="layout-preview-box" style="background:#faebd7"></div>
+                3. Beige Clásico
+            </div>
+            <div class="model-card" onclick="cambiarModelo(4)">
+                <div class="layout-preview-box" style="background:#005f73"></div>
+                4. Azul Petróleo
+            </div>
+            <div class="model-card" onclick="cambiarModelo(5)">
+                <div class="layout-preview-box" style="background:#b0e0e6"></div>
+                5. Celeste Moderno
+            </div>
+            <div class="model-card" onclick="cambiarModelo(6)">
+                <div class="layout-preview-box" style="background:#1e1e1e"></div>
+                6. Modo Oscuro
+            </div>
+            <div class="model-card" onclick="cambiarModelo(7)">
+                <div class="layout-preview-box" style="background:#2e8b57"></div>
+                7. Verde Elegante
+            </div>
+            <div class="model-card" onclick="cambiarModelo(8)">
+                <div class="layout-preview-box" style="background:#daa520"></div>
+                8. Dorado y Estilo
+            </div>
         </div>
-      </div>
-      <div class="input-group">
-        <label>Título / Puesto</label>
-        <div class="field-row">
-          <input type="text" id="inPuesto" placeholder="Ej: Coordinadora Logística" oninput="actualizarCV()">
-          <button class="btn-mic" onclick="toggleDictado('inPuesto', this)">🎙️</button>
+    </div>
+
+    <div class="main-grid">
+        <!-- Panel de Edición con Voz y Cámara -->
+        <div class="editor-card">
+            <h3>📝 Datos Personales y Experiencia</h3>
+            
+            <div class="form-group">
+                <label>Foto de Perfil</label>
+                <button type="button" class="btn btn-primary" onclick="abrirCamara()" style="width:100%; margin-bottom:8px;">📷 Tomar Foto con Cámara</button>
+                <input type="file" id="uploadFoto" accept="image/*" onchange="cargarFotoArchivo(event)">
+            </div>
+
+            <div class="form-group">
+                <label>Nombre y Apellido</label>
+                <div class="input-with-voice">
+                    <input type="text" id="inputNombre" placeholder="Ej: Noemí Vargas" oninput="actualizarCV()">
+                    <button type="button" class="voice-btn" onclick="iniciarDictado('inputNombre')">🎤</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Puesto o Profesión</label>
+                <div class="input-with-voice">
+                    <input type="text" id="inputPuesto" placeholder="Ej: Especialista en Logística" oninput="actualizarCV()">
+                    <button type="button" class="voice-btn" onclick="iniciarDictado('inputPuesto')">🎤</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Teléfono / Contacto</label>
+                <div class="input-with-voice">
+                    <input type="text" id="inputContacto" placeholder="+54 9 11..." oninput="actualizarCV()">
+                    <button type="button" class="voice-btn" onclick="iniciarDictado('inputContacto')">🎤</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Resumen / Experiencia</label>
+                <div class="input-with-voice">
+                    <textarea id="inputExperiencia" placeholder="Contá tu trayectoria..." oninput="actualizarCV()"></textarea>
+                    <button type="button" class="voice-btn" onclick="iniciarDictado('inputExperiencia')">🎤</button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="grid-2">
-      <div class="input-group">
-        <label>Edad / Dirección</label>
-        <div class="field-row">
-          <input type="text" id="inDatosPersonales" placeholder="Ej: 42 años | CABA, Buenos Aires" oninput="actualizarCV()">
-          <button class="btn-mic" onclick="toggleDictado('inDatosPersonales', this)">🎙️</button>
+        <!-- Vista Previa Interactiva -->
+        <div class="preview-card">
+            <h3>👁️ Vista Previa en Tiempo Real</h3>
+            <div id="cvSheet" class="cv-preview-sheet model-1">
+                <div class="cv-header-prev">
+                    <div class="cv-avatar-prev" id="prevFoto">👤</div>
+                    <div>
+                        <h2 id="prevNombre" style="margin:0 0 5px 0; font-size: 1.3rem;">Nombre Apellido</h2>
+                        <p id="prevPuesto" style="margin:0; font-weight:600; opacity:0.8;">Puesto o Profesión</p>
+                        <small id="prevContacto" style="opacity:0.7;">Contacto</small>
+                    </div>
+                </div>
+                <hr style="border:0; border-top:1px solid #ddd; margin:15px 0;">
+                <div>
+                    <h4 style="margin:0 0 8px 0;">Perfil Profesional</h4>
+                    <p id="prevExperiencia" style="font-size: 0.9rem; white-space: pre-wrap; line-height: 1.4;">Acá se verá reflejado el resumen que escribas o dictes por voz...</p>
+                </div>
+            </div>
+
+            <div class="actions-bar">
+                <button class="btn btn-success" onclick="descargarPDF()">📥 Descargar CV / PDF</button>
+            </div>
         </div>
-      </div>
-      <div class="input-group">
-        <label>Teléfono / WhatsApp</label>
-        <div class="field-row">
-          <input type="text" id="inTelefono" placeholder="Ej: +54 9 11 1234-5678" oninput="actualizarCV()">
-          <button class="btn-mic" onclick="toggleDictado('inTelefono', this)">🎙️</button>
-        </div>
-      </div>
     </div>
-
-    <div class="grid-2">
-      <div class="input-group">
-        <label>Correo Electrónico</label>
-        <div class="field-row">
-          <input type="text" id="inEmail" placeholder="Ej: correo@email.com" oninput="actualizarCV()">
-          <button class="btn-mic" onclick="toggleDictado('inEmail', this)">🎙️</button>
-        </div>
-      </div>
-      <div class="input-group">
-        <label>Redes Sociales</label>
-        <div class="field-row">
-          <input type="text" id="inRedes" placeholder="Ej: @tu_usuario" oninput="actualizarCV()">
-          <button class="btn-mic" onclick="toggleDictado('inRedes', this)">🎙️</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- SECCIONES DE TEXTO -->
-    <div class="input-group">
-      <label>Resumen & Fortalezas</label>
-      <div class="field-row">
-        <textarea id="inFortalezas" rows="3" placeholder="Dicta tus fortalezas y perfil..." oninput="actualizarCV()"></textarea>
-        <button class="btn-mic" onclick="toggleDictado('inFortalezas', this)">🎙️</button>
-      </div>
-    </div>
-
-    <div class="input-group">
-      <label>Experiencia Laboral</label>
-      <div class="field-row">
-        <textarea id="inExperiencia" rows="4" placeholder="Dicta tus empleos anteriores y tareas..." oninput="actualizarCV()"></textarea>
-        <button class="btn-mic" onclick="toggleDictado('inExperiencia', this)">🎙️</button>
-      </div>
-    </div>
-
-    <div class="input-group">
-      <label>Referencias Laborales</label>
-      <div class="field-row">
-        <input type="text" id="inReferencias" placeholder="Ej: Juan Pérez - Supervisor - Tel: 11-xxxx-xxxx" oninput="actualizarCV()">
-        <button class="btn-mic" onclick="toggleDictado('inReferencias', this)">🎙️</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- BARRA DE BOTONES REDUCIDOS -->
-  <div class="export-bar">
-    <button class="btn-export btn-pdf" onclick="guardarPDF()">📥 Descargar PDF</button>
-    <button class="btn-export btn-wsp" onclick="compartirWhatsApp()">💬 Enviar por WhatsApp</button>
-  </div>
-
-  <!-- VISTA PREVIA HOJA DE CV -->
-  <div class="cv-paper con-marca" id="cvHoja">
-    <div class="cv-header">
-      <img id="cvFoto" src="https://via.placeholder.com/150?text=Tu+Foto" alt="Foto">
-      <div class="cv-header-text">
-        <h1 id="outNombre">Nombre y Apellido</h1>
-        <h3 id="outPuesto">Título Profesional</h3>
-        <div class="contact-list">
-          <span id="outDatosPersonales">📍 Edad / Ubicación</span>
-          <span id="outTelefono">📞 Teléfono</span>
-          <span id="outEmail">✉️ Email</span>
-          <span id="outRedes">🌐 Redes</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="cv-section">
-      <h4>Perfil & Fortalezas</h4>
-      <p id="outFortalezas">Resumen de virtudes y fortalezas profesionales.</p>
-    </div>
-
-    <div class="cv-section">
-      <h4>Experiencia Laboral</h4>
-      <p id="outExperiencia" style="white-space: pre-line;">Detalle de empleos anteriores y tareas realizadas.</p>
-    </div>
-
-    <div class="cv-section">
-      <h4>Referencias</h4>
-      <p id="outReferencias">Contactos de referencia laboral.</p>
-    </div>
-  </div>
-
 </div>
 
+<!-- Modal de Cámara -->
+<div id="cameraModal">
+    <div class="modal-content">
+        <h3>Tomar Foto</h3>
+        <video id="videoCamara" autoplay playsinline></video>
+        <div style="margin-top:15px; display:flex; gap:10px;">
+            <button class="btn btn-success" onclick="sacarFoto()">📸 Capturar</button>
+            <button class="btn" style="background:#cbd5e1;" onclick="cerrarCamara()">Cancelar</button>
+        </div>
+    </div>
+</div>
+<canvas id="canvasFoto" style="display:none;"></canvas>
+
 <script>
-  let streamCamara = null;
-  let fotoDataUrl = "";
+    let modeloActual = 1;
+    let fotoDataUrl = "";
 
-  // IDs de todos los campos del formulario para localStorage
-  const camposIds = ['inNombre', 'inPuesto', 'inDatosPersonales', 'inTelefono', 'inEmail', 'inRedes', 'inFortalezas', 'inExperiencia', 'inReferencias'];
-
-  // INICIALIZACIÓN Y PERSISTENCIA AL CARGAR
-  window.addEventListener('DOMContentLoaded', () => {
-    cargarBorrador();
-
-    // Verificación de pago por URL o Memoria local
-    const params = new URLSearchParams(window.location.search);
-    const estado = params.get('pago') || params.get('status') || params.get('collection_status');
-
-    if (estado === 'aprobado' || estado === 'approved' || localStorage.getItem('cv_pagado') === 'true') {
-      document.getElementById('cvHoja').classList.remove('con-marca');
-      document.getElementById('pagoBanner').style.display = 'none';
-      document.getElementById('avisoPagoOk').style.display = 'block';
-      localStorage.setItem('cv_pagado', 'true');
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }
-    actualizarCV();
-  });
-
-  function irAPagar() {
-    guardarBorradorEnMemoria();
-    window.location.href = "https://mpago.li/1YZVG9u";
-  }
-
-  function guardarBorradorEnMemoria() {
-    const datos = {};
-    camposIds.forEach(id => {
-      datos[id] = document.getElementById(id).value;
-    });
-    datos['fotoDataUrl'] = fotoDataUrl;
-    localStorage.setItem('cv_voz_borrador', JSON.stringify(datos));
-  }
-
-  function cargarBorrador() {
-    const guardado = localStorage.getItem('cv_voz_borrador');
-    if (guardado) {
-      try {
-        const datos = JSON.parse(guardado);
-        camposIds.forEach(id => {
-          if (datos[id] !== undefined) {
-            document.getElementById(id).value = datos[id];
-          }
+    function cambiarModelo(num) {
+        modeloActual = num;
+        document.querySelectorAll('.model-card').forEach((card, index) => {
+            if(index + 1 === num) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
         });
-        if (datos['fotoDataUrl']) {
-          fotoDataUrl = datos['fotoDataUrl'];
-          document.getElementById('fotoPreview').src = fotoDataUrl;
-          document.getElementById('cvFoto').src = fotoDataUrl;
+        const sheet = document.getElementById('cvSheet');
+        sheet.className = `cv-preview-sheet model-${num}`;
+    }
+
+    function actualizarCV() {
+        document.getElementById('prevNombre').innerText = document.getElementById('inputNombre').value || "Nombre Apellido";
+        document.getElementById('prevPuesto').innerText = document.getElementById('inputPuesto').value || "Puesto o Profesión";
+        document.getElementById('prevContacto').innerText = document.getElementById('inputContacto').value || "Contacto";
+        document.getElementById('prevExperiencia').innerText = document.getElementById('inputExperiencia').value || "Acá se verá reflejado el resumen que escribas o dictes por voz...";
+
+        // Guardar automáticamente en localStorage
+        guardarDatosLocal();
+    }
+
+    // Dictado por Voz
+    function iniciarDictado(idInput) {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            alert("Tu navegador no soporta dictado por voz directo. Probá usando Chrome.");
+            return;
         }
-      } catch (e) {
-        console.error("Error al cargar borrador", e);
-      }
-    }
-  }
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'es-AR';
+        
+        const btn = event.currentTarget;
+        btn.classList.add('recording');
 
-  // CÁMARA
-  async function iniciarCamara() {
-    try {
-      const video = document.getElementById('videoElement');
-      streamCamara = await navigator.mediaDevices.getUserMedia({ video: true });
-      video.srcObject = streamCamara;
-      video.style.display = 'block';
-      document.getElementById('fotoPreview').style.display = 'none';
-      document.getElementById('btnCamara').style.display = 'none';
-      document.getElementById('btnCapturar').style.display = 'block';
-    } catch (err) {
-      alert("Asegúrate de permitir el acceso a la cámara.");
-    }
-  }
+        recognition.onresult = function(event) {
+            const textoTranscrito = event.results[0][0].transcript;
+            document.getElementById(idInput).value += (document.getElementById(idInput).value ? " " : "") + textoTranscrito;
+            actualizarCV();
+            btn.classList.remove('recording');
+        };
 
-  function tomarFoto() {
-    const video = document.getElementById('videoElement');
-    const canvas = document.getElementById('canvasElement');
-    const fotoPreview = document.getElementById('fotoPreview');
-    const cvFoto = document.getElementById('cvFoto');
+        recognition.onerror = function() {
+            btn.classList.remove('recording');
+        };
 
-    canvas.width = video.videoWidth || 300;
-    canvas.height = video.videoHeight || 300;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        recognition.onend = function() {
+            btn.classList.remove('recording');
+        };
 
-    fotoDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-    fotoPreview.src = fotoDataUrl;
-    cvFoto.src = fotoDataUrl;
-
-    fotoPreview.style.display = 'block';
-    video.style.display = 'none';
-
-    if (streamCamara) {
-      streamCamara.getTracks().forEach(track => track.stop());
-    }
-    document.getElementById('btnCapturar').style.display = 'none';
-    document.getElementById('btnCamara').style.display = 'block';
-    document.getElementById('btnCamara').innerText = "🔄 Tomar Otra Foto";
-    guardarBorradorEnMemoria();
-  }
-
-  // DICTADO CONTINUO (MICRÓFONO ON/OFF)
-  let reconocimientos = {};
-  let escuchandoCampo = null;
-
-  function toggleDictado(idCampo, btn) {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert("Tu navegador no soporta dictado por voz. Usa Google Chrome.");
-      return;
+        recognition.start();
     }
 
-    if (escuchandoCampo === idCampo) {
-      reconocimientos[idCampo].stop();
-      escuchandoCampo = null;
-      btn.classList.remove('listening');
-      btn.innerText = '🎙️';
-      guardarBorradorEnMemoria();
-      return;
+    // Manejo de Cámara
+    let streamCamara = null;
+    async function abrirCamara() {
+        const modal = document.getElementById('cameraModal');
+        modal.style.display = 'flex';
+        try {
+            streamCamara = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            document.getElementById('videoCamara').srcObject = streamCamara;
+        } catch (err) {
+            alert("No se pudo acceder a la cámara.");
+            modal.style.display = 'none';
+        }
     }
 
-    if (escuchandoCampo && reconocimientos[escuchandoCampo]) {
-      reconocimientos[escuchandoCampo].stop();
-      document.querySelectorAll('.btn-mic').forEach(b => {
-        b.classList.remove('listening');
-        b.innerText = '🎙️';
-      });
+    function cerrarCamara() {
+        if (streamCamara) {
+            streamCamara.getTracks().forEach(track => track.stop());
+        }
+        document.getElementById('cameraModal').style.display = 'none';
     }
 
-    const rec = new SpeechRecognition();
-    rec.lang = 'es-AR';
-    rec.continuous = true;
-    rec.interimResults = true;
+    function sacarFoto() {
+        const video = document.getElementById('videoCamara');
+        const canvas = document.getElementById('canvasFoto');
+        canvas.width = video.videoWidth || 300;
+        canvas.height = video.videoHeight || 300;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        fotoDataUrl = canvas.toDataURL('image/png');
+        
+        document.getElementById('prevFoto').innerHTML = `<img src="${fotoDataUrl}" alt="Foto">`;
+        cerrarCamara();
+        guardarDatosLocal();
+    }
 
-    const inputTarget = document.getElementById(idCampo);
-    let textoInicial = inputTarget.value;
+    function cargarFotoArchivo(event) {
+        const archivo = event.target.files[0];
+        if (archivo) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                fotoDataUrl = e.target.result;
+                document.getElementById('prevFoto').innerHTML = `<img src="${fotoDataUrl}" alt="Foto">`;
+                guardarDatosLocal();
+            }
+            reader.readAsDataURL(archivo);
+        }
+    }
 
-    rec.onresult = (e) => {
-      let transcripcion = '';
-      for (let i = e.resultIndex; i < e.results.length; i++) {
-        transcripcion += e.results[i][0].transcript;
-      }
-      inputTarget.value = (textoInicial ? textoInicial + ' ' : '') + transcripcion;
-      actualizarCV();
-      guardarBorradorEnMemoria();
+    // Persistencia LocalStorage
+    function guardarDatosLocal() {
+        const datos = {
+            nombre: document.getElementById('inputNombre').value,
+            puesto: document.getElementById('inputPuesto').value,
+            contacto: document.getElementById('inputContacto').value,
+            experiencia: document.getElementById('inputExperiencia').value,
+            foto: fotoDataUrl,
+            modelo: modeloActual
+        };
+        localStorage.setItem('cv_v2_data', JSON.stringify(datos));
+    }
+
+    window.onload = function() {
+        const guardados = localStorage.getItem('cv_v2_data');
+        if (guardados) {
+            const d = JSON.parse(guardados);
+            document.getElementById('inputNombre').value = d.nombre || '';
+            document.getElementById('inputPuesto').value = d.puesto || '';
+            document.getElementById('inputContacto').value = d.contacto || '';
+            document.getElementById('inputExperiencia').value = d.experiencia || '';
+            if (d.foto) {
+                fotoDataUrl = d.foto;
+                document.getElementById('prevFoto').innerHTML = `<img src="${fotoDataUrl}" alt="Foto">`;
+            }
+            if (d.modelo) {
+                cambiarModelo(d.modelo);
+            }
+            actualizarCV();
+        }
     };
 
-    rec.onend = () => {
-      if (escuchandoCampo === idCampo) {
-        btn.classList.remove('listening');
-        btn.innerText = '🎙️';
-        escuchandoCampo = null;
-        guardarBorradorEnMemoria();
-      }
-    };
-
-    rec.start();
-    reconocimientos[idCampo] = rec;
-    escuchandoCampo = idCampo;
-    btn.classList.add('listening');
-    btn.innerText = '⏹️ Parar';
-  }
-
-  // ACTUALIZACIÓN DEL CV Y GUARDADO AUTOMÁTICO
-  function actualizarCV() {
-    guardarBorradorEnMemoria();
-
-    document.getElementById('outNombre').innerText = document.getElementById('inNombre').value || "Nombre y Apellido";
-    document.getElementById('outPuesto').innerText = document.getElementById('inPuesto').value || "Título Profesional";
-    document.getElementById('outDatosPersonales').innerText = document.getElementById('inDatosPersonales').value ? "📍 " + document.getElementById('inDatosPersonales').value : "📍 Edad / Ubicación";
-    document.getElementById('outTelefono').innerText = document.getElementById('inTelefono').value ? "📞 " + document.getElementById('inTelefono').value : "📞 Teléfono";
-    document.getElementById('outEmail').innerText = document.getElementById('inEmail').value ? "✉️ " + document.getElementById('inEmail').value : "✉️ Email";
-    document.getElementById('outRedes').innerText = document.getElementById('inRedes').value ? "🌐 " + document.getElementById('inRedes').value : "🌐 Redes";
-    
-    document.getElementById('outFortalezas').innerText = document.getElementById('inFortalezas').value || "Resumen de virtudes y fortalezas profesionales.";
-    document.getElementById('outExperiencia').innerText = document.getElementById('inExperiencia').value || "Detalle de empleos anteriores y tareas realizadas.";
-    document.getElementById('outReferencias').innerText = document.getElementById('inReferencias').value || "Contactos de referencia laboral.";
-  }
-
-  // DESCARGAR PDF
-  function guardarPDF() {
-    actualizarCV();
-    window.print();
-  }
-
-  // ENVIAR WHATSAPP
-  function compartirWhatsApp() {
-    actualizarCV();
-    const nombre = document.getElementById('inNombre').value || "Mi CV";
-    const puesto = document.getElementById('inPuesto').value || "";
-    const telefono = document.getElementById('inTelefono').value || "";
-    
-    const mensaje = `Hola! Adjunto la presentación de mi Currículum Vitae:%0A%0A` +
-                    `👤 *Nombre:* ${nombre}%0A` +
-                    `💼 *Puesto:* ${puesto}%0A` +
-                    `📞 *Contacto:* ${telefono}%0A%0A` +
-                    `_Generado desde la App de CV por Voz y Foto._`;
-                    
-    window.open(`https://api.whatsapp.com/send?text=${mensaje}`, '_blank');
-  }
+    function descargarPDF() {
+        const sheet = document.getElementById('cvSheet');
+        html2canvas(sheet, { scale: 2 }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'Mi-CV.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    }
 </script>
 
 </body>
