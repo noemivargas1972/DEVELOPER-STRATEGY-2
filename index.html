@@ -17,7 +17,7 @@
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--ink); }
 
-/* BARRA DE HERRAMIENTAS SOBRIA Y ELEGANTE */
+/* BARRA DE HERRAMIENTAS SUPERIOR */
 .toolbar {
   position: sticky; top: 0; z-index: 100; background: #202124; color: white;
   padding: 12px 16px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
@@ -40,8 +40,10 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .toolbar button:hover { background: #f0f0f0; transform: translateY(-1px); }
 .toolbar button.primary { background: #bd8190; color: white; }
 .toolbar button.primary:hover { background: #a86d7c; }
+.toolbar button.whatsapp-nav { background: #25d366; color: white; }
+.toolbar button.whatsapp-nav:hover { background: #20ba5a; }
 
-/* SELECTOR DE FORMA DE FOTO DISCRETO */
+/* SELECTOR DE FORMA DE FOTO */
 .photo-shape-selector {
   display: flex; align-items: center; gap: 8px; margin-left: auto; background: #2d2e32; padding: 4px 8px; border-radius: 8px; border: 1px solid #444;
 }
@@ -58,7 +60,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   overflow: hidden; position: relative; font-size: 9.8pt; line-height: 1.45;
 }
 
-/* CONTENEDOR SEPARADO PARA EVITAR QUE EL BORRADO DE TECLADO MATE AL MICRÓFONO */
+/* CONTENEDOR PROTEGIDO PARA EL CAMPO Y EL MICRÓFONO FUERA DE ÉL */
 .editable-wrapper {
   position: relative; display: flex; align-items: center; width: 100%; margin-bottom: 4px;
 }
@@ -68,7 +70,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 }
 .sheet [contenteditable="true"]:focus { outline: 1.5px dashed #4c90d9; background: #fffde6; }
 
-/* TEXTOS TRANSPARENTES (PLACEHOLDERS) QUE DESAPARECEN AL ESCRIBIR */
+/* TEXTOS GUÍA (PLACEHOLDERS) TRANSPARENTES */
 .sheet [contenteditable="true"]:empty:not(:focus)::before {
   content: attr(data-placeholder); color: #aaa; font-style: italic; opacity: 0.7; pointer-events: none;
 }
@@ -79,12 +81,12 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .sheet h3 { font-size: 10.5pt; margin-bottom: 3px; }
 .sheet p { margin-bottom: 8px; }
 
-/* BOTÓN DE MICRÓFONO FLOTANTE E IMBORRABLE POR TECLADO */
+/* BOTÓN DE MICRÓFONO FLOTANTE SEGURO (IMBORRABLE POR TECLADO) */
 .voice-mic-btn {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 22px; height: 22px; font-size: 11px; background: #bd8190; color: white;
+  width: 20px; height: 20px; font-size: 10px; background: #bd8190; color: white;
   border-radius: 50%; cursor: pointer; margin-left: 6px; flex-shrink: 0;
-  user-select: none; opacity: 0.8; transition: opacity 0.2s, transform 0.2s;
+  user-select: none; opacity: 0.75; transition: opacity 0.2s, transform 0.2s;
 }
 .voice-mic-btn:hover { opacity: 1; transform: scale(1.15); }
 .voice-mic-btn.recording { background: #e11d48; animation: pulse 1s infinite; opacity: 1; }
@@ -197,10 +199,10 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   .preview-mode .sheet { zoom: calc((100vw - 10px) / 793.7); margin: 0 auto; }
 }
 
-/* BOTÓN FLOTANTE VOLVER ARRIBA */
+/* BOTÓN FLOTANTE CON FLECHA A LA IZQUIERDA (VOLVER / MENÚ) */
 .scroll-top-float {
   position: fixed; bottom: 76px; right: 18px; z-index: 98; background: #333; color: white;
-  border-radius: 50px; width: 44px; height: 44px; font-weight: bold; font-size: 16px; text-decoration: none;
+  border-radius: 50px; width: 44px; height: 44px; font-weight: bold; font-size: 18px; text-decoration: none;
   display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.25); border: 2px solid #bd8190; cursor: pointer; transition: transform 0.2s;
 }
 .scroll-top-float:hover { transform: scale(1.1); background: #bd8190; }
@@ -224,7 +226,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 </head>
 <body>
 
-<!-- BARRA DE HERRAMIENTAS -->
+<!-- BARRA DE HERRAMIENTAS CON BOTÓN DE SOPORTE WHATSAPP -->
 <div class="toolbar">
   <strong>CV Nexus Studio</strong>
   
@@ -247,6 +249,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 
   <button class="primary" id="payDownloadBtn">Imprimir / Guardar PDF</button>
   <button id="whatsappBtn">Compartir CV por WhatsApp</button>
+  <button class="whatsapp-nav" onclick="window.open('https://wa.me/5491131504886?text=Hola%20Noem%C3%AD,%20necesito%20soporte%20con%20mi%20CV','_blank')">💬 Soporte</button>
   <button id="previewBtn">👁 Ver CV completo</button>
   <button id="editBtn" style="display:none;">✏️ Volver a editar</button>
   <button id="reset">Restaurar ejemplo</button>
@@ -259,7 +262,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   </div>
 </div>
 
-<!-- HOJA DEL CV CON TEXTOS GUIAS TRANSPARENTES (DATA-PLACEHOLDER) -->
+<!-- HOJA DEL CV CON TEXTOS GUÍA (PLACEHOLDERS) -->
 <div class="sheet-container">
   <main id="cv" class="sheet design1">
     <div class="watermark">VISTA PREVIA — CV NEXUS</div>
@@ -270,42 +273,42 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
           <img class="main-photo" alt="Foto de perfil" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23ccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>">
         </div>
       </div>
-      <h1 contenteditable="true" data-placeholder="Nombre y Apellido">TU NOMBRE Y APELLIDO</h1>
-      <div class="role" contenteditable="true" data-placeholder="Puesto / Profesión a la que aspirás">Puesto / Profesión</div>
+      <h1 contenteditable="true" data-placeholder="Nombre y Apellido"></h1>
+      <div class="role" contenteditable="true" data-placeholder="Puesto / Profesión al que aspirás"></div>
       
       <div class="section">
         <h2>Contacto</h2>
-        <div class="contact-item"><span class="icon">✉</span><span contenteditable="true" data-placeholder="correo@ejemplo.com">correo@ejemplo.com</span></div>
-        <div class="contact-item"><span class="icon">☎</span><span contenteditable="true" data-placeholder="+54 11 1234-5678">+54 11 1234-5678</span></div>
-        <div class="contact-item"><span class="icon">◎</span><span contenteditable="true" data-placeholder="LinkedIn / Sitio Web">LinkedIn / Sitio Web</span></div>
-        <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true" data-placeholder="Dirección, Barrio, Buenos Aires">Buenos Aires, Argentina</span></div>
+        <div class="contact-item"><span class="icon">✉</span><span contenteditable="true" data-placeholder="correo@ejemplo.com"></span></div>
+        <div class="contact-item"><span class="icon">☎</span><span contenteditable="true" data-placeholder="+54 11 1234-5678"></span></div>
+        <div class="contact-item"><span class="icon">◎</span><span contenteditable="true" data-placeholder="LinkedIn / Sitio Web"></span></div>
+        <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true" data-placeholder="Dirección, Localidad, Buenos Aires"></span></div>
       </div>
       
       <div class="section">
         <h2>Idiomas</h2>
-        <p contenteditable="true" data-placeholder="• Español — Nativo&#10;• Inglés — Intermedio">• Español — Nativo<br>• Inglés — Intermedio</p>
+        <p contenteditable="true" data-placeholder="• Español — Nativo&#10;• Inglés — Intermedio"></p>
       </div>
     </div>
 
     <div class="middle">
       <section class="section">
         <h2>Sobre mí</h2>
-        <p contenteditable="true" data-placeholder="Resumen profesional breves, fortalezas y metas...">Profesional responsable y proactivo/a, con experiencia en organización, atención al cliente y resolución de problemas. Me adapto con facilidad y busco aportar valor al equipo.</p>
+        <p contenteditable="true" data-placeholder="Resumen profesional, experiencia y fortalezas..."></p>
       </section>
       <section class="section">
         <h2>Formación profesional</h2>
         <div class="entry">
-          <h3 contenteditable="true" data-placeholder="Institución educativa">Institución educativa</h3>
-          <p contenteditable="true" data-placeholder="Título o carrera · 2020–2023">Título o formación · 2020–2023</p>
+          <h3 contenteditable="true" data-placeholder="Institución educativa"></h3>
+          <p contenteditable="true" data-placeholder="Título o carrera · 2020–2023"></p>
         </div>
         <div class="entry">
-          <h3 contenteditable="true" data-placeholder="Curso / Especialización">Curso / especialización</h3>
-          <p contenteditable="true" data-placeholder="Institución · Año">Institución · Año</p>
+          <h3 contenteditable="true" data-placeholder="Curso / especialización"></h3>
+          <p contenteditable="true" data-placeholder="Institución · Año"></p>
         </div>
       </section>
       <section class="section">
         <h2>Habilidades</h2>
-        <p contenteditable="true" data-placeholder="Organización, trabajo en equipo, informática...">Organización, comunicación, trabajo en equipo, herramientas informáticas.</p>
+        <p contenteditable="true" data-placeholder="Organización, comunicación, herramientas..."></p>
       </section>
     </div>
 
@@ -313,19 +316,19 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
       <section class="section">
         <h2>Experiencia laboral</h2>
         <div class="entry">
-          <h3 contenteditable="true" data-placeholder="Nombre de la empresa">Nombre de la empresa</h3>
-          <p contenteditable="true" data-placeholder="Puesto · 2022–Actualidad"><b>Puesto · 2022–Actualidad</b></p>
-          <p contenteditable="true" data-placeholder="Tareas principales y logros relevantes...">Descripción de responsabilidades, tareas principales y logros relevantes.</p>
+          <h3 contenteditable="true" data-placeholder="Nombre de la empresa"></h3>
+          <p contenteditable="true" data-placeholder="Puesto · 2022–Actualidad"><b></b></p>
+          <p contenteditable="true" data-placeholder="Descripción de tareas y logros..."></p>
         </div>
         <div class="entry">
-          <h3 contenteditable="true" data-placeholder="Empresa anterior">Empresa anterior</h3>
-          <p contenteditable="true" data-placeholder="Puesto · 2019–2022"><b>Puesto · 2019–2022</b></p>
-          <p contenteditable="true" data-placeholder="Funciones realizadas...">Descripción breve de las funciones realizadas y resultados obtenidos.</p>
+          <h3 contenteditable="true" data-placeholder="Empresa anterior"></h3>
+          <p contenteditable="true" data-placeholder="Puesto · 2019–2022"><b></b></p>
+          <p contenteditable="true" data-placeholder="Funciones realizadas..."></p>
         </div>
       </section>
       <section class="section">
         <h2>Referencias</h2>
-        <p contenteditable="true" data-placeholder="Disponibles a solicitud">Disponibles a solicitud.</p>
+        <p contenteditable="true" data-placeholder="Disponibles a solicitud"></p>
       </section>
     </div>
   </main>
@@ -343,12 +346,12 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   </div>
 </div>
 
-<!-- BOTÓN FLOTANTE ARRIBA -->
-<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-top-float" title="Volver arriba">
-  ▲
+<!-- BOTÓN FLOTANTE CON FLECHA A LA IZQUIERDA (VOLVER ARRIBA) -->
+<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-top-float" title="Volver al menú">
+  ◄
 </button>
 
-<!-- BOTÓN FLOTANTE WHATSAPP -->
+<!-- BOTÓN FLOTANTE SOPORTE WHATSAPP -->
 <a href="https://wa.me/5491131504886?text=Hola%20Noem%C3%AD,%20tengo%20una%20consulta%20sobre%20mi%20CV%20en%20Nexus%20Studio" target="_blank" class="whatsapp-float">
   💬 Soporte WhatsApp
 </a>
@@ -416,12 +419,11 @@ function loadCvFromStorage() {
 
 cv.addEventListener('input', saveCvToStorage);
 
-// CONFIGURACIÓN DE MICRÓFONOS ENVOLVENTES QUE NUNCA SE BORRAN CON EL TECLADO
+// MICRÓFONOS PROTEGIDOS E INDEPENDIENTES FUERA DEL TEXTO EDITABLE
 function setupProtectedMics() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   
   cv.querySelectorAll('[contenteditable="true"]').forEach(field => {
-    // Si ya está envuelto en un wrapper protegido, lo omitimos
     if (field.parentNode.classList.contains('editable-wrapper')) return;
 
     const wrapper = document.createElement('div');
@@ -464,8 +466,8 @@ function setupProtectedMics() {
           const text = event.results[0][0].transcript;
           const currentText = field.innerText.trim();
 
-          // Si el campo tiene solo el texto por defecto o está vacío, arranca limpio
-          if (currentText === '' || field.hasAttribute('data-placeholder')) {
+          // Si el campo estaba vacío o mostraba el placeholder, arranca limpio
+          if (currentText === '' || field.innerHTML === '<br>') {
             field.innerText = text;
           } else {
             field.innerText += ' ' + text;
