@@ -1,130 +1,463 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CV Nexus Studio — 8 diseños editables A4</title>
 <style>
-:root{--ink:#262626;--muted:#555;--line:#cfcfcf;--accent:#bd8190;--paper:#fff;--bg:#e9e9e9;--font:Arial,Helvetica,sans-serif}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:var(--font);color:var(--ink)}
-.toolbar{position:sticky;top:0;z-index:5;background:#202124;color:white;padding:12px 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;box-shadow:0 2px 8px #0002}.toolbar strong{margin-right:8px}.toolbar button,.toolbar select,.toolbar label{font:inherit;border:0;border-radius:6px;padding:9px 12px;cursor:pointer}.toolbar button{background:#fff;color:#222}.toolbar button.primary{background:#bd8190;color:white}.toolbar .hint{font-size:12px;opacity:.85;margin-left:auto}
-.sheet{width:210mm;min-height:297mm;margin:24px auto;background:white;box-shadow:0 4px 18px #0002;overflow:hidden;position:relative;font-size:10pt;line-height:1.42}.sheet [contenteditable="true"]{outline:1px dashed transparent;cursor:text}.sheet [contenteditable="true"]:focus{outline:1px dashed #4c90d9;background:#fffbe6}.sheet h1,.sheet h2,.sheet h3,.sheet p{margin-top:0}.sheet h1{font-size:30pt;line-height:1.02;margin-bottom:10px}.sheet h2{font-size:13pt;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}.sheet h3{font-size:11pt;margin-bottom:3px}.sheet p{margin-bottom:8px}.rule{height:2px;background:currentColor;margin:8px 0 14px}.muted{color:#555}.photo{width:100%;height:57mm;object-fit:cover;background:#ddd;display:block}.photo-round{width:76mm;height:76mm;object-fit:cover;border-radius:50%;border:5px solid white;background:#ddd}.contact{display:flex;align-items:center;gap:9px;margin:10px 0}.icon{width:24px;height:24px;background:currentColor;color:white;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}.icon b{font-size:12px;color:white}.section{margin-bottom:18px}.entry{margin-bottom:13px}.entry .sub{font-weight:600;margin:3px 0}.entry p{font-size:9.3pt;color:#555}.tag{font-weight:bold}
-/* 1: monochrome three-column */
-.design1{display:grid;grid-template-columns:34% 32% 34%;padding:13mm 11mm;gap:7mm}.design1 .left{padding-top:0}.design1 h1{font-size:31pt;letter-spacing:1px;text-transform:uppercase;margin-top:13mm}.design1 .role{font-size:15pt;letter-spacing:3px;text-transform:uppercase;border-top:2px solid;border-bottom:2px solid;padding:7px 0;margin:12px 0 25px}.design1 .headshot{height:58mm;object-fit:cover;width:100%;filter:grayscale(1)}.design1 h2{font-stretch:condensed;letter-spacing:3px;font-weight:500;border-bottom:2px solid;padding-bottom:5px}.design1 .middle,.design1 .right{padding-top:3mm}
-/* 2: pink header */
-.design2{padding:0 0 12mm;position:relative}.design2 .top{height:66mm;background:#bd8190;color:white;padding:22mm 14mm 8mm 50mm}.design2 .top h1{font-size:32pt;font-weight:400;margin-bottom:3px}.design2 .top .role{font-size:17pt}.design2 .round-photo{position:absolute;top:25mm;left:19mm}.design2 .body{display:grid;grid-template-columns:43% 57%;padding:7mm 13mm;gap:8mm}.design2 .left{padding-top:28mm}.design2 h2{letter-spacing:0;font-size:13pt}.design2 .rule{background:#bd8190;height:3px}
-/* 3: blush sidebar and script heading */
-.design3{display:grid;grid-template-columns:46% 54%;padding:0;min-height:297mm}.design3 .left{background:#f0dedb;padding:18mm 10mm 12mm 12mm}.design3 .right{padding:24mm 12mm 12mm 10mm}.design3 .round-photo{width:64mm;height:64mm;display:block;margin:0 auto 9mm}.design3 h1{font-family:"Brush Script MT",cursive;font-size:30pt;font-weight:400}.design3 h2{letter-spacing:0;border-bottom:1px solid;padding-bottom:5px}.design3 .contact-block{background:#fffaf8;padding:10mm;margin:8mm -10mm -12mm -12mm}
-/* 4: teal geometric */
-.design4{display:grid;grid-template-columns:45% 55%;padding:12mm;gap:9mm;color:#124b5b;position:relative}.design4:before{content:"";position:absolute;left:0;top:0;width:44%;height:76mm;background:#1d5e72;clip-path:polygon(0 0,100% 0,72% 55%,100% 100%,0 100%);z-index:0}.design4 .left,.design4 .right{position:relative;z-index:1}.design4 .round-photo{margin:6mm auto 13mm;width:62mm;height:62mm}.design4 h1{font-size:29pt;text-transform:uppercase}.design4 h2{font-weight:400;letter-spacing:2px}.design4 .contact{background:#075064;color:white;padding:8px;margin-left:-12mm;margin-right:-4mm}.design4 .right{padding-top:17mm}.design4 .rule{height:3px;background:#1d5e72}
-/* 5: blue modern */
-.design5{padding:0;display:grid;grid-template-columns:43% 57%;}.design5 .banner{grid-column:1/3;background:#4b75a0;color:white;min-height:59mm;padding:12mm 10mm 8mm 47%;position:relative}.design5 .round-photo{position:absolute;left:10mm;top:7mm;width:64mm;height:64mm}.design5 .banner h1{font-size:28pt}.design5 .banner .role{font-weight:bold;letter-spacing:1px}.design5 .left{background:#e8edf6;padding:38mm 10mm 12mm}.design5 .right{padding:10mm 10mm 12mm}.design5 h2{background:#4b75a0;color:white;border-radius:20px;padding:8px 12px;letter-spacing:0}.design5 .rule{display:none}
-/* 6: dark header and classic */
-.design6{padding:0;display:grid;grid-template-columns:38% 62%;}.design6 .banner{grid-column:1/3;height:64mm;background:#302c3a;color:white;padding:13mm 10mm 8mm 40%;position:relative}.design6 .round-photo{position:absolute;left:9mm;top:10mm;width:65mm;height:65mm}.design6 .banner h1{font-size:28pt}.design6 .left{padding:45mm 10mm 12mm 12mm}.design6 .right{padding:12mm 10mm 12mm 7mm}.design6 h2{letter-spacing:0;border-bottom:1px solid #999;padding-bottom:7px}.skillbar{height:5px;background:#ddd;border-radius:5px;margin:4px 0 10px}.skillbar span{display:block;height:100%;width:80%;background:#302c3a;border-radius:5px}
-.preview-mode .toolbar{display:flex!important;justify-content:flex-end}.preview-mode .toolbar>*{display:none!important}.preview-mode .toolbar #editBtn{display:inline-block!important}.preview-mode body{background:#fff}.preview-mode .sheet{margin:0 auto;transform:none!important;zoom:1!important;box-shadow:none}.preview-mode{background:#fff}@media(max-width:850px){.sheet{width:210mm;transform-origin:top left;zoom:calc((100vw - 24px) / 793.7);margin:12px}.preview-mode .sheet{zoom:calc((100vw - 12px) / 793.7);margin:0}.preview-mode #cv{min-height:297mm}}
-.camera-modal{position:fixed;inset:0;z-index:20;background:#000b;display:flex;align-items:center;justify-content:center;padding:16px}.camera-modal[hidden]{display:none}.camera-card{background:white;border-radius:14px;padding:18px;max-width:520px;width:100%;text-align:center}.camera-card video{width:100%;max-height:60vh;background:#222;border-radius:10px;object-fit:cover}.camera-actions{display:flex;gap:10px;justify-content:center;margin-top:12px}.camera-actions button{padding:10px 14px;border:0;border-radius:7px;cursor:pointer}.design7{color:#244b3c}.design7 .banner{background:#2f6b55!important}.design7 .left{background:#e7f0e9!important}.design7 h2{background:#2f6b55!important;color:white!important}.design7 .skillbar span{background:#2f6b55!important}.design8{color:#4a4034}.design8 .banner{background:#b69a65!important;color:white!important}.design8 .left{background:#f4eee2!important}.design8 h2{background:#b69a65!important;color:white!important}.design8 .skillbar span{background:#b69a65!important}
-@page{size:A4;margin:0}
-@media print{body{background:white}.toolbar{display:none}.sheet{margin:0;width:210mm;height:297mm;min-height:297mm;box-shadow:none;page-break-after:always;break-after:page}.sheet:last-of-type{page-break-after:auto;break-after:auto}.sheet [contenteditable="true"]:focus{outline:none;background:transparent}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
-@media(max-width:850px){.sheet{transform-origin:top left;margin:12px;zoom:.55}.toolbar .hint{display:none}}
-</style></head>
+:root {
+  --ink: #262626;
+  --muted: #555;
+  --line: #cfcfcf;
+  --accent: #bd8190;
+  --paper: #fff;
+  --bg: #e9e9e9;
+  --font: Arial, Helvetica, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--ink); }
+
+/* BARRA DE HERRAMIENTAS Y CONTROLES SUPERIORES */
+.toolbar {
+  position: sticky; top: 0; z-index: 100; background: #1e1e24; color: white;
+  padding: 10px 14px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.toolbar strong { margin-right: 6px; font-size: 15px; color: #f3d5dc; }
+.toolbar button, .toolbar select, .toolbar label {
+  font: inherit; border: 0; border-radius: 6px; padding: 7px 11px; cursor: pointer; font-size: 12px;
+}
+.toolbar button { background: #fff; color: #222; font-weight: 600; transition: background 0.2s; }
+.toolbar button:hover { background: #f0f0f0; }
+.toolbar button.primary { background: #bd8190; color: white; }
+.toolbar button.primary:hover { background: #a86d7c; }
+.toolbar button.success { background: #10b981; color: white; }
+.toolbar select { background: #333; color: white; }
+.toolbar .hint { font-size: 11px; opacity: 0.85; margin-left: auto; }
+
+/* BARRA DE BOTONES DE ACCIÓN RÁPIDA Y VOZ */
+.action-bar {
+  background: #2a2b32; color: white; padding: 8px 14px; display: flex; gap: 10px;
+  align-items: center; flex-wrap: wrap; border-top: 1px solid #3a3b42;
+}
+.action-bar label { font-size: 12px; font-weight: bold; color: #e2e8f0; }
+.btn-group { display: inline-flex; border-radius: 6px; overflow: hidden; border: 1px solid #4a4b52; }
+.btn-group button {
+  background: #3a3b42; color: #fff; border: 0; padding: 6px 12px; font-size: 11px; cursor: pointer;
+}
+.btn-group button.active { background: #bd8190; color: white; font-weight: bold; }
+
+/* HOJA DE CV Y MARCA DE AGUA */
+.sheet-container { position: relative; width: 210mm; margin: 20px auto; }
+.sheet {
+  width: 210mm; min-height: 297mm; background: white; box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+  overflow: hidden; position: relative; font-size: 9.8pt; line-height: 1.45;
+}
+.sheet [contenteditable="true"] { outline: 1px dashed transparent; cursor: text; border-radius: 3px; }
+.sheet [contenteditable="true"]:focus { outline: 1.5px dashed #4c90d9; background: #fffde6; }
+.sheet h1, .sheet h2, .sheet h3, .sheet p { margin-top: 0; }
+.sheet h1 { font-size: 26pt; line-height: 1.05; margin-bottom: 8px; }
+.sheet h2 { font-size: 12pt; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.8px; }
+.sheet h3 { font-size: 10.5pt; margin-bottom: 3px; }
+.sheet p { margin-bottom: 8px; }
+
+/* WATERMARK DE VISTA PREVIA SIN PAGO */
+.watermark {
+  position: absolute; inset: 0; pointer-events: none; z-index: 90;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 42pt; font-weight: 900; color: rgba(189, 129, 144, 0.18);
+  transform: rotate(-35deg); text-transform: uppercase; letter-spacing: 4px;
+  user-select: none;
+}
+.sheet.paid .watermark { display: none !important; }
+
+/* ESTILOS DE FOTO SELECCIONABLE */
+.photo-frame {
+  display: inline-block; overflow: hidden; background: #e0e0e0; transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* FORMALIDADES DE FOTO (REDONDA / CUADRADA / RECTANGULAR) */
+.shape-round { border-radius: 50% !important; aspect-ratio: 1 / 1 !important; }
+.shape-square { border-radius: 8px !important; aspect-ratio: 1 / 1 !important; }
+.shape-rect { border-radius: 6px !important; aspect-ratio: 3 / 4 !important; }
+
+/* SECCIONES Y SANGRÍAS CORREGIDAS (SANGRIAS / PADDING GENERAL) */
+.section { margin-bottom: 16px; }
+.entry { margin-bottom: 12px; }
+.entry .sub { font-weight: 600; margin: 3px 0; }
+.entry p { font-size: 9pt; color: #555; }
+.rule { height: 2px; background: currentColor; margin: 10px 0 14px; opacity: 0.8; }
+.contact-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 9.2pt; }
+.icon { width: 20px; height: 20px; background: currentColor; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
+
+/* ==========================================
+   MODELOS VISUALES - CORRECCIÓN DE ERRORES DE DISEÑO
+   ========================================== */
+
+/* MODELO 1: Blanco y Negro */
+.design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 14mm 12mm; gap: 6mm; }
+.design1 .left { padding-right: 4mm; }
+.design1 h1 { font-size: 24pt; text-transform: uppercase; margin-top: 6mm; }
+.design1 .role { font-size: 12pt; letter-spacing: 2px; text-transform: uppercase; border-y: 2px solid #222; padding: 6px 0; margin: 10px 0 18px; }
+
+/* MODELO 2: Rosa Elegante */
+.design2 { padding: 0 0 12mm; }
+.design2 .top { height: 58mm; background: #bd8190; color: white; padding: 14mm 14mm 8mm 56mm; }
+.design2 .top h1 { font-size: 28pt; margin-bottom: 2px; }
+.design2 .photo-box { position: absolute; top: 18mm; left: 14mm; width: 38mm; z-index: 2; }
+.design2 .body { display: grid; grid-template-columns: 42% 58%; padding: 8mm 14mm; gap: 8mm; }
+.design2 .left { padding-top: 14mm; padding-right: 4mm; }
+
+/* MODELO 3: Rosa Suave y Cursiva */
+.design3 { display: grid; grid-template-columns: 44% 56%; padding: 0; min-height: 297mm; }
+.design3 .left { background: #f0dedb; padding: 16mm 10mm 12mm 12mm; }
+.design3 .right { padding: 18mm 12mm 12mm 10mm; }
+.design3 h1 { font-family: "Brush Script MT", cursive; font-size: 32pt; }
+
+/* MODELO 4: Azul Petróleo - CORREGIDO SUPERPOSICIÓN DE SOMBRA SOBRE NOMBRE */
+.design4 { display: grid; grid-template-columns: 44% 56%; padding: 14mm 12mm; gap: 8mm; color: #124b5b; position: relative; }
+.design4::before {
+  content: ""; position: absolute; left: 0; top: 0; width: 42%; height: 52mm;
+  background: #1d5e72; clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%); z-index: 0; opacity: 0.15;
+}
+.design4 .left, .design4 .right { position: relative; z-index: 1; }
+.design4 .photo-container { margin: 4mm 0 10mm; width: 42mm; }
+.design4 h1 { font-size: 24pt; text-transform: uppercase; color: #0a313c; margin-top: 4px; line-height: 1.1; }
+.design4 h2 { border-bottom: 2px solid #1d5e72; padding-bottom: 4px; }
+
+/* MODELO 5: Azul Moderno */
+.design5 { display: grid; grid-template-columns: 42% 58%; padding: 0; }
+.design5 .banner { grid-column: 1/3; background: #4b75a0; color: white; min-height: 52mm; padding: 10mm 12mm 8mm 54mm; position: relative; }
+.design5 .photo-container { position: absolute; left: 12mm; top: 8mm; width: 38mm; }
+.design5 .left { background: #e8edf6; padding: 12mm 10mm 12mm 12mm; }
+.design5 .right { padding: 12mm 12mm 12mm 10mm; }
+
+/* MODELO 6: Violeta Oscuro */
+.design6 { display: grid; grid-template-columns: 40% 60%; padding: 0; }
+.design6 .banner { grid-column: 1/3; height: 54mm; background: #302c3a; color: white; padding: 12mm 12mm 8mm 54mm; position: relative; }
+.design6 .photo-container { position: absolute; left: 12mm; top: 8mm; width: 38mm; }
+.design6 .left { padding: 14mm 10mm 12mm 12mm; background: #f8f7f9; }
+.design6 .right { padding: 14mm 12mm 12mm 10mm; }
+
+/* MODELO 7: Verde Elegante */
+.design7 { color: #244b3c; }
+.design7 .banner { background: #2f6b55 !important; }
+.design7 .left { background: #e7f0e9 !important; }
+
+/* MODELO 8: Beige y Dorado - CORREGIDO HEADER Y ARTE ARTÍSTICO Y GIRASOLES */
+.design8 { color: #4a4034; }
+.design8 .banner {
+  background: linear-gradient(135deg, #b69a65 0%, #8c713f 100%) !important; color: white !important;
+  min-height: 62mm !important; padding: 10mm 14mm 8mm 14mm !important; display: flex; justify-space-between; align-items: center;
+  position: relative; overflow: hidden;
+}
+/* Detalle artístico sutil de girasoles */
+.design8 .banner::after {
+  content: "🌻 🌻 🌻"; position: absolute; right: 10px; bottom: -5px; font-size: 28px; opacity: 0.25; filter: sepia(1); pointer-events: none;
+}
+.design8 .photo-container { width: 40mm; flex-shrink: 0; margin-left: auto; }
+.design8 .left { background: #f4eee2 !important; padding: 12mm 10mm 12mm 12mm !important; }
+.design8 .right { padding: 12mm 12mm 12mm 10mm !important; }
+
+/* MODAL DE CAMARA Y PAGO */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.modal-overlay[hidden] { display: none; }
+.modal-card { background: white; border-radius: 14px; padding: 22px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.modal-card video { width: 100%; max-height: 50vh; background: #111; border-radius: 8px; object-fit: cover; }
+
+/* BOTÓN FLOTANTE DE SOPORTE WHATSAPP */
+.whatsapp-float {
+  position: fixed; bottom: 18px; right: 18px; z-index: 99; background: #25d366; color: white;
+  border-radius: 50px; padding: 10px 18px; font-weight: bold; font-size: 13px; text-decoration: none;
+  display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.25); transition: transform 0.2s;
+}
+.whatsapp-float:hover { transform: scale(1.05); background: #20ba5a; }
+
+@media print {
+  body { background: white; }
+  .toolbar, .action-bar, .whatsapp-float { display: none !important; }
+  .sheet-container { margin: 0; width: 210mm; }
+  .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; }
+  .watermark { display: none !important; }
+}
+</style>
+</head>
 <body>
-<div class="toolbar"><strong>CV Nexus Studio</strong><label for="design">Elegí modelo:</label><select id="design"><option value="design1">1 · Blanco y negro</option><option value="design2">2 · Rosa con foto circular</option><option value="design3">3 · Rosa suave y nombre manuscrito</option><option value="design4">4 · Azul petróleo</option><option value="design5">5 · Azul moderno</option><option value="design6">6 · Violeta oscuro</option><option value="design7">7 · Verde elegante</option><option value="design8">8 · Beige y dorado</option></select><button class="primary" id="photoBtn">Subir foto</button><button id="cameraBtn">📷 Usar cámara</button><input id="photoInput" type="file" accept="image/*" hidden><input id="cameraCaptureInput" type="file" accept="image/*" capture="user" hidden><button onclick="window.print()">Imprimir / Guardar PDF</button><button id="whatsappBtn">Compartir CV por WhatsApp</button><button id="previewBtn">👁 Ver CV completo</button><button id="editBtn" hidden>✏️ Volver a editar</button><button id="reset">Restaurar ejemplo</button><span class="hint">1) Elegí modelo · 2) Tocá los textos para editarlos · 3) Compartí la imagen o guardá PDF</span></div>
-<div id="cameraModal" class="camera-modal" hidden><div class="camera-card"><h2>Tomar foto para el CV</h2><video id="cameraVideo" autoplay playsinline></video><div class="camera-actions"><button id="captureBtn" class="primary">Tomar foto</button><button id="closeCameraBtn">Cancelar</button></div><p id="cameraNote">Permití el acceso a la cámara cuando el navegador lo solicite.</p></div></div>
-<main id="cv" class="sheet design1">
-<div class="left"><img class="photo main-photo" alt="Foto de perfil" src=""><h1 contenteditable="true">TU NOMBRE<br>Y APELLIDO</h1><div class="role" contenteditable="true">Puesto / profesión</div><div class="section"><h2>Contacto</h2><div class="contact"><span class="icon"><b>✉</b></span><span contenteditable="true">correo@ejemplo.com</span></div><div class="contact"><span class="icon"><b>☎</b></span><span contenteditable="true">+54 11 1234-5678</span></div><div class="contact"><span class="icon"><b>◎</b></span><span contenteditable="true">LinkedIn / sitio web</span></div><div class="contact"><span class="icon"><b>⌖</b></span><span contenteditable="true">Buenos Aires, Argentina</span></div></div><div class="section"><h2>Idiomas</h2><p contenteditable="true">• Español — nativo<br>• Inglés — intermedio</p></div></div>
-<div class="middle"><section class="section"><h2>Sobre mí</h2><p contenteditable="true">Profesional responsable y proactivo/a, con experiencia en organización, atención al cliente y resolución de problemas. Me adapto con facilidad y busco aportar valor al equipo.</p></section><section class="section"><h2>Formación profesional</h2><div class="entry"><h3 contenteditable="true">Institución educativa</h3><p contenteditable="true">Título o formación · 2020–2023</p></div><div class="entry"><h3 contenteditable="true">Curso / especialización</h3><p contenteditable="true">Institución · Año</p></div><div class="entry"><h3 contenteditable="true">Otra formación</h3><p contenteditable="true">Institución · Año</p></div></section><section class="section"><h2>Habilidades</h2><p contenteditable="true">Organización, comunicación, trabajo en equipo, herramientas informáticas y resolución de problemas.</p></section></div>
-<div class="right"><section class="section"><h2>Experiencia laboral</h2><div class="entry"><h3 contenteditable="true">Nombre de la empresa</h3><div class="tag" contenteditable="true">Puesto · 2022–Actualidad</div><p contenteditable="true">Descripción de responsabilidades, tareas principales y logros relevantes. Usá datos concretos cuando sea posible.</p></div><div class="entry"><h3 contenteditable="true">Empresa anterior</h3><div class="tag" contenteditable="true">Puesto · 2019–2022</div><p contenteditable="true">Descripción breve de las funciones realizadas y los resultados obtenidos.</p></div><div class="entry"><h3 contenteditable="true">Experiencia adicional</h3><div class="tag" contenteditable="true">Puesto · 2017–2019</div><p contenteditable="true">Principales tareas, herramientas utilizadas y contribuciones.</p></div></section><section class="section"><h2>Referencias</h2><p contenteditable="true">Disponibles a solicitud.</p></section></div>
-</main>
+
+<!-- BARRA PRINCIPAL -->
+<div class="toolbar">
+  <strong>CV Nexus Studio</strong>
+  <label for="design">Modelo:</label>
+  <select id="design">
+    <option value="design1">1 · Blanco y negro</option>
+    <option value="design2">2 · Rosa elegante</option>
+    <option value="design3">3 · Rosa suave y cursiva</option>
+    <option value="design4">4 · Azul petróleo</option>
+    <option value="design5">5 · Azul moderno</option>
+    <option value="design6">6 · Violeta oscuro</option>
+    <option value="design7">7 · Verde elegante</option>
+    <option value="design8">8 · Beige y dorado (Arte 🌻)</option>
+  </select>
+  
+  <button class="primary" id="photoBtn">Subir foto</button>
+  <button id="cameraBtn">📷 Cámara</button>
+  <input id="photoInput" type="file" accept="image/*" hidden>
+  <input id="cameraCaptureInput" type="file" accept="image/*" capture="user" hidden>
+
+  <button class="success" id="payDownloadBtn">💳 Descargar PDF ($ Pago MP)</button>
+  <button id="whatsappBtn">Compartir por WhatsApp</button>
+  <button id="reset">Restaurar ejemplo</button>
+</div>
+
+<!-- BARRA DE AJUSTES DE FOTO Y VOZ -->
+<div class="action-bar">
+  <label>Forma de Foto:</label>
+  <div class="btn-group">
+    <button id="btnShapeRound" class="active" onclick="setPhotoShape('shape-round')">🔴 Redonda</button>
+    <button id="btnShapeSquare" onclick="setPhotoShape('shape-square')">🔳 Cuadrada</button>
+    <button id="btnShapeRect" onclick="setPhotoShape('shape-rect')">📱 Rectangular</button>
+  </div>
+
+  <label style="margin-left: 15px;">Dictado por Voz:</label>
+  <button id="voiceBtn" class="toolbar-btn" style="background: #ef4444; color: white;" onclick="toggleVoiceDictation()">🎙️ Iniciar Dictado</button>
+  <span id="voiceStatus" style="font-size: 11px; opacity: 0.8; color: #a7f3d0;"></span>
+</div>
+
+<!-- HOJA DEL CV CON MARCA DE AGUA Y MEMORIA LOCAL -->
+<div class="sheet-container">
+  <main id="cv" class="sheet design1">
+    <div class="watermark">VISTA PREVIA — CV NEXUS</div>
+    
+    <div class="left">
+      <div class="photo-container">
+        <div class="photo-frame shape-round" id="mainPhotoFrame">
+          <img class="main-photo" alt="Foto de perfil" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23ccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>">
+        </div>
+      </div>
+      <h1 contenteditable="true">TU NOMBRE<br>Y APELLIDO</h1>
+      <div class="role" contenteditable="true">Puesto / Profesión</div>
+      
+      <div class="section">
+        <h2>Contacto</h2>
+        <div class="contact-item"><span class="icon">✉</span><span contenteditable="true">correo@ejemplo.com</span></div>
+        <div class="contact-item"><span class="icon">☎</span><span contenteditable="true">+54 11 1234-5678</span></div>
+        <div class="contact-item"><span class="icon">◎</span><span contenteditable="true">LinkedIn / Sitio Web</span></div>
+        <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true">Buenos Aires, Argentina</span></div>
+      </div>
+      
+      <div class="section">
+        <h2>Idiomas</h2>
+        <p contenteditable="true">• Español — Nativo<br>• Inglés — Intermedio</p>
+      </div>
+    </div>
+
+    <div class="middle">
+      <section class="section">
+        <h2>Sobre mí</h2>
+        <p contenteditable="true">Profesional responsable y proactivo/a, con experiencia en organización, atención al cliente y resolución de problemas. Me adapto con facilidad y busco aportar valor al equipo.</p>
+      </section>
+      <section class="section">
+        <h2>Formación profesional</h2>
+        <div class="entry">
+          <h3 contenteditable="true">Institución educativa</h3>
+          <p contenteditable="true">Título o formación · 2020–2023</p>
+        </div>
+        <div class="entry">
+          <h3 contenteditable="true">Curso / especialización</h3>
+          <p contenteditable="true">Institución · Año</p>
+        </div>
+      </section>
+      <section class="section">
+        <h2>Habilidades</h2>
+        <p contenteditable="true">Organización, comunicación, trabajo en equipo, herramientas informáticas.</p>
+      </section>
+    </div>
+
+    <div class="right">
+      <section class="section">
+        <h2>Experiencia laboral</h2>
+        <div class="entry">
+          <h3 contenteditable="true">Nombre de la empresa</h3>
+          <p contenteditable="true"><b>Puesto · 2022–Actualidad</b></p>
+          <p contenteditable="true">Descripción de responsabilidades, tareas principales y logros relevantes.</p>
+        </div>
+        <div class="entry">
+          <h3 contenteditable="true">Empresa anterior</h3>
+          <p contenteditable="true"><b>Puesto · 2019–2022</b></p>
+          <p contenteditable="true">Descripción breve de las funciones realizadas y resultados obtenidos.</p>
+        </div>
+      </section>
+      <section class="section">
+        <h2>Referencias</h2>
+        <p contenteditable="true">Disponibles a solicitud.</p>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL CÁMARA -->
+<div id="cameraModal" class="modal-overlay" hidden>
+  <div class="modal-card">
+    <h3>Tomar foto para el CV</h3>
+    <video id="cameraVideo" autoplay playsinline></video>
+    <div style="margin-top: 12px; display: flex; gap: 8px; justify-content: center;">
+      <button id="captureBtn" class="primary">Tomar foto</button>
+      <button id="closeCameraBtn">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOTÓN FLOTANTE SOPORTE WHATSAPP -->
+<a href="https://wa.me/5491131504886?text=Hola%20Noem%C3%AD,%20tengo%20una%20consulta%20sobre%20mi%20CV%20en%20Nexus%20Studio" target="_blank" class="whatsapp-float">
+  💬 Soporte WhatsApp
+</a>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-const cv=document.getElementById('cv'), selector=document.getElementById('design');
-const original=cv.innerHTML;
-selector.addEventListener('change',()=>{cv.className='sheet '+selector.value;});
-document.getElementById('photoBtn').onclick=()=>document.getElementById('photoInput').click();
-document.getElementById('photoInput').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const url=URL.createObjectURL(f);document.querySelectorAll('.main-photo,.round-photo').forEach(img=>img.src=url);});
-document.getElementById('reset').onclick=()=>{if(confirm('¿Restaurar los textos de ejemplo? Se perderán los cambios de texto.')){cv.innerHTML=original;cv.className='sheet '+selector.value;makeTextEditable();}};
-function adaptLayout(){const d=selector.value;const img=document.querySelector('.main-photo');if(d==='design1'){document.querySelectorAll('.main-photo').forEach(i=>{i.className='photo main-photo';});}else{document.querySelectorAll('.main-photo').forEach(i=>{i.className='photo main-photo';});}}
-// Transform the same editable CV content into the six visual structures.
-function applyDesign(){const d=selector.value;if(d==='design7'||d==='design8'){const variant=d;selector.value=variant==='design7'?'design5':'design6';applyDesign();cv.classList.add(variant);selector.value=variant;return;}const left=cv.querySelector('.left'),mid=cv.querySelector('.middle'),right=cv.querySelector('.right');const name=left.querySelector('h1'),role=left.querySelector('.role'),photo=left.querySelector('.main-photo');
-if(d==='design1'){cv.innerHTML=original;cv.className='sheet design1';}
-else if(d==='design2'){cv.innerHTML=`<div class="top"><h1 contenteditable="true">Sofía Torres</h1><div class="role" contenteditable="true">Profesional / especialidad</div></div><img class="photo-round round-photo" alt="Foto" src="${photo.src}"><div class="body"><div class="left"><section class="section"><h2>Sobre mí</h2><p contenteditable="true">Profesional con experiencia, orientación al detalle y compromiso con la calidad. Capacidad para organizar tareas, trabajar en equipo y resolver problemas.</p></section><div class="rule"></div><section class="section"><h2>Contacto</h2><p contenteditable="true">☎ +54 11 1234-5678<br>✉ correo@ejemplo.com<br>◎ LinkedIn / sitio web</p></section><div class="rule"></div><section><h2>Idiomas</h2><p contenteditable="true">• Español — nativo<br>• Inglés — intermedio</p></section></div><div class="right"><section class="section"><h2>Experiencia laboral</h2><div class="entry"><h3 contenteditable="true">Puesto principal</h3><p contenteditable="true">Empresa · 2022–Actualidad</p><p contenteditable="true">Responsabilidades y logros principales.</p></div><div class="entry"><h3 contenteditable="true">Puesto anterior</h3><p contenteditable="true">Empresa · 2019–2022</p><p contenteditable="true">Funciones y resultados relevantes.</p></div><div class="entry"><h3 contenteditable="true">Experiencia adicional</h3><p contenteditable="true">Empresa · 2017–2019</p><p contenteditable="true">Descripción breve de tareas.</p></div></section><div class="rule"></div><section><h2>Formación académica</h2><div class="entry"><h3 contenteditable="true">Título o carrera</h3><p contenteditable="true">Institución · Año</p></div><div class="entry"><h3 contenteditable="true">Curso / diplomado</h3><p contenteditable="true">Institución · Año</p></div></section><div class="rule"></div><section><h2>Referencias</h2><p contenteditable="true">Disponibles a solicitud.</p></section></div></div>`;}
-else if(d==='design3'){cv.innerHTML=`<div class="left"><img class="photo-round round-photo" src="${photo.src}" alt="Foto"><section class="section"><h2>Sobre mí</h2><p contenteditable="true">Soy una persona organizada, responsable y proactiva. Me destaco por la comunicación, el trabajo en equipo y la capacidad de aprender rápidamente.</p></section><section class="section"><h2>Educación</h2><div class="entry"><h3 contenteditable="true">Universidad / instituto</h3><p contenteditable="true">Título o carrera · Año</p></div><div class="entry"><h3 contenteditable="true">Formación complementaria</h3><p contenteditable="true">Curso o diploma · Año</p></div></section><div class="contact-block"><h2>Contacto</h2><p contenteditable="true">☎ +54 11 1234-5678<br>✉ correo@ejemplo.com<br>⌖ Buenos Aires, Argentina</p></div></div><div class="right"><h1 contenteditable="true">Tu Nombre</h1><h3 contenteditable="true">PROFESIÓN / ESPECIALIDAD</h3><section class="section" style="margin-top:18mm"><h2>Experiencia</h2><div class="entry"><h3 contenteditable="true">Puesto actual</h3><b contenteditable="true">Empresa · 2022–Actualidad</b><p contenteditable="true">Descripción de responsabilidades y logros.</p></div><div class="entry"><h3 contenteditable="true">Puesto anterior</h3><b contenteditable="true">Empresa · 2019–2022</b><p contenteditable="true">Descripción de funciones y aportes.</p></div><div class="entry"><h3 contenteditable="true">Experiencia adicional</h3><b contenteditable="true">Empresa · 2017–2019</b><p contenteditable="true">Descripción breve de tareas.</p></div></section><section class="section"><h2>Habilidades</h2><p contenteditable="true">• Organización y planificación<br>• Comunicación efectiva<br>• Herramientas informáticas<br>• Trabajo en equipo</p></section><section><h2>Referencias</h2><p contenteditable="true">Disponibles a solicitud.</p></section></div>`;}
-else if(d==='design4'){cv.innerHTML=`<div class="left"><img class="photo-round round-photo" src="${photo.src}" alt="Foto"><h2>Sobre mí</h2><p contenteditable="true">Profesional proactivo/a y responsable, con buenas relaciones interpersonales, capacidad de decisión y manejo de prioridades.</p><div class="section"><div class="contact"><span class="icon"><b>☎</b></span><span contenteditable="true">+54 11 1234-5678</span></div><div class="contact"><span class="icon"><b>✉</b></span><span contenteditable="true">correo@ejemplo.com</span></div><div class="contact"><span class="icon"><b>⌖</b></span><span contenteditable="true">Buenos Aires, Argentina</span></div></div><div class="rule"></div><h2>Educación</h2><div class="entry"><h3 contenteditable="true">Institución</h3><p contenteditable="true">Título · Año</p></div><div class="entry"><h3 contenteditable="true">Especialización</h3><p contenteditable="true">Institución · Año</p></div></div><div class="right"><h1 contenteditable="true">TU NOMBRE<br>APELLIDO</h1><h2 contenteditable="true">Profesión / especialidad</h2><section class="section" style="margin-top:20mm"><h2>Experiencia</h2><div class="entry"><h3 contenteditable="true">Puesto principal</h3><b contenteditable="true">Empresa · 2022–Actualidad</b><p contenteditable="true">Descripción de responsabilidades y logros profesionales.</p></div><div class="entry"><h3 contenteditable="true">Puesto anterior</h3><b contenteditable="true">Empresa · 2019–2022</b><p contenteditable="true">Funciones realizadas y aportes al equipo.</p></div><div class="entry"><h3 contenteditable="true">Experiencia adicional</h3><b contenteditable="true">Empresa · 2017–2019</b><p contenteditable="true">Tareas relevantes y herramientas utilizadas.</p></div></section><div class="rule"></div><section><h2>Habilidades</h2><p contenteditable="true">• Herramientas informáticas<br>• Atención al cliente<br>• Organización y planificación<br>• Idiomas</p></section></div>`;}
-else if(d==='design5'){cv.innerHTML=`<div class="banner"><img class="photo-round round-photo" src="${photo.src}" alt="Foto"><h1 contenteditable="true">MATEO LÓPEZ</h1><div class="role" contenteditable="true">PROFESIÓN / ESPECIALIDAD</div></div><div class="left"><p contenteditable="true">Profesional proactivo/a, organizado/a y responsable. Me interesa aprender, asumir desafíos y aportar mis conocimientos al equipo.</p><h2>Educación</h2><div class="entry"><h3 contenteditable="true">Universidad / instituto</h3><b contenteditable="true">Título · Año</b><p contenteditable="true">Especialización o detalle.</p></div><div class="entry"><h3 contenteditable="true">Secundario / formación</h3><b contenteditable="true">Institución · Año</b></div><h2>Cursos / idiomas</h2><p contenteditable="true">Marketing / informática<br>Español nativo · Inglés intermedio</p><h2>Contacto</h2><p contenteditable="true">correo@ejemplo.com<br>+54 11 1234-5678<br>LinkedIn / sitio web</p></div><div class="right"><h2>Experiencia laboral</h2><div class="entry"><h3 contenteditable="true">Puesto principal</h3><b contenteditable="true">Empresa · 2022–Actualidad</b><p contenteditable="true">Responsabilidades, proyectos y resultados destacados.</p></div><div class="entry"><h3 contenteditable="true">Asistente / puesto anterior</h3><b contenteditable="true">Empresa · 2019–2022</b><p contenteditable="true">Funciones, coordinación y tareas habituales.</p></div><div class="entry"><h3 contenteditable="true">Pasantía / experiencia adicional</h3><b contenteditable="true">Empresa · 2017–2019</b><p contenteditable="true">Apoyo al equipo y participación en proyectos.</p></div><h2>Referencias</h2><p contenteditable="true">Disponibles a solicitud.</p></div>`;}
-else{cv.innerHTML=`<div class="banner"><img class="photo-round round-photo" src="${photo.src}" alt="Foto"><h1 contenteditable="true">TU NOMBRE Y APELLIDO</h1><h3 contenteditable="true">Profesión / especialidad</h3></div><div class="left"><section class="section"><h2>Sobre mí</h2><p contenteditable="true">Profesional responsable, con experiencia en organización, atención y resolución de problemas.</p></section><section class="section"><h2>Contacto</h2><p contenteditable="true">☎ +54 11 1234-5678<br>✉ correo@ejemplo.com</p></section><section class="section"><h2>Habilidades</h2><p contenteditable="true">Organización</p><div class="skillbar"><span></span></div><p contenteditable="true">Comunicación</p><div class="skillbar"><span style="width:70%"></span></div><p contenteditable="true">Herramientas digitales</p><div class="skillbar"><span style="width:85%"></span></div></section></div><div class="right"><section class="section"><h2>Experiencia</h2><div class="entry"><h3 contenteditable="true">Puesto principal</h3><b contenteditable="true">Empresa · 2022–Actualidad</b><p contenteditable="true">Responsabilidades y logros principales.</p></div><div class="entry"><h3 contenteditable="true">Puesto anterior</h3><b contenteditable="true">Empresa · 2019–2022</b><p contenteditable="true">Funciones y resultados relevantes.</p></div></section><section class="section"><h2>Educación</h2><div class="entry"><h3 contenteditable="true">Título / carrera</h3><p contenteditable="true">Institución · Año</p></div><div class="entry"><h3 contenteditable="true">Formación adicional</h3><p contenteditable="true">Institución · Año</p></div></section><section><h2>Referencias</h2><p contenteditable="true">Disponibles a solicitud.</p></section></div>`;}}
-selector.addEventListener('change',()=>{setTimeout(makeTextEditable,0);});
-function makeTextEditable(){
-  // Todos los títulos y textos del CV, incluidos nombre, apellido y encabezados, se pueden editar.
-  cv.querySelectorAll('h1,h2,h3,h4,p,b,strong,.role,.tag,.sub,span:not(.icon):not(.icon b),div.role').forEach(el=>{
-    if(!el.closest('.icon') && !el.querySelector('img') && el.innerText.trim()) el.setAttribute('contenteditable','true');
+const MP_PAYMENT_URL = "https://mpago.li/1YZVG9u";
+const cv = document.getElementById('cv');
+const selector = document.getElementById('design');
+let currentPhotoShape = 'shape-round';
+
+// 1. REVISAR ESTADO DE PAGO Y REDIRECCIÓN DESDE MERCADO PAGO
+function checkPaymentStatus() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const status = urlParams.get('status') || urlParams.get('collection_status');
+  if (status === 'approved' || localStorage.getItem('cv_nexus_paid') === 'true') {
+    localStorage.setItem('cv_nexus_paid', 'true');
+    cv.classList.add('paid');
+  }
+}
+checkPaymentStatus();
+
+// 2. CAMBIO DE MODELO VISUAL
+selector.addEventListener('change', () => {
+  const isPaid = cv.classList.contains('paid');
+  cv.className = 'sheet ' + selector.value + (isPaid ? ' paid' : '');
+  applyPhotoShape();
+  saveCvToStorage();
+});
+
+// 3. CAMBIO DE FORMA REAL DE FOTO (REDONDA, CUADRADA, RECTANGULAR)
+function setPhotoShape(shapeClass) {
+  currentPhotoShape = shapeClass;
+  document.querySelectorAll('.btn-group button').forEach(b => b.classList.remove('active'));
+  if (shapeClass === 'shape-round') document.getElementById('btnShapeRound').classList.add('active');
+  if (shapeClass === 'shape-square') document.getElementById('btnShapeSquare').classList.add('active');
+  if (shapeClass === 'shape-rect') document.getElementById('btnShapeRect').classList.add('active');
+  applyPhotoShape();
+}
+
+function applyPhotoShape() {
+  document.querySelectorAll('.photo-frame').forEach(frame => {
+    frame.classList.remove('shape-round', 'shape-square', 'shape-rect');
+    frame.classList.add(currentPhotoShape);
   });
 }
-makeTextEditable();
-const previewBtn=document.getElementById('previewBtn'), editBtn=document.getElementById('editBtn');
-previewBtn.addEventListener('click',()=>{makeTextEditable();document.body.classList.add('preview-mode');previewBtn.hidden=true;editBtn.hidden=false;window.scrollTo({top:0,behavior:'smooth'});});
-editBtn.addEventListener('click',()=>{document.body.classList.remove('preview-mode');previewBtn.hidden=false;editBtn.hidden=true;window.scrollTo({top:0,behavior:'smooth'});});
 
-const photoInput=document.getElementById('photoInput');
-document.getElementById('photoBtn').onclick=()=>photoInput.click();
-photoInput.addEventListener('change',e=>{const f=e.target.files[0];if(f){const url=URL.createObjectURL(f);document.querySelectorAll('.round-photo,.main-photo').forEach(i=>i.src=url);}});
-let cameraStream=null;
-const modal=document.getElementById('cameraModal'), video=document.getElementById('cameraVideo'), note=document.getElementById('cameraNote');
-const cameraCaptureInput=document.getElementById('cameraCaptureInput');
-function applySelectedPhoto(file){if(!file)return;const url=URL.createObjectURL(file);document.querySelectorAll('.round-photo,.main-photo').forEach(img=>img.src=url);}
-cameraCaptureInput.addEventListener('change',e=>{applySelectedPhoto(e.target.files[0]);cameraCaptureInput.value='';});
-document.getElementById('cameraBtn').onclick=async()=>{
-  // getUserMedia only works in secure contexts (HTTPS/localhost). On file:// or unsupported browsers,
-  // use the phone's native camera/file chooser instead.
-  if(!window.isSecureContext || !navigator.mediaDevices?.getUserMedia){cameraCaptureInput.click();return;}
-  try{
-    cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'user'}},audio:false});
-    video.srcObject=cameraStream;modal.hidden=false;note.textContent='Cuando estés lista, tocá “Tomar foto”.';
-    await video.play();
-  }catch(err){
-    // Permissions/device restrictions: let mobile browsers open their native camera as a fallback.
-    stopCamera();cameraCaptureInput.click();
+// 4. MEMORIA INDESTRUCTIBLE (LOCAL STORAGE)
+function saveCvToStorage() {
+  localStorage.setItem('cv_nexus_content', cv.innerHTML);
+  localStorage.setItem('cv_nexus_design', selector.value);
+  localStorage.setItem('cv_nexus_shape', currentPhotoShape);
+}
+
+function loadCvFromStorage() {
+  const savedContent = localStorage.getItem('cv_nexus_content');
+  const savedDesign = localStorage.getItem('cv_nexus_design');
+  const savedShape = localStorage.getItem('cv_nexus_shape');
+  
+  if (savedDesign) selector.value = savedDesign;
+  if (savedShape) setPhotoShape(savedShape);
+  if (savedContent) {
+    cv.innerHTML = savedContent;
+    checkPaymentStatus();
+  }
+}
+
+cv.addEventListener('input', saveCvToStorage);
+loadCvFromStorage();
+
+// 5. MANEJO DE FOTO (SUBIR Y CÁMARA)
+const photoInput = document.getElementById('photoInput');
+document.getElementById('photoBtn').onclick = () => photoInput.click();
+photoInput.addEventListener('change', e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const url = URL.createObjectURL(f);
+  document.querySelectorAll('.main-photo').forEach(img => img.src = url);
+  saveCvToStorage();
+});
+
+// 6. PASARELA DE PAGO / DESCARGA PDF PROTEGIDA
+document.getElementById('payDownloadBtn').onclick = () => {
+  if (localStorage.getItem('cv_nexus_paid') === 'true') {
+    window.print();
+  } else {
+    if (confirm("Para descargar e imprimir tu CV sin marca de agua, serás redirigido al pago seguro de Mercado Pago ($). ¿Deseas continuar?")) {
+      window.location.href = MP_PAYMENT_URL;
+    }
   }
 };
-function stopCamera(){if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;}video.srcObject=null;modal.hidden=true;}
-document.getElementById('closeCameraBtn').onclick=stopCamera;
-document.getElementById('captureBtn').onclick=()=>{if(!video.videoWidth){note.textContent='Esperá un momento a que se active la cámara.';return;}const canvas=document.createElement('canvas');canvas.width=video.videoWidth;canvas.height=video.videoHeight;canvas.getContext('2d').drawImage(video,0,0);const data=canvas.toDataURL('image/jpeg',.9);document.querySelectorAll('.round-photo,.main-photo').forEach(i=>i.src=data);stopCamera();};
-modal.addEventListener('click',e=>{if(e.target===modal)stopCamera();});
-async function makeCvImage(){
-  if(typeof window.html2canvas!=='function') throw new Error('No se pudo cargar el generador de imagen. Revisá la conexión a Internet y volvé a intentar.');
-  // Captura el CV a tamaño A4 real, sin el zoom que se usa para verlo en pantallas pequeñas.
-  const canvas=await window.html2canvas(cv,{
-    scale:2, backgroundColor:'#ffffff', useCORS:true, logging:false,
-    windowWidth:1200, windowHeight:1600,
-    onclone:(doc)=>{
-      const copy=doc.getElementById('cv');
-      if(copy){
-        copy.style.setProperty('zoom','1','important');
-        copy.style.setProperty('transform','none','important');
-        copy.style.setProperty('width','210mm','important');
-        copy.style.setProperty('min-height','297mm','important');
-        copy.style.setProperty('height','297mm','important');
-        copy.style.setProperty('margin','0','important');
-        copy.style.setProperty('box-shadow','none','important');
+
+// 7. DICTADO POR VOZ (WEB SPEECH API)
+let recognition = null;
+let isRecording = false;
+
+function toggleVoiceDictation() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    alert("El dictado por voz no está soportado en este navegador. Utilizá Google Chrome.");
+    return;
+  }
+  
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const statusSpan = document.getElementById('voiceStatus');
+  const voiceBtn = document.getElementById('voiceBtn');
+
+  if (isRecording) {
+    recognition.stop();
+    isRecording = false;
+    voiceBtn.textContent = "🎙️ Iniciar Dictado";
+    statusSpan.textContent = "";
+    return;
+  }
+
+  recognition = new SpeechRecognition();
+  recognition.lang = 'es-AR';
+  recognition.continuous = true;
+  recognition.interimResults = true;
+
+  recognition.onstart = () => {
+    isRecording = true;
+    voiceBtn.textContent = "⏹️ Detener Dictado";
+    statusSpan.textContent = "Escuchando... Seleccioná un texto en el CV y hablá.";
+  };
+
+  recognition.onresult = (event) => {
+    const activeEl = document.activeElement;
+    if (activeEl && activeEl.isContentEditable) {
+      let transcript = '';
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        transcript += event.results[i][0].transcript;
       }
-      doc.body.style.width='1200px';
-      doc.body.style.background='#ffffff';
+      activeEl.innerText = transcript;
+      saveCvToStorage();
     }
-  });
-  return await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('No se pudo crear la imagen.')),'image/png'));
+  };
+
+  recognition.onerror = () => {
+    isRecording = false;
+    voiceBtn.textContent = "🎙️ Iniciar Dictado";
+    statusSpan.textContent = "Error en dictado.";
+  };
+
+  recognition.start();
 }
-document.getElementById('whatsappBtn').onclick=async()=>{
-  const btn=document.getElementById('whatsappBtn');const name=cv.querySelector('h1')?.innerText.replace(/\s+/g,' ').trim()||'mi currículum';
-  btn.disabled=true;btn.textContent='Preparando imagen…';
-  try{
-    const blob=await makeCvImage();const file=new File([blob],`CV-${name.replace(/[^a-z0-9-]/gi,'-')}.png`,{type:'image/png'});
-    if(navigator.canShare&&navigator.canShare({files:[file]})){
-      await navigator.share({files:[file],title:`Currículum de ${name}`,text:`Te comparto mi currículum: ${name}`});
-    } else {
-      const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(url),15000);
-      const msg=`Te comparto mi currículum: ${name}. Descargué la imagen del CV; adjuntala en este chat de WhatsApp.`;
-      window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener');
-      alert('La imagen del currículum se descargó. En WhatsApp, tocá el clip y adjuntá la imagen descargada. Si querés enviar el CV completo en alta calidad, usá “Imprimir / Guardar PDF” y adjuntá el PDF.');
-    }
-  }catch(err){if(err.name!=='AbortError')alert('No se pudo compartir automáticamente. Usá “Imprimir / Guardar PDF” y adjuntá el archivo desde WhatsApp. Detalle: '+err.message);}
-  finally{btn.disabled=false;btn.textContent='Compartir CV por WhatsApp';}
-};
-</script></body></html>
+</script>
+</body>
+</html>
