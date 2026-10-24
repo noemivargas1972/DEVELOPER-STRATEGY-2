@@ -60,7 +60,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 
 /* ENVOLTORIO PROTEGIDO DE CAMPO Y MICRÓFONO EXTERNO */
 .editable-wrapper {
-  position: relative; display: flex; align-items: center; width: 100%; margin-bottom: 4px;
+  position: relative; display: flex; align-items: center; width: 100%; margin-bottom: 6px;
 }
 
 .sheet [contenteditable="true"] {
@@ -75,7 +75,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 
 .sheet h1, .sheet h2, .sheet h3, .sheet p { margin-top: 0; }
 .sheet h1 { font-size: 24pt; line-height: 1.1; margin-bottom: 6px; }
-.sheet h2 { font-size: 12pt; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.8px; }
+.sheet h2 { font-size: 12pt; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 6px; }
 .sheet h3 { font-size: 10.5pt; margin-bottom: 3px; }
 .sheet p { margin-bottom: 8px; }
 
@@ -84,7 +84,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   display: inline-flex; align-items: center; justify-content: center;
   width: 22px; height: 22px; font-size: 11px; background: #bd8190; color: white;
   border-radius: 50%; cursor: pointer; margin-left: 6px; flex-shrink: 0;
-  user-select: none; opacity: 0.8; transition: opacity 0.2s, transform 0.2s;
+  user-select: none; opacity: 0.85; transition: opacity 0.2s, transform 0.2s;
 }
 .voice-mic-btn:hover { opacity: 1; transform: scale(1.15); }
 .voice-mic-btn.recording { background: #e11d48 !important; animation: pulse 1s infinite; opacity: 1; }
@@ -114,64 +114,67 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .shape-square { border-radius: 8px !important; aspect-ratio: 1 / 1 !important; }
 .shape-rect { border-radius: 6px !important; aspect-ratio: 3 / 4 !important; }
 
-.section { margin-bottom: 16px; }
+.section { margin-bottom: 18px; }
 .entry { margin-bottom: 12px; }
 .entry p { font-size: 9pt; color: #555; }
-.rule { height: 2px; background: currentColor; margin: 10px 0 14px; opacity: 0.8; }
+.rule { height: 2px; background: currentColor; margin: 12px 0 16px; opacity: 0.8; }
 .contact-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 9.2pt; width: 100%; }
 .icon { width: 20px; height: 20px; background: currentColor; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
 
-/* MODELOS VISUALES */
-.design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 14mm 12mm; gap: 6mm; }
+/* MAQUETAS ESPECÍFICAS POR MODELO */
+.design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 18mm 14mm; gap: 8mm; }
 .design1 .left { padding-right: 4mm; }
 
-.design2 { padding: 0 0 12mm; }
-.design2 .top { height: 56mm; background: #bd8190; color: white; padding: 12mm 14mm 8mm 56mm; }
-.design2 .photo-box { position: absolute; top: 14mm; left: 14mm; width: 38mm; z-index: 2; }
-.design2 .body { display: grid; grid-template-columns: 42% 58%; padding: 8mm 14mm; gap: 8mm; }
-.design2 .left { padding-top: 10mm; padding-right: 4mm; }
+.design2 { padding: 0 0 14mm; }
+.design2 .top { min-height: 60mm; background: #bd8190; color: white; padding: 14mm 14mm 10mm 62mm; position: relative; }
+.design2 .photo-container { position: absolute; top: 10mm; left: 14mm; width: 40mm; z-index: 2; }
+.design2 .body { display: grid; grid-template-columns: 42% 58%; padding: 14mm 16mm 14mm; gap: 10mm; }
+.design2 .left { padding-top: 10mm; padding-right: 6mm; }
+.design2 .right { padding-top: 10mm; padding-left: 6mm; }
 
-.design3 { display: grid; grid-template-columns: 44% 56%; padding: 0; min-height: 297mm; }
-.design3 .left { background: #f0dedb; padding: 16mm 10mm 12mm 12mm; }
-.design3 .right { padding: 18mm 12mm 12mm 10mm; }
+.design3 { display: grid; grid-template-columns: 42% 58%; padding: 0; min-height: 297mm; }
+.design3 .left { background: #f0dedb; padding: 22mm 14mm 14mm 14mm; }
+.design3 .right { padding: 22mm 14mm 14mm 12mm; }
 .design3 h1 { font-family: "Brush Script MT", cursive; font-size: 32pt; }
 
-.design4 { display: grid; grid-template-columns: 44% 56%; padding: 14mm 12mm; gap: 8mm; color: #124b5b; position: relative; }
+.design4 { display: grid; grid-template-columns: 42% 58%; padding: 18mm 14mm; gap: 10mm; color: #124b5b; position: relative; }
 .design4::before {
-  content: ""; position: absolute; left: 0; top: 0; width: 42%; height: 52mm;
+  content: ""; position: absolute; left: 0; top: 0; width: 40%; height: 52mm;
   background: #1d5e72; clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%); z-index: 0; opacity: 0.15;
 }
 .design4 .left, .design4 .right { position: relative; z-index: 1; }
 .design4 .photo-container { margin: 4mm 0 10mm; width: 42mm; }
 
 .design5 { display: grid; grid-template-columns: 42% 58%; padding: 0; }
-.design5 .banner { grid-column: 1/3; background: #4b75a0; color: white; min-height: 52mm; padding: 10mm 12mm 8mm 54mm; position: relative; }
-.design5 .photo-container { position: absolute; left: 12mm; top: 8mm; width: 38mm; }
-.design5 .left { background: #e8edf6; padding: 12mm 10mm 12mm 12mm; }
-.design5 .right { padding: 12mm 12mm 12mm 10mm; }
+.design5 .banner { grid-column: 1/3; background: #4b75a0; color: white; min-height: 58mm; padding: 14mm 14mm 10mm 60mm; position: relative; }
+.design5 .photo-container { position: absolute; left: 14mm; top: 10mm; width: 40mm; }
+.design5 .left { background: #e8edf6; padding: 20mm 14mm 14mm 14mm; }
+.design5 .right { padding: 20mm 14mm 14mm 12mm; }
 
 .design6 { display: grid; grid-template-columns: 40% 60%; padding: 0; }
-.design6 .banner { grid-column: 1/3; height: 54mm; background: #302c3a; color: white; padding: 12mm 12mm 8mm 54mm; position: relative; }
-.design6 .photo-container { position: absolute; left: 12mm; top: 8mm; width: 38mm; }
-.design6 .left { padding: 14mm 10mm 12mm 12mm; background: #f8f7f9; }
-.design6 .right { padding: 14mm 12mm 12mm 10mm; }
+.design6 .banner { grid-column: 1/3; height: 58mm; background: #302c3a; color: white; padding: 14mm 14mm 10mm 60mm; position: relative; }
+.design6 .photo-container { position: absolute; left: 14mm; top: 10mm; width: 40mm; }
+.design6 .left { padding: 20mm 14mm 14mm 14mm; background: #f8f7f9; }
+.design6 .right { padding: 20mm 14mm 14mm 12mm; }
 
-.design7 { color: #244b3c; }
-.design7 .banner { background: #2f6b55 !important; }
-.design7 .left { background: #e7f0e9 !important; }
+.design7 { display: grid; grid-template-columns: 42% 58%; padding: 0; color: #244b3c; }
+.design7 .banner { grid-column: 1/3; background: #2f6b55 !important; color: white !important; min-height: 58mm; padding: 14mm 14mm 10mm 60mm; position: relative; }
+.design7 .photo-container { position: absolute; left: 14mm; top: 10mm; width: 40mm; }
+.design7 .left { background: #e7f0e9 !important; padding: 20mm 14mm 14mm 14mm; }
+.design7 .right { padding: 20mm 14mm 14mm 12mm; }
 
-.design8 { color: #4a4034; }
+.design8 { display: grid; grid-template-columns: 42% 58%; padding: 0; color: #4a4034; }
 .design8 .banner {
-  background: linear-gradient(135deg, #b69a65 0%, #8c713f 100%) !important; color: white !important;
-  min-height: 62mm !important; padding: 10mm 14mm 8mm 14mm !important; display: flex; justify-space-between; align-items: center;
+  grid-column: 1/3; background: linear-gradient(135deg, #b69a65 0%, #8c713f 100%) !important; color: white !important;
+  min-height: 62mm !important; padding: 12mm 16mm 10mm 16mm !important; display: flex; justify-content: space-between; align-items: center;
   position: relative; overflow: hidden;
 }
 .design8 .banner::after {
   content: "🌻 🌻 🌻"; position: absolute; right: 10px; bottom: -5px; font-size: 28px; opacity: 0.25; filter: sepia(1); pointer-events: none;
 }
 .design8 .photo-container { width: 40mm; flex-shrink: 0; margin-left: auto; }
-.design8 .left { background: #f4eee2 !important; padding: 12mm 10mm 12mm 12mm !important; }
-.design8 .right { padding: 12mm 12mm 12mm 10mm !important; }
+.design8 .left { background: #f4eee2 !important; padding: 20mm 14mm 14mm 14mm !important; }
+.design8 .right { padding: 20mm 14mm 14mm 12mm !important; }
 
 /* MODAL CÁMARA */
 .modal-overlay {
@@ -194,7 +197,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   .preview-mode .sheet { zoom: calc((100vw - 10px) / 793.7); margin: 0 auto; }
 }
 
-/* BOTÓN FLOTANTE CON FLECHA A LA IZQUIERDA (VOLVER AL MENÚ PRINCIPAL) */
+/* BOTÓN FLOTANTE CON FLECHA A LA IZQUIERDA */
 .scroll-top-float {
   position: fixed; bottom: 70px; right: 18px; z-index: 98; background: #202124; color: white;
   border-radius: 50%; width: 44px; height: 44px; font-weight: bold; font-size: 18px;
@@ -203,7 +206,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 }
 .scroll-top-float:hover { transform: scale(1.1); background: #bd8190; }
 
-/* BOTÓN FLOTANTE DE SOPORTE ROSA SUTIL DISCRETO */
+/* BOTÓN FLOTANTE DE SOPORTE ROSA SUTIL */
 .support-float {
   position: fixed; bottom: 18px; right: 18px; z-index: 99; background: #bd8190; color: white;
   border-radius: 8px; padding: 8px 14px; font-weight: 600; font-size: 12px; text-decoration: none;
@@ -261,75 +264,10 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   </div>
 </div>
 
-<!-- HOJA DEL CV CON NOMBRES Y PLACEHOLDERS COMPLETOS -->
+<!-- HOJA DEL CV -->
 <div class="sheet-container">
   <main id="cv" class="sheet design1">
-    <div class="watermark">VISTA PREVIA — CV NEXUS</div>
-    
-    <div class="left">
-      <div class="photo-container">
-        <div class="photo-frame shape-round" id="mainPhotoFrame">
-          <img class="main-photo" alt="Foto de perfil" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23ccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>">
-        </div>
-      </div>
-      <h1 contenteditable="true" data-placeholder="Nombre y Apellido"></h1>
-      <div class="role" contenteditable="true" data-placeholder="Puesto / Profesión al que aspirás"></div>
-      
-      <div class="section">
-        <h2>Contacto</h2>
-        <div class="contact-item"><span class="icon">✉</span><span contenteditable="true" data-placeholder="correo@ejemplo.com"></span></div>
-        <div class="contact-item"><span class="icon">☎</span><span contenteditable="true" data-placeholder="+54 11 1234-5678"></span></div>
-        <div class="contact-item"><span class="icon">◎</span><span contenteditable="true" data-placeholder="LinkedIn / Sitio Web"></span></div>
-        <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true" data-placeholder="Dirección, Localidad, Buenos Aires"></span></div>
-      </div>
-      
-      <div class="section">
-        <h2>Idiomas</h2>
-        <p contenteditable="true" data-placeholder="• Español — Nativo&#10;• Inglés — Intermedio"></p>
-      </div>
-    </div>
-
-    <div class="middle">
-      <section class="section">
-        <h2>Sobre mí</h2>
-        <p contenteditable="true" data-placeholder="Resumen profesional, fortalezas y metas..."></p>
-      </section>
-      <section class="section">
-        <h2>Formación profesional</h2>
-        <div class="entry">
-          <h3 contenteditable="true" data-placeholder="Institución educativa"></h3>
-          <p contenteditable="true" data-placeholder="Título o carrera · 2020–2023"></p>
-        </div>
-        <div class="entry">
-          <h3 contenteditable="true" data-placeholder="Curso / especialización"></h3>
-          <p contenteditable="true" data-placeholder="Institución · Año"></p>
-        </div>
-      </section>
-      <section class="section">
-        <h2>Habilidades</h2>
-        <p contenteditable="true" data-placeholder="Organización, comunicación, herramientas..."></p>
-      </section>
-    </div>
-
-    <div class="right">
-      <section class="section">
-        <h2>Experiencia laboral</h2>
-        <div class="entry">
-          <h3 contenteditable="true" data-placeholder="Nombre de la empresa"></h3>
-          <p contenteditable="true" data-placeholder="Puesto · 2022–Actualidad"></p>
-          <p contenteditable="true" data-placeholder="Descripción de tareas y logros..."></p>
-        </div>
-        <div class="entry">
-          <h3 contenteditable="true" data-placeholder="Empresa anterior"></h3>
-          <p contenteditable="true" data-placeholder="Puesto · 2019–2022"></p>
-          <p contenteditable="true" data-placeholder="Funciones realizadas..."></p>
-        </div>
-      </section>
-      <section class="section">
-        <h2>Referencias</h2>
-        <p contenteditable="true" data-placeholder="Disponibles a solicitud"></p>
-      </section>
-    </div>
+    <!-- El contenido se renderiza dinámicamente según el diseño seleccionado -->
   </main>
 </div>
 
@@ -361,6 +299,8 @@ const MP_PAYMENT_URL = "https://mpago.li/1YZVG9u";
 const cv = document.getElementById('cv');
 const selector = document.getElementById('design');
 let currentPhotoShape = 'shape-round';
+let currentPhotoSrc = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23ccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
+
 let activeRecognition = null;
 let activeMicBtn = null;
 
@@ -373,14 +313,6 @@ function checkPaymentStatus() {
   }
 }
 checkPaymentStatus();
-
-selector.addEventListener('change', () => {
-  const isPaid = cv.classList.contains('paid');
-  cv.className = 'sheet ' + selector.value + (isPaid ? ' paid' : '');
-  applyPhotoShape();
-  setupProtectedMics();
-  saveCvToStorage();
-});
 
 function setPhotoShape(shapeClass) {
   currentPhotoShape = shapeClass;
@@ -398,40 +330,225 @@ function applyPhotoShape() {
   });
 }
 
+// PLANTILLAS HTML PARA CADA UNO DE LOS 8 MODELOS
+function renderCurrentDesign() {
+  const design = selector.value;
+  const isPaid = cv.classList.contains('paid');
+  cv.className = 'sheet ' + design + (isPaid ? ' paid' : '');
+  
+  // Recopilar datos actuales del DOM si existen
+  const getData = (key, defaultVal) => {
+    const el = cv.querySelector(`[data-key="${key}"]`);
+    return el ? el.innerHTML : defaultVal;
+  };
+
+  const name = getData('name', 'Nombre y Apellido');
+  const role = getData('role', 'Puesto / Profesión al que aspirás');
+  const email = getData('email', 'correo@ejemplo.com');
+  const phone = getData('phone', '+54 11 1234-5678');
+  const web = getData('web', 'LinkedIn / Sitio Web');
+  const address = getData('address', 'Buenos Aires, Argentina');
+  const languages = getData('languages', '• Español — Nativo<br>• Inglés — Intermedio');
+  const about = getData('about', 'Resumen profesional, fortalezas y metas...');
+  const edu1Title = getData('edu1Title', 'Institución educativa');
+  const edu1Desc = getData('edu1Desc', 'Título o carrera · 2020–2023');
+  const edu2Title = getData('edu2Title', 'Curso / especialización');
+  const edu2Desc = getData('edu2Desc', 'Institución · Año');
+  const skills = getData('skills', 'Organización, comunicación, herramientas...');
+  const exp1Company = getData('exp1Company', 'Nombre de la empresa');
+  const exp1Role = getData('exp1Role', 'Puesto · 2022–Actualidad');
+  const exp1Desc = getData('exp1Desc', 'Descripción de tareas y logros...');
+  const exp2Company = getData('exp2Company', 'Empresa anterior');
+  const exp2Role = getData('exp2Role', 'Puesto · 2019–2022');
+  const exp2Desc = getData('exp2Desc', 'Funciones realizadas...');
+  const refs = getData('refs', 'Disponibles a solicitud');
+
+  let html = `<div class="watermark">VISTA PREVIA — CV NEXUS</div>`;
+
+  if (design === 'design1') {
+    html += `
+      <div class="left">
+        <div class="photo-container"><div class="photo-frame ${currentPhotoShape}" id="mainPhotoFrame"><img class="main-photo" src="${currentPhotoSrc}" alt="Foto"></div></div>
+        <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">${name}</h1>
+        <div class="role" contenteditable="true" data-placeholder="Puesto al que aspirás" data-key="role">${role}</div>
+        <div class="section">
+          <h2>Contacto</h2>
+          <div class="contact-item"><span class="icon">✉</span><span contenteditable="true" data-placeholder="Correo" data-key="email">${email}</span></div>
+          <div class="contact-item"><span class="icon">☎</span><span contenteditable="true" data-placeholder="Teléfono" data-key="phone">${phone}</span></div>
+          <div class="contact-item"><span class="icon">◎</span><span contenteditable="true" data-placeholder="Web" data-key="web">${web}</span></div>
+          <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true" data-placeholder="Dirección" data-key="address">${address}</span></div>
+        </div>
+        <div class="section"><h2>Idiomas</h2><p contenteditable="true" data-placeholder="Idiomas" data-key="languages">${languages}</p></div>
+      </div>
+      <div class="middle">
+        <section class="section"><h2>Sobre mí</h2><p contenteditable="true" data-placeholder="Resumen..." data-key="about">${about}</p></section>
+        <section class="section"><h2>Formación profesional</h2>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Institución" data-key="edu1Title">${edu1Title}</h3><p contenteditable="true" data-placeholder="Título" data-key="edu1Desc">${edu1Desc}</p></div>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Curso" data-key="edu2Title">${edu2Title}</h3><p contenteditable="true" data-placeholder="Año" data-key="edu2Desc">${edu2Desc}</p></div>
+        </section>
+        <section class="section"><h2>Habilidades</h2><p contenteditable="true" data-placeholder="Habilidades..." data-key="skills">${skills}</p></section>
+      </div>
+      <div class="right">
+        <section class="section"><h2>Experiencia laboral</h2>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Empresa" data-key="exp1Company">${exp1Company}</h3><p contenteditable="true" data-placeholder="Puesto" data-key="exp1Role">${exp1Role}</p><p contenteditable="true" data-placeholder="Descripción..." data-key="exp1Desc">${exp1Desc}</p></div>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Empresa" data-key="exp2Company">${exp2Company}</h3><p contenteditable="true" data-placeholder="Puesto" data-key="exp2Role">${exp2Role}</p><p contenteditable="true" data-placeholder="Descripción..." data-key="exp2Desc">${exp2Desc}</p></div>
+        </section>
+        <section class="section"><h2>Referencias</h2><p contenteditable="true" data-placeholder="Referencias" data-key="refs">${refs}</p></section>
+      </div>
+    `;
+  } else if (design === 'design2' || design === 'design5' || design === 'design6' || design === 'design7') {
+    html += `
+      <div class="banner">
+        <div class="photo-container"><div class="photo-frame ${currentPhotoShape}" id="mainPhotoFrame"><img class="main-photo" src="${currentPhotoSrc}" alt="Foto"></div></div>
+        <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">${name}</h1>
+        <div class="role" contenteditable="true" data-placeholder="Puesto al que aspirás" data-key="role">${role}</div>
+        <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; font-size: 9pt;">
+          <span contenteditable="true" data-placeholder="Correo" data-key="email">✉ ${email}</span>
+          <span contenteditable="true" data-placeholder="Teléfono" data-key="phone">☎ ${phone}</span>
+          <span contenteditable="true" data-placeholder="Web" data-key="web">◎ ${web}</span>
+          <span contenteditable="true" data-placeholder="Dirección" data-key="address">⌖ ${address}</span>
+        </div>
+      </div>
+      <div class="left">
+        <section class="section"><h2>Sobre mí</h2><p contenteditable="true" data-placeholder="Resumen..." data-key="about">${about}</p></section>
+        <section class="section"><h2>Idiomas</h2><p contenteditable="true" data-placeholder="Idiomas" data-key="languages">${languages}</p></section>
+        <section class="section"><h2>Habilidades</h2><p contenteditable="true" data-placeholder="Habilidades..." data-key="skills">${skills}</p></section>
+      </div>
+      <div class="right">
+        <section class="section"><h2>Formación profesional</h2>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Institución" data-key="edu1Title">${edu1Title}</h3><p contenteditable="true" data-placeholder="Título" data-key="edu1Desc">${edu1Desc}</p></div>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Curso" data-key="edu2Title">${edu2Title}</h3><p contenteditable="true" data-placeholder="Año" data-key="edu2Desc">${edu2Desc}</p></div>
+        </section>
+        <section class="section"><h2>Experiencia laboral</h2>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Empresa" data-key="exp1Company">${exp1Company}</h3><p contenteditable="true" data-placeholder="Puesto" data-key="exp1Role">${exp1Role}</p><p contenteditable="true" data-placeholder="Descripción..." data-key="exp1Desc">${exp1Desc}</p></div>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Empresa" data-key="exp2Company">${exp2Company}</h3><p contenteditable="true" data-placeholder="Puesto" data-key="exp2Role">${exp2Role}</p><p contenteditable="true" data-placeholder="Descripción..." data-key="exp2Desc">${exp2Desc}</p></div>
+        </section>
+        <section class="section"><h2>Referencias</h2><p contenteditable="true" data-placeholder="Referencias" data-key="refs">${refs}</p></section>
+      </div>
+    `;
+  } else if (design === 'design8') {
+    html += `
+      <div class="banner">
+        <div>
+          <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">${name}</h1>
+          <div class="role" contenteditable="true" data-placeholder="Puesto al que aspirás" data-key="role">${role}</div>
+        </div>
+        <div class="photo-container"><div class="photo-frame ${currentPhotoShape}" id="mainPhotoFrame"><img class="main-photo" src="${currentPhotoSrc}" alt="Foto"></div></div>
+      </div>
+      <div class="left">
+        <section class="section"><h2>Contacto</h2>
+          <div class="contact-item"><span class="icon">✉</span><span contenteditable="true" data-placeholder="Correo" data-key="email">${email}</span></div>
+          <div class="contact-item"><span class="icon">☎</span><span contenteditable="true" data-placeholder="Teléfono" data-key="phone">${phone}</span></div>
+          <div class="contact-item"><span class="icon">◎</span><span contenteditable="true" data-placeholder="Web" data-key="web">${web}</span></div>
+          <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true" data-placeholder="Dirección" data-key="address">${address}</span></div>
+        </section>
+        <section class="section"><h2>Sobre mí</h2><p contenteditable="true" data-placeholder="Resumen..." data-key="about">${about}</p></section>
+        <section class="section"><h2>Idiomas</h2><p contenteditable="true" data-placeholder="Idiomas" data-key="languages">${languages}</p></section>
+      </div>
+      <div class="right">
+        <section class="section"><h2>Formación profesional</h2>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Institución" data-key="edu1Title">${edu1Title}</h3><p contenteditable="true" data-placeholder="Título" data-key="edu1Desc">${edu1Desc}</p></div>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Curso" data-key="edu2Title">${edu2Title}</h3><p contenteditable="true" data-placeholder="Año" data-key="edu2Desc">${edu2Desc}</p></div>
+        </section>
+        <section class="section"><h2>Experiencia laboral</h2>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Empresa" data-key="exp1Company">${exp1Company}</h3><p contenteditable="true" data-placeholder="Puesto" data-key="exp1Role">${exp1Role}</p><p contenteditable="true" data-placeholder="Descripción..." data-key="exp1Desc">${exp1Desc}</p></div>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Empresa" data-key="exp2Company">${exp2Company}</h3><p contenteditable="true" data-placeholder="Puesto" data-key="exp2Role">${exp2Role}</p><p contenteditable="true" data-placeholder="Descripción..." data-key="exp2Desc">${exp2Desc}</p></div>
+        </section>
+        <section class="section"><h2>Habilidades y Referencias</h2><p contenteditable="true" data-placeholder="Habilidades..." data-key="skills">${skills}</p><p contenteditable="true" data-placeholder="Referencias" data-key="refs">${refs}</p></section>
+      </div>
+    `;
+  } else {
+    // design3 & design4
+    html += `
+      <div class="left">
+        <div class="photo-container"><div class="photo-frame ${currentPhotoShape}" id="mainPhotoFrame"><img class="main-photo" src="${currentPhotoSrc}" alt="Foto"></div></div>
+        <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">${name}</h1>
+        <div class="role" contenteditable="true" data-placeholder="Puesto al que aspirás" data-key="role">${role}</div>
+        <div class="section">
+          <h2>Contacto</h2>
+          <div class="contact-item"><span class="icon">✉</span><span contenteditable="true" data-placeholder="Correo" data-key="email">${email}</span></div>
+          <div class="contact-item"><span class="icon">☎</span><span contenteditable="true" data-placeholder="Teléfono" data-key="phone">${phone}</span></div>
+          <div class="contact-item"><span class="icon">◎</span><span contenteditable="true" data-placeholder="Web" data-key="web">${web}</span></div>
+          <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true" data-placeholder="Dirección" data-key="address">${address}</span></div>
+        </div>
+        <div class="section"><h2>Idiomas</h2><p contenteditable="true" data-placeholder="Idiomas" data-key="languages">${languages}</p></div>
+      </div>
+      <div class="right">
+        <section class="section"><h2>Sobre mí</h2><p contenteditable="true" data-placeholder="Resumen..." data-key="about">${about}</p></section>
+        <section class="section"><h2>Formación profesional</h2>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Institución" data-key="edu1Title">${edu1Title}</h3><p contenteditable="true" data-placeholder="Título" data-key="edu1Desc">${edu1Desc}</p></div>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Curso" data-key="edu2Title">${edu2Title}</h3><p contenteditable="true" data-placeholder="Año" data-key="edu2Desc">${edu2Desc}</p></div>
+        </section>
+        <section class="section"><h2>Experiencia laboral</h2>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Empresa" data-key="exp1Company">${exp1Company}</h3><p contenteditable="true" data-placeholder="Puesto" data-key="exp1Role">${exp1Role}</p><p contenteditable="true" data-placeholder="Descripción..." data-key="exp1Desc">${exp1Desc}</p></div>
+          <div class="entry"><h3 contenteditable="true" data-placeholder="Empresa" data-key="exp2Company">${exp2Company}</h3><p contenteditable="true" data-placeholder="Puesto" data-key="exp2Role">${exp2Role}</p><p contenteditable="true" data-placeholder="Descripción..." data-key="exp2Desc">${exp2Desc}</p></div>
+        </section>
+        <section class="section"><h2>Habilidades y Referencias</h2><p contenteditable="true" data-placeholder="Habilidades..." data-key="skills">${skills}</p><p contenteditable="true" data-placeholder="Referencias" data-key="refs">${refs}</p></section>
+      </div>
+    `;
+  }
+
+  cv.innerHTML = html;
+  setupProtectedMics();
+  saveCvToStorage();
+}
+
+selector.addEventListener('change', renderCurrentDesign);
+
 function saveCvToStorage() {
-  localStorage.setItem('cv_nexus_content', cv.innerHTML);
   localStorage.setItem('cv_nexus_design', selector.value);
   localStorage.setItem('cv_nexus_shape', currentPhotoShape);
+  localStorage.setItem('cv_nexus_photosrc', currentPhotoSrc);
+  // Guardar todos los campos editables en JSON
+  const data = {};
+  cv.querySelectorAll('[data-key]').forEach(el => {
+    data[el.getAttribute('data-key')] = el.innerHTML;
+  });
+  localStorage.setItem('cv_nexus_data', JSON.stringify(data));
 }
 
 function loadCvFromStorage() {
-  const savedContent = localStorage.getItem('cv_nexus_content');
   const savedDesign = localStorage.getItem('cv_nexus_design');
   const savedShape = localStorage.getItem('cv_nexus_shape');
-  
+  const savedPhoto = localStorage.getItem('cv_nexus_photosrc');
+  const savedDataJson = localStorage.getItem('cv_nexus_data');
+
   if (savedDesign) selector.value = savedDesign;
   if (savedShape) setPhotoShape(savedShape);
-  if (savedContent) {
-    cv.innerHTML = savedContent;
-    checkPaymentStatus();
+  if (savedPhoto) {
+    currentPhotoSrc = savedPhoto;
+    document.querySelectorAll('.main-photo').forEach(img => img.src = currentPhotoSrc);
   }
-  setupProtectedMics();
+  
+  renderCurrentDesign();
+
+  if (savedDataJson) {
+    try {
+      const data = JSON.parse(savedDataJson);
+      Object.keys(data).forEach(key => {
+        const el = cv.querySelector(`[data-key="${key}"]`);
+        if (el) el.innerHTML = data[key];
+      });
+    } catch(e) {}
+  }
 }
 
 cv.addEventListener('input', saveCvToStorage);
 
-// CONFIGURACIÓN DE MICRÓFONOS PROTEGIDOS SIN DUPLICADOS
+// MICRÓFONOS PROTEGIDOS
 function setupProtectedMics() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   
   cv.querySelectorAll('[contenteditable="true"]').forEach(field => {
-    if (field.parentNode.classList.contains('editable-wrapper')) return;
+    let wrapper = field.closest('.editable-wrapper');
+    if (!wrapper) {
+      wrapper = document.createElement('div');
+      wrapper.className = 'editable-wrapper';
+      field.parentNode.insertBefore(wrapper, field);
+      wrapper.appendChild(field);
+    }
 
-    const wrapper = document.createElement('div');
-    wrapper.className = 'editable-wrapper';
-    
-    field.parentNode.insertBefore(wrapper, field);
-    wrapper.appendChild(field);
+    if (wrapper.querySelector('.voice-mic-btn')) return;
 
     if (SpeechRecognition) {
       const micBtn = document.createElement('span');
@@ -444,13 +561,11 @@ function setupProtectedMics() {
         e.stopPropagation();
         e.preventDefault();
 
-        // Si se hace clic en el mismo micrófono activo, se apaga
         if (activeMicBtn === micBtn && activeRecognition) {
           activeRecognition.stop();
           return;
         }
 
-        // Si había otro micrófono activo escuchando, lo detiene primero
         if (activeRecognition) {
           activeRecognition.stop();
         }
@@ -468,8 +583,9 @@ function setupProtectedMics() {
         recognition.onresult = (event) => {
           const text = event.results[0][0].transcript;
           const currentText = field.innerText.trim();
+          const defaultPlaceholder = field.getAttribute('data-placeholder') || '';
 
-          if (currentText === '') {
+          if (currentText === '' || currentText.toLowerCase() === defaultPlaceholder.toLowerCase()) {
             field.innerText = text;
           } else {
             field.innerText += ' ' + text;
@@ -518,6 +634,7 @@ photoInput.addEventListener('change', e => {
   const f = e.target.files[0];
   if (!f) return;
   const url = URL.createObjectURL(f);
+  currentPhotoSrc = url;
   document.querySelectorAll('.main-photo').forEach(img => img.src = url);
   saveCvToStorage();
 });
