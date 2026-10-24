@@ -12,10 +12,12 @@
   --accent: #bd8190;
   --paper: #fff;
   --bg: #e9e9e9;
-  --font: Arial, Helvetica, sans-serif;
+  --font-print: Arial, Helvetica, sans-serif;
+  --font-cursive: "Georgia", "Times New Roman", cursive;
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--ink); }
+body { margin: 0; background: var(--bg); font-family: var(--font-print); color: var(--ink); }
+body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
 /* BARRA DE HERRAMIENTAS SUPERIOR ELEGANTE */
 .toolbar {
@@ -41,6 +43,16 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .toolbar button.primary { background: #bd8190; color: white; }
 .toolbar button.primary:hover { background: #a86d7c; }
 
+/* TOGGLE DE FUENTE / TIPO DE LETRA */
+.font-toggle-box {
+  display: flex; align-items: center; gap: 6px; background: #2d2e32; padding: 4px 8px; border-radius: 8px; border: 1px solid #444; margin-left: 4px;
+}
+.font-toggle-box span { font-size: 12px; font-weight: 700; color: #ccc; }
+.font-toggle-box button {
+  padding: 5px 10px; font-size: 11px; background: #38393e; color: #eee; border-radius: 6px; border: none; cursor: pointer;
+}
+.font-toggle-box button.active { background: #bd8190; color: white; font-weight: bold; }
+
 /* SELECTOR DE FORMA DE FOTO */
 .photo-shape-selector {
   display: flex; align-items: center; gap: 8px; margin-left: auto; background: #2d2e32; padding: 4px 8px; border-radius: 8px; border: 1px solid #444;
@@ -56,6 +68,12 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .sheet {
   width: 210mm; min-height: 297mm; background: white; box-shadow: 0 4px 18px rgba(0,0,0,0.15);
   overflow: hidden; position: relative; font-size: 9.8pt; line-height: 1.45;
+}
+
+/* MARCA O SELLO DE ARTE EXCLUSIVO */
+.art-stamp {
+  position: absolute; bottom: 12mm; right: 12mm; font-size: 24px; opacity: 0.25;
+  pointer-events: none; user-select: none; z-index: 10; filter: sepia(0.3);
 }
 
 /* ENVOLTORIO PROTEGIDO DE CAMPO Y MICRÓFONO EXTERNO */
@@ -122,59 +140,73 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .icon { width: 20px; height: 20px; background: currentColor; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
 
 /* MAQUETAS ESPECÍFICAS POR MODELO */
-.design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 18mm 14mm; gap: 8mm; }
+.design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 22mm 16mm; gap: 8mm; }
 .design1 .left { padding-right: 4mm; }
 
+/* MODELO 2: ROSA ELEGANTE CON FOTO CENTRO-DERECHA Y MARGEN AMPLIO */
 .design2 { padding: 0 0 14mm; }
-.design2 .top { min-height: 60mm; background: #bd8190; color: white; padding: 14mm 14mm 10mm 62mm; position: relative; }
-.design2 .photo-container { position: absolute; top: 10mm; left: 14mm; width: 40mm; z-index: 2; }
-.design2 .body { display: grid; grid-template-columns: 42% 58%; padding: 14mm 16mm 14mm; gap: 10mm; }
-.design2 .left { padding-top: 10mm; padding-right: 6mm; }
-.design2 .right { padding-top: 10mm; padding-left: 6mm; }
+.design2 .top {
+  min-height: 48mm; background: #bd8190; color: white; padding: 18mm 16mm 10mm 16mm;
+  display: flex; justify-content: space-between; align-items: flex-start; position: relative;
+}
+.design2 .top-info { max-width: 65%; }
+.design2 .photo-container { width: 36mm; flex-shrink: 0; margin-left: auto; }
+.design2 .body { display: grid; grid-template-columns: 42% 58%; padding: 16mm 16mm 14mm; gap: 10mm; }
+.design2 .left { padding-top: 6mm; padding-right: 6mm; }
+.design2 .right { padding-top: 6mm; padding-left: 6mm; }
 
 .design3 { display: grid; grid-template-columns: 42% 58%; padding: 0; min-height: 297mm; }
 .design3 .left { background: #f0dedb; padding: 22mm 14mm 14mm 14mm; }
 .design3 .right { padding: 22mm 14mm 14mm 12mm; }
-.design3 h1 { font-family: "Brush Script MT", cursive; font-size: 32pt; }
 
-.design4 { display: grid; grid-template-columns: 42% 58%; padding: 18mm 14mm; gap: 10mm; color: #124b5b; position: relative; }
+.design4 { display: grid; grid-template-columns: 42% 58%; padding: 20mm 14mm; gap: 10mm; color: #124b5b; position: relative; }
 .design4::before {
-  content: ""; position: absolute; left: 0; top: 0; width: 40%; height: 52mm;
+  content: ""; position: absolute; left: 0; top: 0; width: 40%; height: 48mm;
   background: #1d5e72; clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%); z-index: 0; opacity: 0.15;
 }
 .design4 .left, .design4 .right { position: relative; z-index: 1; }
-.design4 .photo-container { margin: 4mm 0 10mm; width: 42mm; }
+.design4 .photo-container { margin: 4mm 0 10mm; width: 40mm; }
 
+/* MODELO 5: AZUL MODERNO CON BANNER FINO A LA FRANCESA */
 .design5 { display: grid; grid-template-columns: 42% 58%; padding: 0; }
-.design5 .banner { grid-column: 1/3; background: #4b75a0; color: white; min-height: 58mm; padding: 14mm 14mm 10mm 60mm; position: relative; }
-.design5 .photo-container { position: absolute; left: 14mm; top: 10mm; width: 40mm; }
-.design5 .left { background: #e8edf6; padding: 20mm 14mm 14mm 14mm; }
-.design5 .right { padding: 20mm 14mm 14mm 12mm; }
+.design5 .banner {
+  grid-column: 1/3; background: #4b75a0; color: white; min-height: 44mm; padding: 12mm 16mm 10mm 16mm;
+  display: flex; justify-content: space-between; align-items: center; position: relative;
+}
+.design5 .photo-container { width: 34mm; flex-shrink: 0; }
+.design5 .left { background: #e8edf6; padding: 18mm 14mm 14mm 14mm; }
+.design5 .right { padding: 18mm 14mm 14mm 12mm; }
 
+/* MODELO 6: VIOLETA OSCURO */
 .design6 { display: grid; grid-template-columns: 40% 60%; padding: 0; }
-.design6 .banner { grid-column: 1/3; height: 58mm; background: #302c3a; color: white; padding: 14mm 14mm 10mm 60mm; position: relative; }
-.design6 .photo-container { position: absolute; left: 14mm; top: 10mm; width: 40mm; }
-.design6 .left { padding: 20mm 14mm 14mm 14mm; background: #f8f7f9; }
-.design6 .right { padding: 20mm 14mm 14mm 12mm; }
+.design6 .banner {
+  grid-column: 1/3; min-height: 46mm; background: #302c3a; color: white; padding: 12mm 16mm 10mm 16mm;
+  display: flex; justify-content: space-between; align-items: center; position: relative;
+}
+.design6 .photo-container { width: 34mm; flex-shrink: 0; }
+.design6 .left { padding: 18mm 14mm 14mm 14mm; background: #f8f7f9; }
+.design6 .right { padding: 18mm 14mm 14mm 12mm; }
 
+/* MODELO 7: VERDE ELEGANTE CON BANNER AJUSTADO Y FOTO ALINEADA */
 .design7 { display: grid; grid-template-columns: 42% 58%; padding: 0; color: #244b3c; }
-.design7 .banner { grid-column: 1/3; background: #2f6b55 !important; color: white !important; min-height: 58mm; padding: 14mm 14mm 10mm 60mm; position: relative; }
-.design7 .photo-container { position: absolute; left: 14mm; top: 10mm; width: 40mm; }
-.design7 .left { background: #e7f0e9 !important; padding: 20mm 14mm 14mm 14mm; }
-.design7 .right { padding: 20mm 14mm 14mm 12mm; }
+.design7 .banner {
+  grid-column: 1/3; background: #2f6b55 !important; color: white !important; min-height: 44mm; padding: 12mm 16mm 10mm 16mm;
+  display: flex; justify-content: space-between; align-items: center; position: relative;
+}
+.design7 .photo-container { width: 35mm; flex-shrink: 0; }
+.design7 .left { background: #e7f0e9 !important; padding: 18mm 14mm 14mm 14mm; }
+.design7 .right { padding: 18mm 14mm 14mm 12mm; }
 
+/* MODELO 8: BEIGE Y DORADO CON BANNER MÁS BAJO */
 .design8 { display: grid; grid-template-columns: 42% 58%; padding: 0; color: #4a4034; }
 .design8 .banner {
   grid-column: 1/3; background: linear-gradient(135deg, #b69a65 0%, #8c713f 100%) !important; color: white !important;
-  min-height: 62mm !important; padding: 12mm 16mm 10mm 16mm !important; display: flex; justify-content: space-between; align-items: center;
+  min-height: 46mm !important; padding: 10mm 16mm 8mm 16mm !important; display: flex; justify-content: space-between; align-items: center;
   position: relative; overflow: hidden;
 }
-.design8 .banner::after {
-  content: "🌻 🌻 🌻"; position: absolute; right: 10px; bottom: -5px; font-size: 28px; opacity: 0.25; filter: sepia(1); pointer-events: none;
-}
-.design8 .photo-container { width: 40mm; flex-shrink: 0; margin-left: auto; }
-.design8 .left { background: #f4eee2 !important; padding: 20mm 14mm 14mm 14mm !important; }
-.design8 .right { padding: 20mm 14mm 14mm 12mm !important; }
+.design8 .photo-container { width: 36mm; flex-shrink: 0; margin-left: auto; }
+.design8 .left { background: #f4eee2 !important; padding: 18mm 14mm 14mm 14mm !important; }
+.design8 .right { padding: 18mm 14mm 14mm 12mm !important; }
 
 /* MODAL CÁMARA */
 .modal-overlay {
@@ -206,7 +238,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 }
 .scroll-top-float:hover { transform: scale(1.1); background: #bd8190; }
 
-/* BOTÓN FLOTANTE DE SOPORTE ROSA SUTIL */
+/* BOTÓN FLOTANTE DE SOPORTE ROSA SUTIL DISCRETO */
 .support-float {
   position: fixed; bottom: 18px; right: 18px; z-index: 99; background: #bd8190; color: white;
   border-radius: 8px; padding: 8px 14px; font-weight: 600; font-size: 12px; text-decoration: none;
@@ -244,11 +276,16 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
     <option value="design7">7 · Verde elegante</option>
     <option value="design8">8 · Beige y dorado (Arte 🌻)</option>
   </select>
+
+  <div class="font-toggle-box">
+    <span>Letra:</span>
+    <button id="btnFontPrint" class="active" onclick="setFontMode('print')">Imprenta</button>
+    <button id="btnFontCursive" onclick="setFontMode('cursive')">Cursiva</button>
+  </div>
   
   <button class="primary" id="photoBtn">Subir foto</button>
   <button id="cameraBtn">📷 Cámara</button>
   <input id="photoInput" type="file" accept="image/*" hidden>
-  <input id="cameraCaptureInput" type="file" accept="image/*" capture="user" hidden>
 
   <button class="primary" id="payDownloadBtn">Imprimir / Guardar PDF</button>
   <button id="whatsappBtn">Compartir CV por WhatsApp</button>
@@ -267,20 +304,8 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 <!-- HOJA DEL CV -->
 <div class="sheet-container">
   <main id="cv" class="sheet design1">
-    <!-- El contenido se renderiza dinámicamente según el diseño seleccionado -->
+    <!-- Contenido generado dinámicamente -->
   </main>
-</div>
-
-<!-- MODAL CÁMARA -->
-<div id="cameraModal" class="modal-overlay" hidden>
-  <div class="modal-card">
-    <h3>Tomar foto para el CV</h3>
-    <video id="cameraVideo" autoplay playsinline></video>
-    <div style="margin-top: 12px; display: flex; gap: 8px; justify-content: center;">
-      <button id="captureBtn" class="primary">Tomar foto</button>
-      <button id="closeCameraBtn">Cancelar</button>
-    </div>
-  </div>
 </div>
 
 <!-- BOTÓN FLOTANTE CON FLECHA Y VOLVER ARRIBA -->
@@ -303,6 +328,19 @@ let currentPhotoSrc = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/200
 
 let activeRecognition = null;
 let activeMicBtn = null;
+
+function setFontMode(mode) {
+  if (mode === 'cursive') {
+    document.body.classList.add('font-mode-cursive');
+    document.getElementById('btnFontCursive').classList.add('active');
+    document.getElementById('btnFontPrint').classList.remove('active');
+  } else {
+    document.body.classList.remove('font-mode-cursive');
+    document.getElementById('btnFontPrint').classList.add('active');
+    document.getElementById('btnFontCursive').classList.remove('active');
+  }
+  localStorage.setItem('cv_nexus_font', mode);
+}
 
 function checkPaymentStatus() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -330,13 +368,11 @@ function applyPhotoShape() {
   });
 }
 
-// PLANTILLAS HTML PARA CADA UNO DE LOS 8 MODELOS
 function renderCurrentDesign() {
   const design = selector.value;
   const isPaid = cv.classList.contains('paid');
   cv.className = 'sheet ' + design + (isPaid ? ' paid' : '');
   
-  // Recopilar datos actuales del DOM si existen
   const getData = (key, defaultVal) => {
     const el = cv.querySelector(`[data-key="${key}"]`);
     return el ? el.innerHTML : defaultVal;
@@ -363,7 +399,14 @@ function renderCurrentDesign() {
   const exp2Desc = getData('exp2Desc', 'Funciones realizadas...');
   const refs = getData('refs', 'Disponibles a solicitud');
 
+  // MAPA DE ICONOS DE ARTE
+  const artStamps = {
+    design1: "🏛️", design2: "🖼️", design3: "🎨", design4: "🌌",
+    design5: "🖌️", design6: "🎭", design7: "🌿", design8: "🌻"
+  };
+
   let html = `<div class="watermark">VISTA PREVIA — CV NEXUS</div>`;
+  html += `<div class="art-stamp" title="Sello de Arte Nexus">${artStamps[design] || '🎨'}</div>`;
 
   if (design === 'design1') {
     html += `
@@ -396,23 +439,59 @@ function renderCurrentDesign() {
         <section class="section"><h2>Referencias</h2><p contenteditable="true" data-placeholder="Referencias" data-key="refs">${refs}</p></section>
       </div>
     `;
-  } else if (design === 'design2' || design === 'design5' || design === 'design6' || design === 'design7') {
+  } else if (design === 'design2') {
     html += `
-      <div class="banner">
+      <div class="top">
+        <div class="top-info">
+          <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">${name}</h1>
+          <div class="role" contenteditable="true" data-placeholder="Puesto al que aspirás" data-key="role">${role}</div>
+        </div>
         <div class="photo-container"><div class="photo-frame ${currentPhotoShape}" id="mainPhotoFrame"><img class="main-photo" src="${currentPhotoSrc}" alt="Foto"></div></div>
-        <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">${name}</h1>
-        <div class="role" contenteditable="true" data-placeholder="Puesto al que aspirás" data-key="role">${role}</div>
-        <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; font-size: 9pt;">
-          <span contenteditable="true" data-placeholder="Correo" data-key="email">✉ ${email}</span>
-          <span contenteditable="true" data-placeholder="Teléfono" data-key="phone">☎ ${phone}</span>
-          <span contenteditable="true" data-placeholder="Web" data-key="web">◎ ${web}</span>
-          <span contenteditable="true" data-placeholder="Dirección" data-key="address">⌖ ${address}</span>
+      </div>
+      <div class="body">
+        <div class="left">
+          <div class="section">
+            <h2>Contacto</h2>
+            <div class="contact-item"><span class="icon">✉</span><span contenteditable="true" data-placeholder="Correo" data-key="email">${email}</span></div>
+            <div class="contact-item"><span class="icon">☎</span><span contenteditable="true" data-placeholder="Teléfono" data-key="phone">${phone}</span></div>
+            <div class="contact-item"><span class="icon">◎</span><span contenteditable="true" data-placeholder="Web" data-key="web">${web}</span></div>
+            <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true" data-placeholder="Dirección" data-key="address">${address}</span></div>
+          </div>
+          <section class="section"><h2>Sobre mí</h2><p contenteditable="true" data-placeholder="Resumen..." data-key="about">${about}</p></section>
+          <section class="section"><h2>Idiomas</h2><p contenteditable="true" data-placeholder="Idiomas" data-key="languages">${languages}</p></section>
+        </div>
+        <div class="right">
+          <section class="section"><h2>Formación profesional</h2>
+            <div class="entry"><h3 contenteditable="true" data-placeholder="Institución" data-key="edu1Title">${edu1Title}</h3><p contenteditable="true" data-placeholder="Título" data-key="edu1Desc">${edu1Desc}</p></div>
+            <div class="entry"><h3 contenteditable="true" data-placeholder="Curso" data-key="edu2Title">${edu2Title}</h3><p contenteditable="true" data-placeholder="Año" data-key="edu2Desc">${edu2Desc}</p></div>
+          </section>
+          <section class="section"><h2>Experiencia laboral</h2>
+            <div class="entry"><h3 contenteditable="true" data-placeholder="Empresa" data-key="exp1Company">${exp1Company}</h3><p contenteditable="true" data-placeholder="Puesto" data-key="exp1Role">${exp1Role}</p><p contenteditable="true" data-placeholder="Descripción..." data-key="exp1Desc">${exp1Desc}</p></div>
+            <div class="entry"><h3 contenteditable="true" data-placeholder="Empresa" data-key="exp2Company">${exp2Company}</h3><p contenteditable="true" data-placeholder="Puesto" data-key="exp2Role">${exp2Role}</p><p contenteditable="true" data-placeholder="Descripción..." data-key="exp2Desc">${exp2Desc}</p></div>
+          </section>
+          <section class="section"><h2>Habilidades y Referencias</h2><p contenteditable="true" data-placeholder="Habilidades..." data-key="skills">${skills}</p><p contenteditable="true" data-placeholder="Referencias" data-key="refs">${refs}</p></section>
         </div>
       </div>
+    `;
+  } else if (design === 'design5' || design === 'design6' || design === 'design7') {
+    html += `
+      <div class="banner">
+        <div>
+          <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">${name}</h1>
+          <div class="role" contenteditable="true" data-placeholder="Puesto al que aspirás" data-key="role">${role}</div>
+        </div>
+        <div class="photo-container"><div class="photo-frame ${currentPhotoShape}" id="mainPhotoFrame"><img class="main-photo" src="${currentPhotoSrc}" alt="Foto"></div></div>
+      </div>
       <div class="left">
+        <div class="section">
+          <h2>Contacto</h2>
+          <div class="contact-item"><span class="icon">✉</span><span contenteditable="true" data-placeholder="Correo" data-key="email">${email}</span></div>
+          <div class="contact-item"><span class="icon">☎</span><span contenteditable="true" data-placeholder="Teléfono" data-key="phone">${phone}</span></div>
+          <div class="contact-item"><span class="icon">◎</span><span contenteditable="true" data-placeholder="Web" data-key="web">${web}</span></div>
+          <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true" data-placeholder="Dirección" data-key="address">${address}</span></div>
+        </div>
         <section class="section"><h2>Sobre mí</h2><p contenteditable="true" data-placeholder="Resumen..." data-key="about">${about}</p></section>
         <section class="section"><h2>Idiomas</h2><p contenteditable="true" data-placeholder="Idiomas" data-key="languages">${languages}</p></section>
-        <section class="section"><h2>Habilidades</h2><p contenteditable="true" data-placeholder="Habilidades..." data-key="skills">${skills}</p></section>
       </div>
       <div class="right">
         <section class="section"><h2>Formación profesional</h2>
@@ -423,7 +502,7 @@ function renderCurrentDesign() {
           <div class="entry"><h3 contenteditable="true" data-placeholder="Empresa" data-key="exp1Company">${exp1Company}</h3><p contenteditable="true" data-placeholder="Puesto" data-key="exp1Role">${exp1Role}</p><p contenteditable="true" data-placeholder="Descripción..." data-key="exp1Desc">${exp1Desc}</p></div>
           <div class="entry"><h3 contenteditable="true" data-placeholder="Empresa" data-key="exp2Company">${exp2Company}</h3><p contenteditable="true" data-placeholder="Puesto" data-key="exp2Role">${exp2Role}</p><p contenteditable="true" data-placeholder="Descripción..." data-key="exp2Desc">${exp2Desc}</p></div>
         </section>
-        <section class="section"><h2>Referencias</h2><p contenteditable="true" data-placeholder="Referencias" data-key="refs">${refs}</p></section>
+        <section class="section"><h2>Habilidades y Referencias</h2><p contenteditable="true" data-placeholder="Habilidades..." data-key="skills">${skills}</p><p contenteditable="true" data-placeholder="Referencias" data-key="refs">${refs}</p></section>
       </div>
     `;
   } else if (design === 'design8') {
@@ -499,7 +578,6 @@ function saveCvToStorage() {
   localStorage.setItem('cv_nexus_design', selector.value);
   localStorage.setItem('cv_nexus_shape', currentPhotoShape);
   localStorage.setItem('cv_nexus_photosrc', currentPhotoSrc);
-  // Guardar todos los campos editables en JSON
   const data = {};
   cv.querySelectorAll('[data-key]').forEach(el => {
     data[el.getAttribute('data-key')] = el.innerHTML;
@@ -511,8 +589,10 @@ function loadCvFromStorage() {
   const savedDesign = localStorage.getItem('cv_nexus_design');
   const savedShape = localStorage.getItem('cv_nexus_shape');
   const savedPhoto = localStorage.getItem('cv_nexus_photosrc');
+  const savedFont = localStorage.getItem('cv_nexus_font');
   const savedDataJson = localStorage.getItem('cv_nexus_data');
 
+  if (savedFont) setFontMode(savedFont);
   if (savedDesign) selector.value = savedDesign;
   if (savedShape) setPhotoShape(savedShape);
   if (savedPhoto) {
@@ -535,7 +615,6 @@ function loadCvFromStorage() {
 
 cv.addEventListener('input', saveCvToStorage);
 
-// MICRÓFONOS PROTEGIDOS
 function setupProtectedMics() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   
