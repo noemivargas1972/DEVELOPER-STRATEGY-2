@@ -16,81 +16,66 @@
   --font-cursive: "Georgia", "Times New Roman", cursive;
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); font-family: var(--font-print); color: var(--ink); padding-top: 75px; }
+body { margin: 0; background: var(--bg); font-family: var(--font-print); color: var(--ink); }
 body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
-@media(max-width: 850px) {
-  body { padding-top: 130px; }
-}
-
-/* BARRA DE HERRAMIENTAS FIJA ARRIBA EN EL CELULAR Y PC */
+/* BARRA DE HERRAMIENTAS ELEGANTE Y PROPORCIONADA */
 .toolbar {
-  position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: #202124; color: white;
-  padding: 10px 14px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+  position: sticky; top: 0; z-index: 1000; background: #202124; color: white;
+  padding: 12px 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
-.toolbar strong { margin-right: 6px; font-size: 15px; color: #fff; letter-spacing: 0.5px; }
+.toolbar strong { margin-right: 8px; font-size: 16px; color: #fff; letter-spacing: 0.5px; }
 
 .toolbar label.model-label {
-  font-size: 12px; font-weight: 800; color: #f3d5dc; text-transform: uppercase; letter-spacing: 0.8px; margin-left: 2px;
+  font-size: 13px; font-weight: 800; color: #f3d5dc; text-transform: uppercase; letter-spacing: 0.8px; margin-left: 4px;
 }
 
 .toolbar select {
-  background: #333438; color: white; border: 1px solid #555; border-radius: 8px; padding: 7px 10px; font-size: 12px; font-weight: 600;
+  background: #333438; color: white; border: 1px solid #555; border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;
 }
 
-.toolbar button, .toolbar a.toolbar-btn {
-  font: inherit; border: 0; border-radius: 8px; padding: 8px 12px; cursor: pointer; font-size: 12px; font-weight: 600;
-  background: #ffffff; color: #222; text-decoration: none; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;
+.toolbar button {
+  font: inherit; border: 0; border-radius: 8px; padding: 9px 14px; cursor: pointer; font-size: 13px; font-weight: 600;
+  background: #ffffff; color: #222; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;
 }
-.toolbar button:hover, .toolbar a.toolbar-btn:hover { background: #f0f0f0; transform: translateY(-1px); }
+.toolbar button:hover { background: #f0f0f0; transform: translateY(-1px); }
 .toolbar button.primary { background: #bd8190; color: white; }
 .toolbar button.primary:hover { background: #a86d7c; }
 
-/* BOTÓN DE SOPORTE INTEGRADO EN LA BARRA */
-.toolbar a.support-toolbar-btn {
-  background: #bd8190; color: white;
-}
-.toolbar a.support-toolbar-btn:hover { background: #a86d7c; }
-.toolbar a.support-toolbar-btn .wa-circle {
-  width: 18px; height: 18px; background: #25d366; border-radius: 50%; display: flex;
-  align-items: center; justify-content: center; font-size: 10px; color: white; font-weight: bold;
-}
-
-/* TOGGLE DE FUENTE */
+/* TOGGLE DE FUENTE / TIPO DE LETRA */
 .font-toggle-box {
-  display: flex; align-items: center; gap: 4px; background: #2d2e32; padding: 3px 6px; border-radius: 8px; border: 1px solid #444;
+  display: flex; align-items: center; gap: 6px; background: #2d2e32; padding: 4px 8px; border-radius: 8px; border: 1px solid #444; margin-left: 4px;
 }
-.font-toggle-box span { font-size: 11px; font-weight: 700; color: #ccc; }
+.font-toggle-box span { font-size: 12px; font-weight: 700; color: #ccc; }
 .font-toggle-box button {
-  padding: 4px 8px; font-size: 10px; background: #38393e; color: #eee; border-radius: 6px; border: none; cursor: pointer;
+  padding: 5px 10px; font-size: 11px; background: #38393e; color: #eee; border-radius: 6px; border: none; cursor: pointer;
 }
 .font-toggle-box button.active { background: #bd8190; color: white; font-weight: bold; }
 
 /* SELECTOR DE FORMA DE FOTO */
 .photo-shape-selector {
-  display: flex; align-items: center; gap: 6px; margin-left: auto; background: #2d2e32; padding: 3px 6px; border-radius: 8px; border: 1px solid #444;
+  display: flex; align-items: center; gap: 8px; margin-left: auto; background: #2d2e32; padding: 4px 8px; border-radius: 8px; border: 1px solid #444;
 }
-.photo-shape-selector span { font-size: 11px; font-weight: 700; color: #ccc; }
+.photo-shape-selector span { font-size: 12px; font-weight: 700; color: #ccc; }
 .photo-shape-selector button {
-  padding: 4px 8px; font-size: 10px; background: #38393e; color: #eee; border-radius: 6px; border: none; cursor: pointer;
+  padding: 5px 10px; font-size: 11px; background: #38393e; color: #eee; border-radius: 6px; border: none; cursor: pointer;
 }
 .photo-shape-selector button.active { background: #bd8190; color: white; font-weight: bold; }
 
 /* HOJA DE CV Y MARCA DE AGUA */
-.sheet-container { position: relative; width: 210mm; margin: 15px auto; }
+.sheet-container { position: relative; width: 210mm; margin: 20px auto; }
 .sheet {
   width: 210mm; min-height: 297mm; background: white; box-shadow: 0 4px 18px rgba(0,0,0,0.15);
   overflow: hidden; position: relative; font-size: 9.8pt; line-height: 1.45;
 }
 
-/* SELLO DE ARTE EXCLUSIVO */
+/* MARCA O SELLO DE ARTE EXCLUSIVO */
 .art-stamp {
   position: absolute; bottom: 12mm; right: 12mm; font-size: 24px; opacity: 0.25;
   pointer-events: none; user-select: none; z-index: 10; filter: sepia(0.3);
 }
 
-/* ENVOLTORIO PROTEGIDO DE CAMPO Y MICRÓFONO EXTERNO */
 .editable-wrapper {
   position: relative; display: flex; align-items: center; width: 100%; margin-bottom: 6px;
 }
@@ -110,7 +95,6 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .sheet h3 { font-size: 10.5pt; margin-bottom: 3px; }
 .sheet p { margin-bottom: 8px; }
 
-/* MICRÓFONO */
 .voice-mic-btn {
   display: inline-flex; align-items: center; justify-content: center;
   width: 22px; height: 22px; font-size: 11px; background: #bd8190; color: white;
@@ -128,7 +112,6 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
 .preview-mode .voice-mic-btn, @media print { .voice-mic-btn { display: none !important; } }
 
-/* WATERMARK */
 .watermark {
   position: absolute; inset: 0; pointer-events: none; z-index: 90;
   display: flex; align-items: center; justify-content: center;
@@ -152,7 +135,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .contact-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 9.2pt; width: 100%; }
 .icon { width: 20px; height: 20px; background: currentColor; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
 
-/* MAQUETAS ESPECÍFICAS */
+/* MODELOS VISUALES */
 .design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 22mm 16mm; gap: 8mm; }
 .design1 .left { padding-right: 4mm; }
 
@@ -239,16 +222,28 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
 /* BOTÓN FLOTANTE PARA VOLVER ARRIBA */
 .scroll-top-float {
-  position: fixed; bottom: 18px; right: 18px; z-index: 98; background: #202124; color: white;
+  position: fixed; bottom: 70px; right: 18px; z-index: 98; background: #202124; color: white;
   border-radius: 50%; width: 44px; height: 44px; font-weight: bold; font-size: 18px;
   display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.3);
   border: 2px solid #bd8190; cursor: pointer; transition: transform 0.2s;
 }
 .scroll-top-float:hover { transform: scale(1.1); background: #bd8190; }
 
+/* BOTÓN FLOTANTE DE SOPORTE ROSA SUTIL */
+.support-float {
+  position: fixed; bottom: 18px; right: 18px; z-index: 99; background: #bd8190; color: white;
+  border-radius: 8px; padding: 8px 14px; font-weight: 600; font-size: 12px; text-decoration: none;
+  display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s;
+}
+.support-float:hover { transform: scale(1.04); background: #a86d7c; }
+.support-float .wa-circle {
+  width: 20px; height: 20px; background: #25d366; border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; font-size: 11px; font-weight: bold; color: white;
+}
+
 @media print {
-  body { background: white; padding-top: 0 !important; }
-  .toolbar, .scroll-top-float { display: none !important; }
+  body { background: white; }
+  .toolbar, .support-float, .scroll-top-float { display: none !important; }
   .sheet-container { margin: 0; width: 210mm; }
   .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; }
   .watermark { display: none !important; }
@@ -257,58 +252,125 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 </head>
 <body>
 
-<!-- BARRA DE HERRAMIENTAS FIJA ARRIBA CON SOPORTE INTEGRADO -->
+<!-- BARRA DE HERRAMIENTAS RESTAURADA -->
 <div class="toolbar">
-  <strong>CV Nexus</strong>
+  <strong>CV Nexus Studio</strong>
   
-  <label for="design" class="model-label">Modelo:</label>
+  <label for="design" class="model-label">Elegí modelo:</label>
   <select id="design">
-    <option value="design1">1 · B&N</option>
-    <option value="design2">2 · Rosa</option>
-    <option value="design3">3 · Cursiva</option>
-    <option value="design4">4 · Azul</option>
-    <option value="design5">5 · Moderno</option>
-    <option value="design6">6 · Violeta</option>
-    <option value="design7">7 · Verde</option>
-    <option value="design8">8 · Beige</option>
+    <option value="design1">1 · Blanco y negro</option>
+    <option value="design2">2 · Rosa elegante</option>
+    <option value="design3">3 · Rosa suave y cursiva</option>
+    <option value="design4">4 · Azul petróleo</option>
+    <option value="design5">5 · Azul moderno</option>
+    <option value="design6">6 · Violeta oscuro</option>
+    <option value="design7">7 · Verde elegante</option>
+    <option value="design8">8 · Beige y dorado (Arte 🌻)</option>
   </select>
 
   <div class="font-toggle-box">
     <span>Letra:</span>
-    <button id="btnFontPrint" class="active" onclick="setFontMode('print')">Imp.</button>
-    <button id="btnFontCursive" onclick="setFontMode('cursive')">Curs.</button>
+    <button id="btnFontPrint" class="active" onclick="setFontMode('print')">Imprenta</button>
+    <button id="btnFontCursive" onclick="setFontMode('cursive')">Cursiva</button>
   </div>
   
-  <button class="primary" id="photoBtn">Foto</button>
-  <button class="primary" id="payDownloadBtn">PDF</button>
-  <button id="whatsappBtn">WhatsApp</button>
-  <button id="previewBtn">👁 Ver</button>
-  <button id="editBtn" style="display:none;">✏️ Editar</button>
-  
-  <!-- BOTÓN DE SOPORTE INTEGRADO DIRECTAMENTE EN LA BARRA -->
-  <a href="https://wa.me/5491131504886?text=Hola%20Noem%C3%AD,%20tengo%20una%20consulta%20sobre%20mi%20CV%20en%20Nexus%20Studio" target="_blank" class="support-toolbar-btn" title="Soporte técnico">
-    <span class="wa-circle">☎</span> Soporte
-  </a>
+  <button class="primary" id="photoBtn">Subir foto</button>
+  <button class="primary" id="payDownloadBtn">Imprimir / Guardar PDF</button>
+  <button id="whatsappBtn">Compartir CV por WhatsApp</button>
+  <button id="previewBtn">👁 Ver CV completo</button>
+  <button id="editBtn" style="display:none;">✏️ Volver a editar</button>
+  <button id="reset">Restaurar ejemplo</button>
 
   <div class="photo-shape-selector">
-    <span>Forma:</span>
-    <button id="btnShapeRound" class="active" onclick="setPhotoShape('shape-round')">●</button>
-    <button id="btnShapeSquare" onclick="setPhotoShape('shape-square')">■</button>
-    <button id="btnShapeRect" onclick="setPhotoShape('shape-rect')">▬</button>
+    <span>Forma Foto:</span>
+    <button id="btnShapeRound" class="active" onclick="setPhotoShape('shape-round')">Redonda</button>
+    <button id="btnShapeSquare" onclick="setPhotoShape('shape-square')">Cuadrada</button>
+    <button id="btnShapeRect" onclick="setPhotoShape('shape-rect')">Rectangular</button>
   </div>
 </div>
 
 <!-- HOJA DEL CV -->
 <div class="sheet-container">
   <main id="cv" class="sheet design1">
-    <!-- Contenido generado dinámicamente -->
+    <div class="watermark">VISTA PREVIA — CV NEXUS</div>
+    <div class="art-stamp" title="Sello de Arte Nexus">🏛️</div>
+    
+    <div class="left">
+      <div class="photo-container">
+        <div class="photo-frame shape-round" id="mainPhotoFrame">
+          <img class="main-photo" alt="Foto de perfil" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23ccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>">
+        </div>
+      </div>
+      <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">TU NOMBRE Y APELLIDO</h1>
+      <div class="role" contenteditable="true" data-placeholder="Puesto / Profesión al que aspirás" data-key="role">Puesto / Profesión</div>
+      
+      <div class="section">
+        <h2>Contacto</h2>
+        <div class="contact-item"><span class="icon">✉</span><span contenteditable="true" data-placeholder="correo@ejemplo.com" data-key="email">correo@ejemplo.com</span></div>
+        <div class="contact-item"><span class="icon">☎</span><span contenteditable="true" data-placeholder="+54 11 1234-5678" data-key="phone">+54 11 1234-5678</span></div>
+        <div class="contact-item"><span class="icon">◎</span><span contenteditable="true" data-placeholder="LinkedIn / Sitio Web" data-key="web">LinkedIn / Sitio Web</span></div>
+        <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true" data-placeholder="Dirección, Localidad, Buenos Aires" data-key="address">Buenos Aires, Argentina</span></div>
+      </div>
+      
+      <div class="section">
+        <h2>Idiomas</h2>
+        <p contenteditable="true" data-placeholder="• Español — Nativo&#10;• Inglés — Intermedio" data-key="languages">• Español — Nativo<br>• Inglés — Intermedio</p>
+      </div>
+    </div>
+
+    <div class="middle">
+      <section class="section">
+        <h2>Sobre mí</h2>
+        <p contenteditable="true" data-placeholder="Resumen profesional, fortalezas y metas..." data-key="about">Profesional responsable y proactivo/a, con experiencia en organización, atención al cliente y resolución de problemas. Me adapto con facilidad y busco aportar valor al equipo.</p>
+      </section>
+      <section class="section">
+        <h2>Formación profesional</h2>
+        <div class="entry">
+          <h3 contenteditable="true" data-placeholder="Institución educativa" data-key="edu1Title">Institución educativa</h3>
+          <p contenteditable="true" data-placeholder="Título o carrera · 2020–2023" data-key="edu1Desc">Título o formación · 2020–2023</p>
+        </div>
+        <div class="entry">
+          <h3 contenteditable="true" data-placeholder="Curso / especialización" data-key="edu2Title">Curso / especialización</h3>
+          <p contenteditable="true" data-placeholder="Institución · Año" data-key="edu2Desc">Institución · Año</p>
+        </div>
+      </section>
+      <section class="section">
+        <h2>Habilidades</h2>
+        <p contenteditable="true" data-placeholder="Organización, comunicación, herramientas..." data-key="skills">Organización, comunicación, trabajo en equipo, herramientas informáticas.</p>
+      </section>
+    </div>
+
+    <div class="right">
+      <section class="section">
+        <h2>Experiencia laboral</h2>
+        <div class="entry">
+          <h3 contenteditable="true" data-placeholder="Nombre de la empresa" data-key="exp1Company">Nombre de la empresa</h3>
+          <p contenteditable="true" data-placeholder="Puesto · 2022–Actualidad" data-key="exp1Role"><b>Puesto · 2022–Actualidad</b></p>
+          <p contenteditable="true" data-placeholder="Descripción de tareas y logros..." data-key="exp1Desc">Descripción de responsabilidades, tareas principales y logros relevantes.</p>
+        </div>
+        <div class="entry">
+          <h3 contenteditable="true" data-placeholder="Empresa anterior" data-key="exp2Company">Empresa anterior</h3>
+          <p contenteditable="true" data-placeholder="Puesto · 2019–2022" data-key="exp2Role"><b>Puesto · 2019–2022</b></p>
+          <p contenteditable="true" data-placeholder="Funciones realizadas..." data-key="exp2Desc">Descripción breve de las funciones realizadas y resultados obtenidos.</p>
+        </div>
+      </section>
+      <section class="section">
+        <h2>Referencias</h2>
+        <p contenteditable="true" data-placeholder="Disponibles a solicitud" data-key="refs">Disponibles a solicitud.</p>
+      </section>
+    </div>
   </main>
 </div>
 
-<!-- BOTÓN FLOTANTE RÁPIDO PARA VOLVER ARRIBA -->
-<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-top-float" title="Volver arriba">
+<!-- BOTÓN FLOTANTE PARA VOLVER ARRIBA -->
+<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-top-float" title="Volver al menú">
   ▲
 </button>
+
+<!-- BOTÓN FLOTANTE DE SOPORTE ROSA SUTIL -->
+<a href="https://wa.me/5491131504886?text=Hola%20Noem%C3%AD,%20tengo%20una%20consulta%20sobre%20mi%20CV%20en%20Nexus%20Studio" target="_blank" class="support-float">
+  <span class="wa-circle">☎</span> Soporte
+</a>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
@@ -316,7 +378,7 @@ const MP_PAYMENT_URL = "https://mpago.li/1YZVG9u";
 const cv = document.getElementById('cv');
 const selector = document.getElementById('design');
 let currentPhotoShape = 'shape-round';
-let currentPhotoSrc = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23ccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>';
+let currentPhotoSrc = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23ccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
 
 let activeRecognition = null;
 let activeMicBtn = null;
@@ -564,6 +626,13 @@ function renderCurrentDesign() {
 
 selector.addEventListener('change', renderCurrentDesign);
 
+document.getElementById('reset').onclick = () => {
+  if (confirm("¿Querés restaurar los datos de ejemplo del CV?")) {
+    localStorage.removeItem('cv_nexus_data');
+    location.reload();
+  }
+};
+
 function saveCvToStorage() {
   localStorage.setItem('cv_nexus_design', selector.value);
   localStorage.setItem('cv_nexus_shape', currentPhotoShape);
@@ -590,16 +659,19 @@ function loadCvFromStorage() {
     document.querySelectorAll('.main-photo').forEach(img => img.src = currentPhotoSrc);
   }
   
-  renderCurrentDesign();
-
   if (savedDataJson) {
     try {
       const data = JSON.parse(savedDataJson);
+      renderCurrentDesign();
       Object.keys(data).forEach(key => {
         const el = cv.querySelector(`[data-key="${key}"]`);
         if (el) el.innerHTML = data[key];
       });
-    } catch(e) {}
+    } catch(e) {
+      renderCurrentDesign();
+    }
+  } else {
+    renderCurrentDesign();
   }
 }
 
@@ -762,7 +834,7 @@ document.getElementById('whatsappBtn').onclick = async () => {
       alert('Se generó la descarga de la imagen de tu CV para que puedas enviarla adjunta por WhatsApp.');
     }
   } finally {
-    btn.disabled = false; btn.textContent = 'WhatsApp';
+    btn.disabled = false; btn.textContent = 'Compartir CV por WhatsApp';
   }
 };
 </script>
