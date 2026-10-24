@@ -35,13 +35,28 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   background: #333438; color: white; border: 1px solid #555; border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;
 }
 
+/* BOTONES INTERCALADOS: ROSA Y BLANCO */
 .toolbar button {
   font: inherit; border: 0; border-radius: 8px; padding: 9px 14px; cursor: pointer; font-size: 13px; font-weight: 600;
-  background: #ffffff; color: #222; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;
+  background: #bd8190; color: white; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;
 }
-.toolbar button:hover { background: #f0f0f0; transform: translateY(-1px); }
-.toolbar button.primary { background: #bd8190; color: white; }
-.toolbar button.primary:hover { background: #a86d7c; }
+.toolbar button:hover { background: #a86d7c; transform: translateY(-1px); }
+
+/* Patrón estricto: 1ros, 2do blanco, 3ro rosa, 4to blanco... */
+.toolbar select + div + button { background: #ffffff !important; color: #222 !important; }
+.toolbar select + div + button:hover { background: #f0f0f0 !important; }
+
+.toolbar button:nth-of-type(2) { background: #ffffff !important; color: #222 !important; }
+.toolbar button:nth-of-type(2):hover { background: #f0f0f0 !important; }
+
+.toolbar button:nth-of-type(4) { background: #ffffff !important; color: #222 !important; }
+.toolbar button:nth-of-type(4):hover { background: #f0f0f0 !important; }
+
+.toolbar button:nth-of-type(6) { background: #ffffff !important; color: #222 !important; }
+.toolbar button:nth-of-type(6):hover { background: #f0f0f0 !important; }
+
+.toolbar button:nth-of-type(8) { background: #ffffff !important; color: #222 !important; }
+.toolbar button:nth-of-type(8):hover { background: #f0f0f0 !important; }
 
 /* TOGGLE DE FUENTE */
 .font-toggle-box {
@@ -70,7 +85,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   overflow: hidden; position: relative; font-size: 9.8pt; line-height: 1.45;
 }
 
-/* MARCA O SELLO DE ARTE EXCLUSIVO */
+/* SELLO DE ARTE EXCLUSIVO */
 .art-stamp {
   position: absolute; bottom: 12mm; right: 12mm; font-size: 24px; opacity: 0.25;
   pointer-events: none; user-select: none; z-index: 10; filter: sepia(0.3);
@@ -112,21 +127,24 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
 .preview-mode .voice-mic-btn, @media print { .voice-mic-btn { display: none !important; } }
 
+/* MARCA DE AGUA ACENTUADA */
 .watermark {
   position: absolute; inset: 0; pointer-events: none; z-index: 90;
   display: flex; align-items: center; justify-content: center;
-  font-size: 42pt; font-weight: 900; color: rgba(189, 129, 144, 0.16);
-  transform: rotate(-35deg); text-transform: uppercase; letter-spacing: 4px; user-select: none;
+  font-size: 44pt; font-weight: 900; color: rgba(189, 129, 144, 0.24);
+  text-shadow: 0 0 2px rgba(255,255,255,0.8);
+  transform: rotate(-35deg); text-transform: uppercase; letter-spacing: 6px; user-select: none;
 }
 .sheet.paid .watermark { display: none !important; }
 
-/* FOTOS */
+/* FOTOS Y FORMAS SIMPLIFICADAS */
 .photo-frame { display: inline-block; overflow: hidden; background: #e0e0e0; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
 .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.shape-round { border-radius: 50% !important; aspect-ratio: 1 / 1 !important; }
-.shape-square { border-radius: 8px !important; aspect-ratio: 1 / 1 !important; }
-.shape-rect { border-radius: 6px !important; aspect-ratio: 3 / 4 !important; }
+.shape-round { border-radius: 50% !important; aspect-ratio: 1 / 1 !important; clip-path: none !important; }
+.shape-square { border-radius: 8px !important; aspect-ratio: 1 / 1 !important; clip-path: none !important; }
+.shape-rect { border-radius: 6px !important; aspect-ratio: 3 / 4 !important; clip-path: none !important; }
+.shape-triangle { border-radius: 0 !important; aspect-ratio: 1 / 1 !important; clip-path: polygon(50% 0%, 0% 100%, 100% 100%) !important; }
 
 .section { margin-bottom: 18px; }
 .entry { margin-bottom: 12px; }
@@ -199,14 +217,18 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .design8 .left { background: #f4eee2 !important; padding: 18mm 14mm 14mm 14mm !important; }
 .design8 .right { padding: 18mm 14mm 14mm 12mm !important; }
 
-/* MODAL CÁMARA */
+/* MODAL CÁMARA EN VIVO */
 .modal-overlay {
-  position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
+  position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
   display: flex; align-items: center; justify-content: center; padding: 16px;
 }
 .modal-overlay[hidden] { display: none; }
-.modal-card { background: white; border-radius: 14px; padding: 22px; max-width: 480px; width: 100%; text-align: center; }
-.modal-card video { width: 100%; max-height: 50vh; background: #111; border-radius: 8px; object-fit: cover; }
+.modal-card { background: white; border-radius: 14px; padding: 20px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.modal-card video { width: 100%; max-height: 45vh; background: #111; border-radius: 8px; object-fit: cover; margin-bottom: 12px; }
+.modal-buttons { display: flex; gap: 10px; justify-content: center; }
+.modal-buttons button { padding: 10px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-size: 13px; }
+.btn-capture { background: #22c55e; color: white; }
+.btn-close-modal { background: #ef4444; color: white; }
 
 /* VISTA PREVIA MÓVIL */
 .preview-mode .toolbar > *:not(#editBtn) { display: none !important; }
@@ -243,7 +265,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
 @media print {
   body { background: white; }
-  .toolbar, .support-float, .scroll-top-float { display: none !important; }
+  .toolbar, .support-float, .scroll-top-float, .modal-overlay { display: none !important; }
   .sheet-container { margin: 0; width: 210mm; }
   .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; }
   .watermark { display: none !important; }
@@ -252,7 +274,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 </head>
 <body>
 
-<!-- BARRA DE HERRAMIENTAS ACTUALIZADA -->
+<!-- BARRA DE HERRAMIENTAS ACTUALIZADA CON BOTONES INTERCALADOS Y CÁMARA -->
 <div class="toolbar">
   <strong>CV Nexus Studio</strong>
   
@@ -274,19 +296,34 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
     <button id="btnFontCursive" onclick="setFontMode('cursive')">Cursiva</button>
   </div>
   
-  <button class="primary" id="photoBtn">Subir foto</button>
-  <button id="printPreviewBtn">Imprimir / Vista Previa</button>
-  <button class="primary" id="payDownloadBtn">Quitar marca de agua ($)</button>
-  <button id="whatsappBtn">Compartir CV por WhatsApp</button>
+  <button class="primary" id="photoFileBtn">Subir foto</button>
+  <button id="photoCamBtn">📸 Cámara en vivo</button>
+  <button class="primary" id="printPreviewBtn">Imprimir / Vista Previa</button>
+  <button id="payDownloadBtn">Descarga sin marca de agua - $2000 MP</button>
+  <button class="primary" id="whatsappBtn">Compartir CV por WhatsApp</button>
   <button id="previewBtn">👁 Ver CV completo</button>
-  <button id="editBtn" style="display:none;">✏️ Volver a editar</button>
+  <button class="primary" id="editBtn" style="display:none;">✏️ Volver a editar</button>
   <button id="reset">Restaurar ejemplo</button>
 
   <div class="photo-shape-selector">
-    <span>Forma Foto:</span>
+    <span>Forma:</span>
     <button id="btnShapeRound" class="active" onclick="setPhotoShape('shape-round')">Redonda</button>
     <button id="btnShapeSquare" onclick="setPhotoShape('shape-square')">Cuadrada</button>
-    <button id="btnShapeRect" onclick="setPhotoShape('shape-rect')">Rectangular</button>
+    <button id="btnShapeRect" onclick="setPhotoShape('shape-rect')">Rect.</button>
+    <button id="btnShapeTri" onclick="setPhotoShape('shape-triangle')">Triángulo</button>
+  </div>
+</div>
+
+<!-- MODAL PARA CÁMARA EN VIVO -->
+<div class="modal-overlay" id="cameraModal" hidden>
+  <div class="modal-card">
+    <h3 style="margin-bottom: 10px; color: #202124;">Tomar foto con cámara</h3>
+    <video id="cameraStream" autoplay playsinline></video>
+    <canvas id="cameraCanvas" style="display:none;"></canvas>
+    <div class="modal-buttons">
+      <button class="btn-capture" id="capturePhotoBtn">📸 Sacar foto</button>
+      <button class="btn-close-modal" id="closeCameraBtn">Cancelar</button>
+    </div>
   </div>
 </div>
 
@@ -383,6 +420,7 @@ let currentPhotoSrc = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/200
 
 let activeRecognition = null;
 let activeMicBtn = null;
+let mediaStream = null;
 
 function setFontMode(mode) {
   if (mode === 'cursive') {
@@ -413,12 +451,13 @@ function setPhotoShape(shapeClass) {
   if (shapeClass === 'shape-round') document.getElementById('btnShapeRound').classList.add('active');
   if (shapeClass === 'shape-square') document.getElementById('btnShapeSquare').classList.add('active');
   if (shapeClass === 'shape-rect') document.getElementById('btnShapeRect').classList.add('active');
+  if (shapeClass === 'shape-triangle') document.getElementById('btnShapeTri').classList.add('active');
   applyPhotoShape();
 }
 
 function applyPhotoShape() {
   document.querySelectorAll('.photo-frame').forEach(frame => {
-    frame.classList.remove('shape-round', 'shape-square', 'shape-rect');
+    frame.classList.remove('shape-round', 'shape-square', 'shape-rect', 'shape-triangle');
     frame.classList.add(currentPhotoShape);
   });
 }
@@ -440,7 +479,7 @@ function renderCurrentDesign() {
   const web = getData('web', 'LinkedIn / Sitio Web');
   const address = getData('address', 'Buenos Aires, Argentina');
   const languages = getData('languages', '• Español — Nativo<br>• Inglés — Intermedio');
-  const about = getData('about', 'Resumen profesional, fortalezas y metas...');
+  const about = getData('about', 'Profesional responsable y proactivo/a...');
   const edu1Title = getData('edu1Title', 'Institución educativa');
   const edu1Desc = getData('edu1Desc', 'Título o carrera · 2020–2023');
   const edu2Title = getData('edu2Title', 'Curso / especialización');
@@ -448,11 +487,11 @@ function renderCurrentDesign() {
   const skills = getData('skills', 'Organización, comunicación, herramientas...');
   const exp1Company = getData('exp1Company', 'Nombre de la empresa');
   const exp1Role = getData('exp1Role', 'Puesto · 2022–Actualidad');
-  const exp1Desc = getData('exp1Desc', 'Descripción de tareas y logros...');
+  const exp1Desc = getData('exp1Desc', 'Descripción de responsabilidades y logros...');
   const exp2Company = getData('exp2Company', 'Empresa anterior');
   const exp2Role = getData('exp2Role', 'Puesto · 2019–2022');
-  const exp2Desc = getData('exp2Desc', 'Funciones realizadas...');
-  const refs = getData('refs', 'Disponibles a solicitud');
+  const exp2Desc = getData('exp2Desc', 'Descripción breve de funciones...');
+  const refs = getData('refs', 'Disponibles a solicitud.');
 
   const artStamps = {
     design1: "🏛️", design2: "🖼️", design3: "🎨", design4: "🌌",
@@ -770,13 +809,14 @@ editBtn.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+// SUBIR FOTO DESDE ARCHIVOS
 const photoInput = document.createElement('input');
 photoInput.type = 'file';
 photoInput.accept = 'image/*';
 photoInput.hidden = true;
 document.body.appendChild(photoInput);
 
-document.getElementById('photoBtn').onclick = () => photoInput.click();
+document.getElementById('photoFileBtn').onclick = () => photoInput.click();
 photoInput.addEventListener('change', e => {
   const f = e.target.files[0];
   if (!f) return;
@@ -786,18 +826,60 @@ photoInput.addEventListener('change', e => {
   saveCvToStorage();
 });
 
-// NUEVO BOTÓN: IMPRIMIR / VISTA PREVIA (MUESTRA VISTA PREVIA CON MARCA DE AGUA)
+// CÁMARA EN VIVO (MODAL)
+const cameraModal = document.getElementById('cameraModal');
+const cameraStream = document.getElementById('cameraStream');
+const cameraCanvas = document.getElementById('cameraCanvas');
+
+document.getElementById('photoCamBtn').onclick = async () => {
+  cameraModal.hidden = false;
+  try {
+    mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+    cameraStream.srcObject = mediaStream;
+  } catch (err) {
+    alert("No se pudo acceder a la cámara. Verificá los permisos de tu navegador.");
+    cameraModal.hidden = true;
+  }
+};
+
+document.getElementById('closeCameraBtn').onclick = () => {
+  if (mediaStream) {
+    mediaStream.getTracks().forEach(track => track.stop());
+  }
+  cameraModal.hidden = true;
+};
+
+document.getElementById('capturePhotoBtn').onclick = () => {
+  const width = cameraStream.videoWidth || 640;
+  const height = cameraStream.videoHeight || 480;
+  cameraCanvas.width = width;
+  cameraCanvas.height = height;
+  const ctx = cameraCanvas.getContext('2d');
+  ctx.drawImage(cameraStream, 0, 0, width, height);
+  
+  const dataUrl = cameraCanvas.toDataURL('image/png');
+  currentPhotoSrc = dataUrl;
+  document.querySelectorAll('.main-photo').forEach(img => img.src = dataUrl);
+  saveCvToStorage();
+
+  if (mediaStream) {
+    mediaStream.getTracks().forEach(track => track.stop());
+  }
+  cameraModal.hidden = true;
+};
+
+// IMPRIMIR / VISTA PREVIA
 document.getElementById('printPreviewBtn').onclick = () => {
   window.print();
 };
 
-// BOTÓN ESPECÍFICO DE MERCADO PAGO PARA QUITAR MARCA DE AGUA
+// MERCADO PAGO
 document.getElementById('payDownloadBtn').onclick = () => {
   if (localStorage.getItem('cv_nexus_paid') === 'true') {
     alert("¡Tu CV ya está desbloqueado! Podés imprimirlo sin marca de agua.");
     window.print();
   } else {
-    if (confirm("Serás redirigido al pago seguro de Mercado Pago para eliminar la marca de agua y descargar tu CV listo. ¿Deseas continuar?")) {
+    if (confirm("Serás redirigido al pago seguro de Mercado Pago por $2000 para eliminar la marca de agua y descargar tu CV. ¿Deseas continuar?")) {
       window.location.href = MP_PAYMENT_URL;
     }
   }
@@ -835,7 +917,7 @@ document.getElementById('whatsappBtn').onclick = async () => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a'); a.href = url; a.download = file.name; a.click();
       setTimeout(() => URL.revokeObjectURL(url), 15000);
-      alert(`La imagen de tu CV (${file.name}) se descargó en tu teléfono. Abrí WhatsApp y adjuntala con el ícono del clip.`);
+      alert(`La imagen de tu CV (${file.name}) se descargó en tu teléfono. Abrí WhatsApp y adjuntala.`);
     }
   } catch (err) {
     if (err.name !== 'AbortError') {
