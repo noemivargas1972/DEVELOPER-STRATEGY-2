@@ -19,7 +19,7 @@
 body { margin: 0; background: var(--bg); font-family: var(--font-print); color: var(--ink); }
 body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
-/* BARRA DE HERRAMIENTAS ELEGANTE Y ARMONIOSA */
+/* BARRA DE HERRAMIENTAS / MENÚ PRINCIPAL (IZQUIERDA) */
 .toolbar {
   position: sticky; top: 0; z-index: 1000; background: #202124; color: white;
   padding: 12px 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
@@ -35,56 +35,40 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   background: #333438; color: white; border: 1px solid #555; border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;
 }
 
-/* BOTONES PRINCIPALES INTERCALADOS ESTRICTAMENTE (BLANCO / ROSA) */
+/* ORDEN ESTRICTO DE BOTONES PRINCIPALES (SECUENCIA BLANCO / ROSA) */
 .toolbar > button, .toolbar > a.toolbar-btn {
-  font: inherit; border: 0; border-radius: 8px; padding: 9px 14px; cursor: pointer; font-size: 13px; font-weight: 600;
+  font: inherit; border: 0; border-radius: 8px; padding: 10px 16px; cursor: pointer; font-size: 13px; font-weight: 600;
   display: inline-flex; align-items: center; gap: 6px; text-decoration: none; transition: all 0.2s ease;
 }
 .toolbar > button:hover, .toolbar > a.toolbar-btn:hover { transform: translateY(-1px); }
 
-/* Secuencia exacta de colores para los elementos principales */
 #photoFileBtn { background: #ffffff !important; color: #222 !important; }
-#photoFileBtn:hover { background: #f0f0f0 !important; }
-
 #photoCamBtn { background: #bd8190 !important; color: white !important; }
-#photoCamBtn:hover { background: #a86d7c !important; }
-
 #previewModeBtn { background: #ffffff !important; color: #222 !important; }
-#previewModeBtn:hover { background: #f0f0f0 !important; }
-
 #payDownloadBtn { background: #bd8190 !important; color: white !important; }
-#payDownloadBtn:hover { background: #a86d7c !important; }
-
 #whatsappBtn { background: #ffffff !important; color: #222 !important; }
-#whatsappBtn:hover { background: #f0f0f0 !important; }
-
 #supportBtn { background: #bd8190 !important; color: white !important; }
-#supportBtn:hover { background: #a86d7c !important; }
-
 #reset { background: #ffffff !important; color: #222 !important; }
-#reset:hover { background: #f0f0f0 !important; }
-
 #editBtn { background: #bd8190 !important; color: white !important; }
 
-/* BLOQUES AGRUPADOS (Caja de Letras y Caja de Marcos) */
 .font-toggle-box {
-  display: flex; align-items: center; gap: 6px; background: #ffffff; padding: 4px 8px; border-radius: 8px; border: 1px solid #ccc; margin-left: 4px;
+  display: flex; align-items: center; gap: 6px; background: #ffffff; padding: 6px 10px; border-radius: 8px; border: 1px solid #ccc; margin-left: 4px;
 }
 .font-toggle-box span { font-size: 12px; font-weight: 700; color: #444; }
 .font-toggle-box button {
-  padding: 5px 10px; font-size: 13px; background: #f0f0f0; color: #333; border-radius: 6px; border: 1px solid #ddd; cursor: pointer;
+  padding: 6px 12px; font-size: 12px; font-weight: 600; background: #f0f0f0; color: #333; border-radius: 6px; border: 1px solid #ddd; cursor: pointer;
 }
-.font-toggle-box button.active { background: #bd8190; color: white; font-weight: bold; border-color: #a86d7c; }
+.font-toggle-box button.active { background: #bd8190; color: white; border-color: #a86d7c; }
 
 .photo-shape-selector {
-  display: flex; align-items: center; gap: 8px; margin-left: auto; background: #ffffff; padding: 4px 8px; border-radius: 8px; border: 1px solid #ccc;
+  display: flex; align-items: center; gap: 8px; margin-left: auto; background: #ffffff; padding: 6px 10px; border-radius: 8px; border: 1px solid #ccc;
 }
 .photo-shape-selector span { font-size: 12px; font-weight: 700; color: #444; }
 .shape-btn {
-  width: 28px; height: 28px; background: #f0f0f0; border: 1px solid #ccc; border-radius: 6px; cursor: pointer;
+  width: 32px; height: 32px; background: #f0f0f0; border: 1px solid #ccc; border-radius: 6px; cursor: pointer;
   display: flex; align-items: center; justify-content: center; padding: 0; transition: all 0.2s;
 }
-.shape-btn.active { border-color: #bd8190; background: #fce8ec; }
+.shape-btn.active { border-color: #bd8190; background: #fce8ec; box-shadow: 0 0 0 1px #bd8190; }
 .shape-preview-circle { width: 14px; height: 14px; background: #bd8190; border-radius: 50%; }
 .shape-preview-square { width: 13px; height: 13px; background: #bd8190; border-radius: 2px; }
 .shape-preview-rect { width: 16px; height: 11px; background: #bd8190; border-radius: 2px; }
@@ -138,7 +122,6 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
 .preview-mode .voice-mic-btn, @media print { .voice-mic-btn { display: none !important; } }
 
-/* MARCA DE AGUA ACENTUADA */
 .watermark {
   position: absolute; inset: 0; pointer-events: none; z-index: 90;
   display: flex; align-items: center; justify-content: center;
@@ -148,7 +131,6 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 }
 .sheet.paid .watermark { display: none !important; }
 
-/* FOTOS Y MARCOS PROPORCIONALES */
 .photo-frame { display: inline-block; overflow: hidden; background: #e0e0e0; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
 .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -159,11 +141,10 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .section { margin-bottom: 18px; }
 .entry { margin-bottom: 12px; }
 .entry p { font-size: 9pt; color: #555; }
-.rule { height: 2px; background: currentColor; margin: 12px 0 16px; opacity: 0.8; }
 .contact-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 9.2pt; width: 100%; }
 .icon { width: 20px; height: 20px; background: currentColor; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
 
-/* MODELOS VISUALES */
+/* DISEÑOS DEL CV */
 .design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 22mm 16mm; gap: 8mm; }
 .design1 .left { padding-right: 4mm; }
 .design1 .photo-container { width: 42mm; margin-bottom: 10px; }
@@ -242,40 +223,36 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .btn-capture { background: #22c55e; color: white; }
 .btn-close-modal { background: #ef4444; color: white; }
 
-/* VISTA PREVIA MÓVIL */
+/* VISTA PREVIA MÓVIL (AJUSTA EL CONTENEDOR PARA VER TODO ENTERO) */
 .preview-mode .toolbar > *:not(#editBtn) { display: none !important; }
 .preview-mode .toolbar { justify-content: space-between; }
 .preview-mode #editBtn { display: inline-flex !important; }
-.preview-mode .sheet-container { margin: 0 auto; width: 100% !important; }
-.preview-mode .sheet { transform: none !important; zoom: 1 !important; box-shadow: none; margin: 0 auto; }
+.preview-mode .sheet-container { margin: 0 auto; width: 100% !important; max-width: 100% !important; }
+.preview-mode .sheet { transform: none !important; zoom: 1 !important; box-shadow: none; margin: 0 auto; width: 100% !important; height: auto !important; }
 
-/* BOTÓN FLOTANTE LATERAL DERECHO (ESTILO PESTAÑA VERTICAL IGUAL AL VIDEO) */
+/* BOTÓN FLOTANTE EN EL ESPACIO GRIS SUPERIOR DERECHO */
 .scroll-top-float {
   position: fixed; 
-  top: 50%; 
-  right: 0; 
-  transform: translateY(-50%);
+  top: 14px; 
+  right: 14px; 
   z-index: 9999; 
   background: #bd8190; 
   color: white;
-  border-radius: 12px 0 0 12px; 
-  padding: 14px 8px; 
+  border-radius: 20px; 
+  padding: 8px 14px; 
   font-weight: bold; 
-  font-size: 13px;
-  writing-mode: vertical-lr;
-  text-orientation: mixed;
+  font-size: 12px;
   display: flex; 
   align-items: center; 
-  justify-content: center;
   gap: 6px; 
-  box-shadow: -3px 4px 16px rgba(0,0,0,0.4);
-  border: 1px solid rgba(255,255,255,0.4); 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.5); 
   cursor: pointer; 
   transition: transform 0.2s, background 0.2s;
 }
 .scroll-top-float:hover { 
   background: #a86d7c; 
-  transform: translateY(-50%) scale(1.05);
+  transform: scale(1.05);
 }
 
 @media print {
@@ -289,12 +266,12 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 </head>
 <body>
 
-<!-- BOTÓN FLOTANTE VERTICAL DERECHO PARA VOLVER AL MENÚ -->
-<button onclick="scrollToTopMenu()" class="scroll-top-float" title="Volver al Menú Principal">
+<!-- BOTÓN FLOTANTE EN EL ESPACIO GRIS SUPERIOR DERECHO -->
+<button onclick="scrollToMenu()" class="scroll-top-float" title="Volver al Menú Principal">
   ☰ Menú principal
 </button>
 
-<!-- BARRA DE HERRAMIENTAS PRINCIPAL -->
+<!-- BARRA DE HERRAMIENTAS / MENÚ PRINCIPAL -->
 <div class="toolbar">
   <strong>CV Nexus Studio</strong>
   
@@ -313,8 +290,8 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   <!-- BLOQUE DE LETRAS -->
   <div class="font-toggle-box">
     <span>Letra:</span>
-    <button id="btnFontPrint" class="active" onclick="setFontMode('print')" style="font-family: Arial, sans-serif;">Aa</button>
-    <button id="btnFontCursive" onclick="setFontMode('cursive')" style="font-family: 'Brush Script MT', cursive;">𝒜𝒶</button>
+    <button id="btnFontPrint" class="active" onclick="setFontMode('print')">A imprenta</button>
+    <button id="btnFontCursive" onclick="setFontMode('cursive')" style="font-family: var(--font-cursive);">Cursiva</button>
   </div>
   
   <!-- BOTONES INTERCALADOS SECUENCIALES -->
@@ -426,8 +403,8 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-// FUNCIÓN PARA VOLVER AL MENÚ PRINCIPAL DESDE CUALQUIER PARTE
-function scrollToTopMenu() {
+// FUNCIÓN PARA VOLVER AL MENÚ PRINCIPAL Y RESETEAR EL SCROLL HORIZONTAL Y VERTICAL
+function scrollToMenu() {
   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 }
 
@@ -817,14 +794,14 @@ previewModeBtn.addEventListener('click', () => {
   document.body.classList.add('preview-mode');
   previewModeBtn.style.display = 'none';
   editBtn.style.display = 'inline-flex';
-  scrollToTopMenu();
+  scrollToMenu();
 });
 
 editBtn.addEventListener('click', () => {
   document.body.classList.remove('preview-mode');
   previewModeBtn.style.display = 'inline-flex';
   editBtn.style.display = 'none';
-  scrollToTopMenu();
+  scrollToMenu();
 });
 
 // SUBIR FOTO DESDE ARCHIVOS
