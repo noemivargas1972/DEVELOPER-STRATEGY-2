@@ -249,17 +249,34 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .preview-mode .sheet-container { margin: 0 auto; width: 100% !important; }
 .preview-mode .sheet { transform: none !important; zoom: 1 !important; box-shadow: none; margin: 0 auto; }
 
-/* BOTÓN FLOTANTE SUPERIOR DERECHO MÁS GRANDE Y VISIBLE */
+/* BOTÓN FLOTANTE LATERAL DERECHO (ESTILO PESTAÑA VERTICAL IGUAL AL VIDEO) */
 .scroll-top-float {
-  position: fixed; top: 14px; right: 14px; z-index: 9999; 
-  background: #202124; color: white;
-  border-radius: 25px; padding: 10px 18px; 
-  font-weight: bold; font-size: 14px;
-  display: flex; align-items: center; gap: 8px; 
-  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-  border: 2px solid #bd8190; cursor: pointer; transition: transform 0.2s;
+  position: fixed; 
+  top: 50%; 
+  right: 0; 
+  transform: translateY(-50%);
+  z-index: 9999; 
+  background: #bd8190; 
+  color: white;
+  border-radius: 12px 0 0 12px; 
+  padding: 14px 8px; 
+  font-weight: bold; 
+  font-size: 13px;
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  gap: 6px; 
+  box-shadow: -3px 4px 16px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.4); 
+  cursor: pointer; 
+  transition: transform 0.2s, background 0.2s;
 }
-.scroll-top-float:hover { transform: scale(1.08); background: #bd8190; }
+.scroll-top-float:hover { 
+  background: #a86d7c; 
+  transform: translateY(-50%) scale(1.05);
+}
 
 @media print {
   body { background: white; }
@@ -272,9 +289,9 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 </head>
 <body>
 
-<!-- BOTÓN FLOTANTE SUPERIOR DERECHO FUNCIONAL Y VISIBLE -->
-<button onclick="scrollToTopMenu()" class="scroll-top-float" title="Volver al Menú">
-  ◄ Menú Principal
+<!-- BOTÓN FLOTANTE VERTICAL DERECHO PARA VOLVER AL MENÚ -->
+<button onclick="scrollToTopMenu()" class="scroll-top-float" title="Volver al Menú Principal">
+  ☰ Menú principal
 </button>
 
 <!-- BARRA DE HERRAMIENTAS PRINCIPAL -->
