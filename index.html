@@ -19,13 +19,13 @@
 body { margin: 0; background: var(--bg); font-family: var(--font-print); color: var(--ink); }
 body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
-/* BARRA DE HERRAMIENTAS ELEGANTE */
+/* BARRA DE HERRAMIENTAS ELEGANTE Y ARMONIOSA */
 .toolbar {
   position: sticky; top: 0; z-index: 1000; background: #202124; color: white;
   padding: 12px 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
   box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
-.toolbar strong { margin-right: 8px; font-size: 16px; color: #fff; letter-spacing: 0.5px; }
+.toolbar strong { margin-right: 4px; font-size: 16px; color: #fff; letter-spacing: 0.5px; }
 
 .toolbar label.model-label {
   font-size: 13px; font-weight: 800; color: #f3d5dc; text-transform: uppercase; letter-spacing: 0.8px; margin-left: 4px;
@@ -35,48 +35,42 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   background: #333438; color: white; border: 1px solid #555; border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;
 }
 
-/* BOTONES INTERCALADOS: ROSA Y BLANCO */
+/* ESTILO BASE DE BOTONES (ROSA) Y PATRÓN ALTERNADO ROSA / BLANCO */
 .toolbar button {
   font: inherit; border: 0; border-radius: 8px; padding: 9px 14px; cursor: pointer; font-size: 13px; font-weight: 600;
   background: #bd8190; color: white; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;
 }
 .toolbar button:hover { background: #a86d7c; transform: translateY(-1px); }
 
-/* Patrón estricto: 1ros, 2do blanco, 3ro rosa, 4to blanco... */
-.toolbar select + div + button { background: #ffffff !important; color: #222 !important; }
-.toolbar select + div + button:hover { background: #f0f0f0 !important; }
+/* Patrón armonioso: Botones alternados en blanco y rosa */
+.toolbar button:nth-of-type(odd) { background: #ffffff !important; color: #222 !important; }
+.toolbar button:nth-of-type(odd):hover { background: #f0f0f0 !important; }
+.toolbar button:nth-of-type(even) { background: #bd8190 !important; color: white !important; }
+.toolbar button:nth-of-type(even):hover { background: #a86d7c !important; }
 
-.toolbar button:nth-of-type(2) { background: #ffffff !important; color: #222 !important; }
-.toolbar button:nth-of-type(2):hover { background: #f0f0f0 !important; }
-
-.toolbar button:nth-of-type(4) { background: #ffffff !important; color: #222 !important; }
-.toolbar button:nth-of-type(4):hover { background: #f0f0f0 !important; }
-
-.toolbar button:nth-of-type(6) { background: #ffffff !important; color: #222 !important; }
-.toolbar button:nth-of-type(6):hover { background: #f0f0f0 !important; }
-
-.toolbar button:nth-of-type(8) { background: #ffffff !important; color: #222 !important; }
-.toolbar button:nth-of-type(8):hover { background: #f0f0f0 !important; }
-
-/* TOGGLE DE FUENTE */
+/* TOGGLE DE FUENTE CON EJEMPLOS */
 .font-toggle-box {
   display: flex; align-items: center; gap: 6px; background: #2d2e32; padding: 4px 8px; border-radius: 8px; border: 1px solid #444; margin-left: 4px;
 }
 .font-toggle-box span { font-size: 12px; font-weight: 700; color: #ccc; }
 .font-toggle-box button {
-  padding: 5px 10px; font-size: 11px; background: #38393e; color: #eee; border-radius: 6px; border: none; cursor: pointer;
+  padding: 5px 10px; font-size: 12px; background: #38393e; color: #eee; border-radius: 6px; border: none; cursor: pointer;
 }
 .font-toggle-box button.active { background: #bd8190; color: white; font-weight: bold; }
 
-/* SELECTOR DE FORMA DE FOTO */
+/* SELECTOR DE FORMA DE FOTO GRÁFICO (SIN TEXTOS) */
 .photo-shape-selector {
   display: flex; align-items: center; gap: 8px; margin-left: auto; background: #2d2e32; padding: 4px 8px; border-radius: 8px; border: 1px solid #444;
 }
 .photo-shape-selector span { font-size: 12px; font-weight: 700; color: #ccc; }
-.photo-shape-selector button {
-  padding: 5px 10px; font-size: 11px; background: #38393e; color: #eee; border-radius: 6px; border: none; cursor: pointer;
+.shape-btn {
+  width: 26px; height: 26px; background: #38393e; border: 2px solid #555; border-radius: 6px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; padding: 0; transition: all 0.2s;
 }
-.photo-shape-selector button.active { background: #bd8190; color: white; font-weight: bold; }
+.shape-btn.active { border-color: #fff; background: #bd8190; }
+.shape-preview-circle { width: 14px; height: 14px; background: #fff; border-radius: 50%; }
+.shape-preview-square { width: 13px; height: 13px; background: #fff; border-radius: 2px; }
+.shape-preview-rect { width: 16px; height: 11px; background: #fff; border-radius: 2px; }
 
 /* HOJA DE CV Y MARCA DE AGUA */
 .sheet-container { position: relative; width: 210mm; margin: 20px auto; }
@@ -137,14 +131,13 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 }
 .sheet.paid .watermark { display: none !important; }
 
-/* FOTOS Y FORMAS SIMPLIFICADAS */
+/* FOTOS Y MARCOS PROPORCIONALES */
 .photo-frame { display: inline-block; overflow: hidden; background: #e0e0e0; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
 .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.shape-round { border-radius: 50% !important; aspect-ratio: 1 / 1 !important; clip-path: none !important; }
-.shape-square { border-radius: 8px !important; aspect-ratio: 1 / 1 !important; clip-path: none !important; }
-.shape-rect { border-radius: 6px !important; aspect-ratio: 3 / 4 !important; clip-path: none !important; }
-.shape-triangle { border-radius: 0 !important; aspect-ratio: 1 / 1 !important; clip-path: polygon(50% 0%, 0% 100%, 100% 100%) !important; }
+.shape-round { border-radius: 50% !important; aspect-ratio: 1 / 1 !important; }
+.shape-square { border-radius: 8px !important; aspect-ratio: 1 / 1 !important; }
+.shape-rect { border-radius: 6px !important; aspect-ratio: 3 / 4 !important; }
 
 .section { margin-bottom: 18px; }
 .entry { margin-bottom: 12px; }
@@ -153,23 +146,25 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .contact-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 9.2pt; width: 100%; }
 .icon { width: 20px; height: 20px; background: currentColor; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
 
-/* MODELOS VISUALES */
+/* MODELOS VISUALES (CON TAMAÑOS DE ENCABEZADO Y FOTO PROPORCIONALES) */
 .design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 22mm 16mm; gap: 8mm; }
 .design1 .left { padding-right: 4mm; }
+.design1 .photo-container { width: 42mm; margin-bottom: 10px; }
 
 .design2 { padding: 0 0 14mm; }
 .design2 .top {
-  min-height: 48mm; background: #bd8190; color: white; padding: 18mm 16mm 10mm 16mm;
-  display: flex; justify-content: space-between; align-items: flex-start; position: relative;
+  min-height: 52mm; background: #bd8190; color: white; padding: 18mm 16mm 10mm 16mm;
+  display: flex; justify-content: space-between; align-items: center; position: relative;
 }
-.design2 .top-info { max-width: 65%; }
-.design2 .photo-container { width: 36mm; flex-shrink: 0; margin-left: auto; }
+.design2 .top-info { max-width: 58%; }
+.design2 .photo-container { width: 44mm; flex-shrink: 0; margin-left: auto; }
 .design2 .body { display: grid; grid-template-columns: 42% 58%; padding: 16mm 16mm 14mm; gap: 10mm; }
 .design2 .left { padding-top: 6mm; padding-right: 6mm; }
 .design2 .right { padding-top: 6mm; padding-left: 6mm; }
 
 .design3 { display: grid; grid-template-columns: 42% 58%; padding: 0; min-height: 297mm; }
 .design3 .left { background: #f0dedb; padding: 22mm 14mm 14mm 14mm; }
+.design3 .left .photo-container { width: 42mm; margin-bottom: 10px; }
 .design3 .right { padding: 22mm 14mm 14mm 12mm; }
 
 .design4 { display: grid; grid-template-columns: 42% 58%; padding: 20mm 14mm; gap: 10mm; color: #124b5b; position: relative; }
@@ -178,42 +173,42 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   background: #1d5e72; clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%); z-index: 0; opacity: 0.15;
 }
 .design4 .left, .design4 .right { position: relative; z-index: 1; }
-.design4 .photo-container { margin: 4mm 0 10mm; width: 40mm; }
+.design4 .photo-container { margin: 4mm 0 10mm; width: 42mm; }
 
 .design5 { display: grid; grid-template-columns: 42% 58%; padding: 0; }
 .design5 .banner {
-  grid-column: 1/3; background: #4b75a0; color: white; min-height: 44mm; padding: 12mm 16mm 10mm 16mm;
+  grid-column: 1/3; background: #4b75a0; color: white; min-height: 48mm; padding: 12mm 16mm 10mm 16mm;
   display: flex; justify-content: space-between; align-items: center; position: relative;
 }
-.design5 .photo-container { width: 34mm; flex-shrink: 0; }
+.design5 .photo-container { width: 42mm; flex-shrink: 0; }
 .design5 .left { background: #e8edf6; padding: 18mm 14mm 14mm 14mm; }
 .design5 .right { padding: 18mm 14mm 14mm 12mm; }
 
 .design6 { display: grid; grid-template-columns: 40% 60%; padding: 0; }
 .design6 .banner {
-  grid-column: 1/3; min-height: 46mm; background: #302c3a; color: white; padding: 12mm 16mm 10mm 16mm;
+  grid-column: 1/3; min-height: 48mm; background: #302c3a; color: white; padding: 12mm 16mm 10mm 16mm;
   display: flex; justify-content: space-between; align-items: center; position: relative;
 }
-.design6 .photo-container { width: 34mm; flex-shrink: 0; }
+.design6 .photo-container { width: 42mm; flex-shrink: 0; }
 .design6 .left { padding: 18mm 14mm 14mm 14mm; background: #f8f7f9; }
 .design6 .right { padding: 18mm 14mm 14mm 12mm; }
 
 .design7 { display: grid; grid-template-columns: 42% 58%; padding: 0; color: #244b3c; }
 .design7 .banner {
-  grid-column: 1/3; background: #2f6b55 !important; color: white !important; min-height: 44mm; padding: 12mm 16mm 10mm 16mm;
+  grid-column: 1/3; background: #2f6b55 !important; color: white !important; min-height: 48mm; padding: 12mm 16mm 10mm 16mm;
   display: flex; justify-content: space-between; align-items: center; position: relative;
 }
-.design7 .photo-container { width: 35mm; flex-shrink: 0; }
+.design7 .photo-container { width: 42mm; flex-shrink: 0; }
 .design7 .left { background: #e7f0e9 !important; padding: 18mm 14mm 14mm 14mm; }
 .design7 .right { padding: 18mm 14mm 14mm 12mm; }
 
 .design8 { display: grid; grid-template-columns: 42% 58%; padding: 0; color: #4a4034; }
 .design8 .banner {
   grid-column: 1/3; background: linear-gradient(135deg, #b69a65 0%, #8c713f 100%) !important; color: white !important;
-  min-height: 46mm !important; padding: 10mm 16mm 8mm 16mm !important; display: flex; justify-content: space-between; align-items: center;
+  min-height: 50mm !important; padding: 10mm 16mm 8mm 16mm !important; display: flex; justify-content: space-between; align-items: center;
   position: relative; overflow: hidden;
 }
-.design8 .photo-container { width: 36mm; flex-shrink: 0; margin-left: auto; }
+.design8 .photo-container { width: 44mm; flex-shrink: 0; margin-left: auto; }
 .design8 .left { background: #f4eee2 !important; padding: 18mm 14mm 14mm 14mm !important; }
 .design8 .right { padding: 18mm 14mm 14mm 12mm !important; }
 
@@ -230,42 +225,25 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .btn-capture { background: #22c55e; color: white; }
 .btn-close-modal { background: #ef4444; color: white; }
 
-/* VISTA PREVIA MÓVIL */
+/* VISTA PREVIA MÓVIL Y BOTÓN DE RETORNO SUPERIOR DERECHO */
 .preview-mode .toolbar > *:not(#editBtn) { display: none !important; }
-.preview-mode .toolbar { justify-content: flex-end; }
+.preview-mode .toolbar { justify-content: space-between; }
 .preview-mode #editBtn { display: inline-flex !important; }
 .preview-mode .sheet-container { margin: 0 auto; width: 100% !important; }
 .preview-mode .sheet { transform: none !important; zoom: 1 !important; box-shadow: none; margin: 0 auto; }
 
-@media(max-width: 850px) {
-  .sheet { transform-origin: top left; zoom: calc((100vw - 24px) / 793.7); margin: 12px auto; }
-  .preview-mode .sheet { zoom: calc((100vw - 10px) / 793.7); margin: 0 auto; }
-}
-
-/* BOTÓN FLOTANTE PARA VOLVER ARRIBA */
+/* BOTÓN FLOTANTE SUPERIOR DERECHO PARA VOLVER A LA BOTONERA EN CELULAR */
 .scroll-top-float {
-  position: fixed; bottom: 70px; right: 18px; z-index: 98; background: #202124; color: white;
-  border-radius: 50%; width: 44px; height: 44px; font-weight: bold; font-size: 18px;
-  display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-  border: 2px solid #bd8190; cursor: pointer; transition: transform 0.2s;
+  position: fixed; top: 12px; right: 12px; z-index: 9999; background: #202124; color: white;
+  border-radius: 20px; padding: 6px 12px; font-weight: bold; font-size: 12px;
+  display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  border: 1.5px solid #bd8190; cursor: pointer; transition: transform 0.2s;
 }
-.scroll-top-float:hover { transform: scale(1.1); background: #bd8190; }
-
-/* BOTÓN FLOTANTE DE SOPORTE ROSA SUTIL */
-.support-float {
-  position: fixed; bottom: 18px; right: 18px; z-index: 99; background: #bd8190; color: white;
-  border-radius: 8px; padding: 8px 14px; font-weight: 600; font-size: 12px; text-decoration: none;
-  display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s;
-}
-.support-float:hover { transform: scale(1.04); background: #a86d7c; }
-.support-float .wa-circle {
-  width: 20px; height: 20px; background: #25d366; border-radius: 50%; display: flex;
-  align-items: center; justify-content: center; font-size: 11px; font-weight: bold; color: white;
-}
+.scroll-top-float:hover { transform: scale(1.05); background: #bd8190; }
 
 @media print {
   body { background: white; }
-  .toolbar, .support-float, .scroll-top-float, .modal-overlay { display: none !important; }
+  .toolbar, .scroll-top-float, .modal-overlay { display: none !important; }
   .sheet-container { margin: 0; width: 210mm; }
   .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; }
   .watermark { display: none !important; }
@@ -274,11 +252,16 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 </head>
 <body>
 
-<!-- BARRA DE HERRAMIENTAS ACTUALIZADA CON BOTONES INTERCALADOS Y CÁMARA -->
+<!-- BOTÓN FLOTANTE SUPERIOR DERECHO PARA VOLVER AL MENÚ EN MÓVIL -->
+<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-top-float" title="Volver a la botonera">
+  ◄ Menú
+</button>
+
+<!-- BARRA DE HERRAMIENTAS PRINCIPAL -->
 <div class="toolbar">
   <strong>CV Nexus Studio</strong>
   
-  <label for="design" class="model-label">Elegí modelo:</label>
+  <label for="design" class="model-label">Modelos:</label>
   <select id="design">
     <option value="design1">1 · Blanco y negro</option>
     <option value="design2">2 · Rosa elegante</option>
@@ -292,25 +275,26 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
   <div class="font-toggle-box">
     <span>Letra:</span>
-    <button id="btnFontPrint" class="active" onclick="setFontMode('print')">Imprenta</button>
-    <button id="btnFontCursive" onclick="setFontMode('cursive')">Cursiva</button>
+    <button id="btnFontPrint" class="active" onclick="setFontMode('print')" style="font-family: Arial, sans-serif;">Aa</button>
+    <button id="btnFontCursive" onclick="setFontMode('cursive')" style="font-family: 'Brush Script MT', cursive;">𝒜𝒶</button>
   </div>
   
   <button class="primary" id="photoFileBtn">Subir foto</button>
-  <button id="photoCamBtn">📸 Cámara en vivo</button>
-  <button class="primary" id="printPreviewBtn">Imprimir / Vista Previa</button>
-  <button id="payDownloadBtn">Descarga sin marca de agua - $2000 MP</button>
-  <button class="primary" id="whatsappBtn">Compartir CV por WhatsApp</button>
-  <button id="previewBtn">👁 Ver CV completo</button>
-  <button class="primary" id="editBtn" style="display:none;">✏️ Volver a editar</button>
-  <button id="reset">Restaurar ejemplo</button>
+  <button id="photoCamBtn">📸 Cámara</button>
+  <button class="primary" id="previewModeBtn">👁 Vista Previa</button>
+  <button id="payDownloadBtn">Sin marca de agua · $2000 🤝 Mercado Pago</button>
+  <button class="primary" id="whatsappBtn">WhatsApp</button>
+  <button id="supportBtn" onclick="window.open('https://wa.me/5491131504886?text=Hola%20Noem%C3%AD,%20tengo%20una%20consulta%20sobre%20el%20pago%20o%20descarga%20de%20mi%20CV', '_blank')">
+    <span style="width:16px; height:16px; background:#25d366; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:10px; color:#fff;">☎</span> Soporte
+  </button>
+  <button class="primary" id="reset">Restaurar ejemplo</button>
+  <button id="editBtn" style="display:none;" class="primary">✏️ Editar</button>
 
   <div class="photo-shape-selector">
-    <span>Forma:</span>
-    <button id="btnShapeRound" class="active" onclick="setPhotoShape('shape-round')">Redonda</button>
-    <button id="btnShapeSquare" onclick="setPhotoShape('shape-square')">Cuadrada</button>
-    <button id="btnShapeRect" onclick="setPhotoShape('shape-rect')">Rect.</button>
-    <button id="btnShapeTri" onclick="setPhotoShape('shape-triangle')">Triángulo</button>
+    <span>Marco:</span>
+    <button id="shapeRoundBtn" class="shape-btn active" onclick="setPhotoShape('shape-round')" title="Redondo"><div class="shape-preview-circle"></div></button>
+    <button id="shapeSquareBtn" class="shape-btn" onclick="setPhotoShape('shape-square')" title="Cuadrado"><div class="shape-preview-square"></div></button>
+    <button id="shapeRectBtn" class="shape-btn" onclick="setPhotoShape('shape-rect')" title="Rectangular"><div class="shape-preview-rect"></div></button>
   </div>
 </div>
 
@@ -336,7 +320,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
     <div class="left">
       <div class="photo-container">
         <div class="photo-frame shape-round" id="mainPhotoFrame">
-          <img class="main-photo" alt="Foto de perfil" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23ccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>">
+          <img class="main-photo" alt="Foto de perfil" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24' fill='%23bbb'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>">
         </div>
       </div>
       <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">TU NOMBRE Y APELLIDO</h1>
@@ -400,23 +384,13 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   </main>
 </div>
 
-<!-- BOTÓN FLOTANTE PARA VOLVER ARRIBA -->
-<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-top-float" title="Volver al menú">
-  ▲
-</button>
-
-<!-- BOTÓN FLOTANTE DE SOPORTE ROSA SUTIL -->
-<a href="https://wa.me/5491131504886?text=Hola%20Noem%C3%AD,%20tengo%20una%20consulta%20sobre%20mi%20CV%20en%20Nexus%20Studio" target="_blank" class="support-float">
-  <span class="wa-circle">☎</span> Soporte
-</a>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 const MP_PAYMENT_URL = "https://mpago.li/1YZVG9u";
 const cv = document.getElementById('cv');
 const selector = document.getElementById('design');
 let currentPhotoShape = 'shape-round';
-let currentPhotoSrc = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23ccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
+let currentPhotoSrc = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24' fill='%23bbb'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
 
 let activeRecognition = null;
 let activeMicBtn = null;
@@ -448,16 +422,15 @@ checkPaymentStatus();
 function setPhotoShape(shapeClass) {
   currentPhotoShape = shapeClass;
   document.querySelectorAll('.photo-shape-selector button').forEach(b => b.classList.remove('active'));
-  if (shapeClass === 'shape-round') document.getElementById('btnShapeRound').classList.add('active');
-  if (shapeClass === 'shape-square') document.getElementById('btnShapeSquare').classList.add('active');
-  if (shapeClass === 'shape-rect') document.getElementById('btnShapeRect').classList.add('active');
-  if (shapeClass === 'shape-triangle') document.getElementById('btnShapeTri').classList.add('active');
+  if (shapeClass === 'shape-round') document.getElementById('shapeRoundBtn').classList.add('active');
+  if (shapeClass === 'shape-square') document.getElementById('shapeSquareBtn').classList.add('active');
+  if (shapeClass === 'shape-rect') document.getElementById('shapeRectBtn').classList.add('active');
   applyPhotoShape();
 }
 
 function applyPhotoShape() {
   document.querySelectorAll('.photo-frame').forEach(frame => {
-    frame.classList.remove('shape-round', 'shape-square', 'shape-rect', 'shape-triangle');
+    frame.classList.remove('shape-round', 'shape-square', 'shape-rect');
     frame.classList.add(currentPhotoShape);
   });
 }
@@ -479,7 +452,7 @@ function renderCurrentDesign() {
   const web = getData('web', 'LinkedIn / Sitio Web');
   const address = getData('address', 'Buenos Aires, Argentina');
   const languages = getData('languages', '• Español — Nativo<br>• Inglés — Intermedio');
-  const about = getData('about', 'Profesional responsable y proactivo/a...');
+  const about = getData('about', 'Resumen profesional, fortalezas y metas...');
   const edu1Title = getData('edu1Title', 'Institución educativa');
   const edu1Desc = getData('edu1Desc', 'Título o carrera · 2020–2023');
   const edu2Title = getData('edu2Title', 'Curso / especialización');
@@ -487,10 +460,10 @@ function renderCurrentDesign() {
   const skills = getData('skills', 'Organización, comunicación, herramientas...');
   const exp1Company = getData('exp1Company', 'Nombre de la empresa');
   const exp1Role = getData('exp1Role', 'Puesto · 2022–Actualidad');
-  const exp1Desc = getData('exp1Desc', 'Descripción de responsabilidades y logros...');
+  const exp1Desc = getData('exp1Desc', 'Descripción de tareas y logros...');
   const exp2Company = getData('exp2Company', 'Empresa anterior');
   const exp2Role = getData('exp2Role', 'Puesto · 2019–2022');
-  const exp2Desc = getData('exp2Desc', 'Descripción breve de funciones...');
+  const exp2Desc = getData('exp2Desc', 'Funciones realizadas...');
   const refs = getData('refs', 'Disponibles a solicitud.');
 
   const artStamps = {
@@ -792,19 +765,19 @@ function setupProtectedMics() {
 
 loadCvFromStorage();
 
-const previewBtn = document.getElementById('previewBtn');
+const previewModeBtn = document.getElementById('previewModeBtn');
 const editBtn = document.getElementById('editBtn');
 
-previewBtn.addEventListener('click', () => {
+previewModeBtn.addEventListener('click', () => {
   document.body.classList.add('preview-mode');
-  previewBtn.style.display = 'none';
+  previewModeBtn.style.display = 'none';
   editBtn.style.display = 'inline-flex';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 editBtn.addEventListener('click', () => {
   document.body.classList.remove('preview-mode');
-  previewBtn.style.display = 'inline-flex';
+  previewModeBtn.style.display = 'inline-flex';
   editBtn.style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
@@ -868,11 +841,6 @@ document.getElementById('capturePhotoBtn').onclick = () => {
   cameraModal.hidden = true;
 };
 
-// IMPRIMIR / VISTA PREVIA
-document.getElementById('printPreviewBtn').onclick = () => {
-  window.print();
-};
-
 // MERCADO PAGO
 document.getElementById('payDownloadBtn').onclick = () => {
   if (localStorage.getItem('cv_nexus_paid') === 'true') {
@@ -907,7 +875,7 @@ async function makeCvImage() {
 document.getElementById('whatsappBtn').onclick = async () => {
   const btn = document.getElementById('whatsappBtn');
   const name = cv.querySelector('h1')?.innerText.replace(/\s+/g, ' ').trim() || 'mi currículum';
-  btn.disabled = true; btn.textContent = 'Generando imagen HD…';
+  btn.disabled = true; btn.textContent = 'Generando...';
   try {
     const blob = await makeCvImage();
     const file = new File([blob], `CV-${name.replace(/[^a-z0-9-]/gi, '-')}.png`, { type: 'image/png' });
@@ -924,7 +892,7 @@ document.getElementById('whatsappBtn').onclick = async () => {
       alert('Se generó la descarga de la imagen de tu CV para que puedas enviarla adjunta por WhatsApp.');
     }
   } finally {
-    btn.disabled = false; btn.textContent = 'Compartir CV por WhatsApp';
+    btn.disabled = false; btn.textContent = 'WhatsApp';
   }
 };
 </script>
