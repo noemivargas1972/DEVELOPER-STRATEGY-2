@@ -57,23 +57,34 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   width: 210mm; min-height: 297mm; background: white; box-shadow: 0 4px 18px rgba(0,0,0,0.15);
   overflow: hidden; position: relative; font-size: 9.8pt; line-height: 1.45;
 }
-.sheet [contenteditable="true"] { outline: 1px dashed transparent; cursor: text; border-radius: 3px; position: relative; display: inline-block; width: 100%; }
+
+/* CONTENEDOR SEPARADO PARA EVITAR QUE EL BORRADO DE TECLADO MATE AL MICRÓFONO */
+.editable-wrapper {
+  position: relative; display: flex; align-items: center; width: 100%; margin-bottom: 4px;
+}
+
+.sheet [contenteditable="true"] {
+  outline: 1px dashed transparent; cursor: text; border-radius: 3px; min-height: 1.2em; flex-grow: 1;
+}
 .sheet [contenteditable="true"]:focus { outline: 1.5px dashed #4c90d9; background: #fffde6; }
+
+/* TEXTOS TRANSPARENTES (PLACEHOLDERS) QUE DESAPARECEN AL ESCRIBIR */
+.sheet [contenteditable="true"]:empty:not(:focus)::before {
+  content: attr(data-placeholder); color: #aaa; font-style: italic; opacity: 0.7; pointer-events: none;
+}
+
 .sheet h1, .sheet h2, .sheet h3, .sheet p { margin-top: 0; }
 .sheet h1 { font-size: 26pt; line-height: 1.05; margin-bottom: 8px; }
 .sheet h2 { font-size: 12pt; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.8px; }
 .sheet h3 { font-size: 10.5pt; margin-bottom: 3px; }
 .sheet p { margin-bottom: 8px; }
 
-/* MICRÓFONO INDIVIDUAL SEPARADO Y PROLIJO */
-.voice-mic-container {
-  display: inline-flex; align-items: center; justify-content: flex-end; width: 100%; position: relative;
-}
+/* BOTÓN DE MICRÓFONO FLOTANTE E IMBORRABLE POR TECLADO */
 .voice-mic-btn {
   display: inline-flex; align-items: center; justify-content: center;
   width: 22px; height: 22px; font-size: 11px; background: #bd8190; color: white;
-  border-radius: 50%; cursor: pointer; margin-left: 6px; vertical-align: middle;
-  user-select: none; opacity: 0.8; transition: opacity 0.2s, transform 0.2s; flex-shrink: 0;
+  border-radius: 50%; cursor: pointer; margin-left: 6px; flex-shrink: 0;
+  user-select: none; opacity: 0.8; transition: opacity 0.2s, transform 0.2s;
 }
 .voice-mic-btn:hover { opacity: 1; transform: scale(1.15); }
 .voice-mic-btn.recording { background: #e11d48; animation: pulse 1s infinite; opacity: 1; }
@@ -107,7 +118,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .entry { margin-bottom: 12px; }
 .entry p { font-size: 9pt; color: #555; }
 .rule { height: 2px; background: currentColor; margin: 10px 0 14px; opacity: 0.8; }
-.contact-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 9.2pt; }
+.contact-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 9.2pt; width: 100%; }
 .icon { width: 20px; height: 20px; background: currentColor; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
 
 /* DISEÑOS */
@@ -186,7 +197,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   .preview-mode .sheet { zoom: calc((100vw - 10px) / 793.7); margin: 0 auto; }
 }
 
-/* BOTÓN FLOTANTE PARA VOLVER ARRIBA / MENÚ */
+/* BOTÓN FLOTANTE VOLVER ARRIBA */
 .scroll-top-float {
   position: fixed; bottom: 76px; right: 18px; z-index: 98; background: #333; color: white;
   border-radius: 50px; width: 44px; height: 44px; font-weight: bold; font-size: 16px; text-decoration: none;
@@ -248,7 +259,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   </div>
 </div>
 
-<!-- HOJA DEL CV -->
+<!-- HOJA DEL CV CON TEXTOS GUIAS TRANSPARENTES (DATA-PLACEHOLDER) -->
 <div class="sheet-container">
   <main id="cv" class="sheet design1">
     <div class="watermark">VISTA PREVIA — CV NEXUS</div>
@@ -259,42 +270,42 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
           <img class="main-photo" alt="Foto de perfil" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23ccc'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>">
         </div>
       </div>
-      <h1 contenteditable="true">TU NOMBRE<br>Y APELLIDO</h1>
-      <div class="role" contenteditable="true">Puesto / Profesión</div>
+      <h1 contenteditable="true" data-placeholder="Nombre y Apellido">TU NOMBRE Y APELLIDO</h1>
+      <div class="role" contenteditable="true" data-placeholder="Puesto / Profesión a la que aspirás">Puesto / Profesión</div>
       
       <div class="section">
         <h2>Contacto</h2>
-        <div class="contact-item"><span class="icon">✉</span><span contenteditable="true">correo@ejemplo.com</span></div>
-        <div class="contact-item"><span class="icon">☎</span><span contenteditable="true">+54 11 1234-5678</span></div>
-        <div class="contact-item"><span class="icon">◎</span><span contenteditable="true">LinkedIn / Sitio Web</span></div>
-        <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true">Dirección / Localidad, Buenos Aires</span></div>
+        <div class="contact-item"><span class="icon">✉</span><span contenteditable="true" data-placeholder="correo@ejemplo.com">correo@ejemplo.com</span></div>
+        <div class="contact-item"><span class="icon">☎</span><span contenteditable="true" data-placeholder="+54 11 1234-5678">+54 11 1234-5678</span></div>
+        <div class="contact-item"><span class="icon">◎</span><span contenteditable="true" data-placeholder="LinkedIn / Sitio Web">LinkedIn / Sitio Web</span></div>
+        <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true" data-placeholder="Dirección, Barrio, Buenos Aires">Buenos Aires, Argentina</span></div>
       </div>
       
       <div class="section">
         <h2>Idiomas</h2>
-        <p contenteditable="true">• Español — Nativo<br>• Inglés — Intermedio</p>
+        <p contenteditable="true" data-placeholder="• Español — Nativo&#10;• Inglés — Intermedio">• Español — Nativo<br>• Inglés — Intermedio</p>
       </div>
     </div>
 
     <div class="middle">
       <section class="section">
         <h2>Sobre mí</h2>
-        <p contenteditable="true">Profesional responsable y proactivo/a, con experiencia en organización, atención al cliente y resolución de problemas. Me adapto con facilidad y busco aportar valor al equipo.</p>
+        <p contenteditable="true" data-placeholder="Resumen profesional breves, fortalezas y metas...">Profesional responsable y proactivo/a, con experiencia en organización, atención al cliente y resolución de problemas. Me adapto con facilidad y busco aportar valor al equipo.</p>
       </section>
       <section class="section">
         <h2>Formación profesional</h2>
         <div class="entry">
-          <h3 contenteditable="true">Institución educativa</h3>
-          <p contenteditable="true">Título o formación · 2020–2023</p>
+          <h3 contenteditable="true" data-placeholder="Institución educativa">Institución educativa</h3>
+          <p contenteditable="true" data-placeholder="Título o carrera · 2020–2023">Título o formación · 2020–2023</p>
         </div>
         <div class="entry">
-          <h3 contenteditable="true">Curso / especialización</h3>
-          <p contenteditable="true">Institución · Año</p>
+          <h3 contenteditable="true" data-placeholder="Curso / Especialización">Curso / especialización</h3>
+          <p contenteditable="true" data-placeholder="Institución · Año">Institución · Año</p>
         </div>
       </section>
       <section class="section">
         <h2>Habilidades</h2>
-        <p contenteditable="true">Organización, comunicación, trabajo en equipo, herramientas informáticas.</p>
+        <p contenteditable="true" data-placeholder="Organización, trabajo en equipo, informática...">Organización, comunicación, trabajo en equipo, herramientas informáticas.</p>
       </section>
     </div>
 
@@ -302,19 +313,19 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
       <section class="section">
         <h2>Experiencia laboral</h2>
         <div class="entry">
-          <h3 contenteditable="true">Nombre de la empresa</h3>
-          <p contenteditable="true"><b>Puesto · 2022–Actualidad</b></p>
-          <p contenteditable="true">Descripción de responsabilidades, tareas principales y logros relevantes.</p>
+          <h3 contenteditable="true" data-placeholder="Nombre de la empresa">Nombre de la empresa</h3>
+          <p contenteditable="true" data-placeholder="Puesto · 2022–Actualidad"><b>Puesto · 2022–Actualidad</b></p>
+          <p contenteditable="true" data-placeholder="Tareas principales y logros relevantes...">Descripción de responsabilidades, tareas principales y logros relevantes.</p>
         </div>
         <div class="entry">
-          <h3 contenteditable="true">Empresa anterior</h3>
-          <p contenteditable="true"><b>Puesto · 2019–2022</b></p>
-          <p contenteditable="true">Descripción breve de las funciones realizadas y resultados obtenidos.</p>
+          <h3 contenteditable="true" data-placeholder="Empresa anterior">Empresa anterior</h3>
+          <p contenteditable="true" data-placeholder="Puesto · 2019–2022"><b>Puesto · 2019–2022</b></p>
+          <p contenteditable="true" data-placeholder="Funciones realizadas...">Descripción breve de las funciones realizadas y resultados obtenidos.</p>
         </div>
       </section>
       <section class="section">
         <h2>Referencias</h2>
-        <p contenteditable="true">Disponibles a solicitud.</p>
+        <p contenteditable="true" data-placeholder="Disponibles a solicitud">Disponibles a solicitud.</p>
       </section>
     </div>
   </main>
@@ -332,12 +343,12 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   </div>
 </div>
 
-<!-- BOTÓN FLOTANTE PARA VOLVER ARRIBA -->
+<!-- BOTÓN FLOTANTE ARRIBA -->
 <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-top-float" title="Volver arriba">
   ▲
 </button>
 
-<!-- BOTÓN FLOTANTE SOPORTE WHATSAPP -->
+<!-- BOTÓN FLOTANTE WHATSAPP -->
 <a href="https://wa.me/5491131504886?text=Hola%20Noem%C3%AD,%20tengo%20una%20consulta%20sobre%20mi%20CV%20en%20Nexus%20Studio" target="_blank" class="whatsapp-float">
   💬 Soporte WhatsApp
 </a>
@@ -348,20 +359,6 @@ const MP_PAYMENT_URL = "https://mpago.li/1YZVG9u";
 const cv = document.getElementById('cv');
 const selector = document.getElementById('design');
 let currentPhotoShape = 'shape-round';
-
-// LISTA DE TEXTOS DE EJEMPLO PARA LIMPIAR AL DICTAR
-const SAMPLE_TEXTS = [
-  "TU NOMBRE\nY APELLIDO", "TU NOMBRE Y APELLIDO", "Puesto / Profesión",
-  "correo@ejemplo.com", "+54 11 1234-5678", "LinkedIn / Sitio Web",
-  "Dirección / Localidad, Buenos Aires", "Buenos Aires, Argentina",
-  "• Español — Nativo\n• Inglés — Intermedio",
-  "Profesional responsable y proactivo/a, con experiencia en organización, atención al cliente y resolución de problemas. Me adapto con facilidad y busco aportar valor al equipo.",
-  "Institución educativa", "Título o formación · 2020–2023", "Curso / especialización", "Institución · Año",
-  "Organización, comunicación, trabajo en equipo, herramientas informáticas.",
-  "Nombre de la empresa", "Puesto · 2022–Actualidad", "Descripción de responsabilidades, tareas principales y logros relevantes.",
-  "Empresa anterior", "Puesto · 2019–2022", "Descripción breve de las funciones realizadas y resultados obtenidos.",
-  "Disponibles a solicitud."
-];
 
 function checkPaymentStatus() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -377,7 +374,7 @@ selector.addEventListener('change', () => {
   const isPaid = cv.classList.contains('paid');
   cv.className = 'sheet ' + selector.value + (isPaid ? ' paid' : '');
   applyPhotoShape();
-  attachVoiceMics();
+  setupProtectedMics();
   saveCvToStorage();
 });
 
@@ -414,80 +411,78 @@ function loadCvFromStorage() {
     cv.innerHTML = savedContent;
     checkPaymentStatus();
   }
-  attachVoiceMics();
+  setupProtectedMics();
 }
 
 cv.addEventListener('input', saveCvToStorage);
 
-function attachVoiceMics() {
-  cv.querySelectorAll('.voice-mic-container').forEach(c => {
-    const parent = c.parentNode;
-    parent.innerHTML = c.querySelector('[contenteditable]').outerHTML;
-  });
-
+// CONFIGURACIÓN DE MICRÓFONOS ENVOLVENTES QUE NUNCA SE BORRAN CON EL TECLADO
+function setupProtectedMics() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) return;
-
+  
   cv.querySelectorAll('[contenteditable="true"]').forEach(field => {
-    const wrapper = document.createElement('span');
-    wrapper.className = 'voice-mic-container';
+    // Si ya está envuelto en un wrapper protegido, lo omitimos
+    if (field.parentNode.classList.contains('editable-wrapper')) return;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'editable-wrapper';
     
     field.parentNode.insertBefore(wrapper, field);
     wrapper.appendChild(field);
 
-    const micBtn = document.createElement('span');
-    micBtn.className = 'voice-mic-btn';
-    micBtn.innerHTML = '🎙️';
-    micBtn.title = 'Dictar por voz';
-    micBtn.contentEditable = 'false';
+    if (SpeechRecognition) {
+      const micBtn = document.createElement('span');
+      micBtn.className = 'voice-mic-btn';
+      micBtn.innerHTML = '🎙️';
+      micBtn.title = 'Dictar por voz';
+      micBtn.contentEditable = 'false';
 
-    let recognition = null;
-    let recording = false;
+      let recognition = null;
+      let recording = false;
 
-    micBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
+      micBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
 
-      if (recording && recognition) {
-        recognition.stop();
-        recording = false;
-        micBtn.classList.remove('recording');
-        return;
-      }
-
-      recognition = new SpeechRecognition();
-      recognition.lang = 'es-AR';
-      recognition.interimResults = false;
-
-      recognition.onstart = () => {
-        recording = true;
-        micBtn.classList.add('recording');
-      };
-
-      recognition.onresult = (event) => {
-        const text = event.results[0][0].transcript;
-        const currentContent = field.innerText.trim();
-
-        // Si el campo tiene un texto de ejemplo de la lista, SE BORRA COMPLETO antes de colocar el dictado
-        const isSample = SAMPLE_TEXTS.some(sample => currentContent.toLowerCase() === sample.toLowerCase().trim());
-
-        if (currentContent === '' || isSample) {
-          field.innerText = text;
-        } else {
-          field.innerText += ' ' + text;
+        if (recording && recognition) {
+          recognition.stop();
+          recording = false;
+          micBtn.classList.remove('recording');
+          return;
         }
-        saveCvToStorage();
-      };
 
-      recognition.onerror = recognition.onend = () => {
-        recording = false;
-        micBtn.classList.remove('recording');
-      };
+        recognition = new SpeechRecognition();
+        recognition.lang = 'es-AR';
+        recognition.interimResults = false;
 
-      recognition.start();
-    });
+        recognition.onstart = () => {
+          recording = true;
+          micBtn.classList.add('recording');
+        };
 
-    wrapper.appendChild(micBtn);
+        recognition.onresult = (event) => {
+          const text = event.results[0][0].transcript;
+          const currentText = field.innerText.trim();
+
+          // Si el campo tiene solo el texto por defecto o está vacío, arranca limpio
+          if (currentText === '' || field.hasAttribute('data-placeholder')) {
+            field.innerText = text;
+          } else {
+            field.innerText += ' ' + text;
+          }
+          saveCvToStorage();
+        };
+
+        recognition.onerror = recognition.onend = () => {
+          recording = false;
+          micBtn.classList.remove('recording');
+        };
+
+        recognition.start();
+      });
+
+      wrapper.appendChild(micBtn);
+    }
   });
 }
 
@@ -575,4 +570,3 @@ document.getElementById('whatsappBtn').onclick = async () => {
 </script>
 </body>
 </html>
-
