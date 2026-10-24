@@ -17,35 +17,40 @@
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--ink); }
 
-/* BARRA DE HERRAMIENTAS Y CONTROLES SUPERIORES */
+/* BARRA DE HERRAMIENTAS INTERFAZ SOBRIA Y ELEGANTE ORIGINAL */
 .toolbar {
-  position: sticky; top: 0; z-index: 100; background: #1e1e24; color: white;
-  padding: 10px 14px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  position: sticky; top: 0; z-index: 100; background: #202124; color: white;
+  padding: 12px 16px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
 }
-.toolbar strong { margin-right: 6px; font-size: 15px; color: #f3d5dc; }
-.toolbar button, .toolbar select, .toolbar label {
-  font: inherit; border: 0; border-radius: 6px; padding: 7px 11px; cursor: pointer; font-size: 12px;
+.toolbar strong { margin-right: 8px; font-size: 16px; color: #fff; letter-spacing: 0.5px; }
+
+/* ETIQUETA "ELEGÍ MODELO" RESALTADA Y EN NEGRITA */
+.toolbar label.model-label {
+  font-size: 13px; font-weight: 800; color: #f3d5dc; text-transform: uppercase; letter-spacing: 0.8px; margin-left: 4px;
 }
-.toolbar button { background: #fff; color: #222; font-weight: 600; transition: background 0.2s; }
-.toolbar button:hover { background: #f0f0f0; }
+
+.toolbar select {
+  background: #333438; color: white; border: 1px solid #555; border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;
+}
+
+.toolbar button {
+  font: inherit; border: 0; border-radius: 8px; padding: 9px 14px; cursor: pointer; font-size: 13px; font-weight: 600;
+  background: #ffffff; color: #222; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;
+}
+.toolbar button:hover { background: #f0f0f0; transform: translateY(-1px); }
 .toolbar button.primary { background: #bd8190; color: white; }
 .toolbar button.primary:hover { background: #a86d7c; }
-.toolbar button.success { background: #10b981; color: white; }
-.toolbar select { background: #333; color: white; }
-.toolbar .hint { font-size: 11px; opacity: 0.85; margin-left: auto; }
 
-/* BARRA DE BOTONES DE ACCIÓN RÁPIDA Y VOZ */
-.action-bar {
-  background: #2a2b32; color: white; padding: 8px 14px; display: flex; gap: 10px;
-  align-items: center; flex-wrap: wrap; border-top: 1px solid #3a3b42;
+/* SECTOR FORMA DE FOTO DISCRETO */
+.photo-shape-selector {
+  display: flex; align-items: center; gap: 8px; margin-left: auto; background: #2d2e32; padding: 4px 8px; border-radius: 8px; border: 1px solid #444;
 }
-.action-bar label { font-size: 12px; font-weight: bold; color: #e2e8f0; }
-.btn-group { display: inline-flex; border-radius: 6px; overflow: hidden; border: 1px solid #4a4b52; }
-.btn-group button {
-  background: #3a3b42; color: #fff; border: 0; padding: 6px 12px; font-size: 11px; cursor: pointer;
+.photo-shape-selector span { font-size: 12px; font-weight: 700; color: #ccc; }
+.photo-shape-selector button {
+  padding: 5px 10px; font-size: 11px; background: #38393e; color: #eee; border-radius: 6px; border: none; cursor: pointer;
 }
-.btn-group button.active { background: #bd8190; color: white; font-weight: bold; }
+.photo-shape-selector button.active { background: #bd8190; color: white; font-weight: bold; }
 
 /* HOJA DE CV Y MARCA DE AGUA */
 .sheet-container { position: relative; width: 210mm; margin: 20px auto; }
@@ -53,7 +58,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   width: 210mm; min-height: 297mm; background: white; box-shadow: 0 4px 18px rgba(0,0,0,0.15);
   overflow: hidden; position: relative; font-size: 9.8pt; line-height: 1.45;
 }
-.sheet [contenteditable="true"] { outline: 1px dashed transparent; cursor: text; border-radius: 3px; }
+.sheet [contenteditable="true"] { outline: 1px dashed transparent; cursor: text; border-radius: 3px; position: relative; }
 .sheet [contenteditable="true"]:focus { outline: 1.5px dashed #4c90d9; background: #fffde6; }
 .sheet h1, .sheet h2, .sheet h3, .sheet p { margin-top: 0; }
 .sheet h1 { font-size: 26pt; line-height: 1.05; margin-bottom: 8px; }
@@ -61,48 +66,54 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .sheet h3 { font-size: 10.5pt; margin-bottom: 3px; }
 .sheet p { margin-bottom: 8px; }
 
-/* WATERMARK DE VISTA PREVIA SIN PAGO */
+/* MICRÓFONO INDIVIDUAL POR CAMPO EDITABLE */
+.voice-mic-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; font-size: 10px; background: #bd8190; color: white;
+  border-radius: 50%; cursor: pointer; margin-left: 5px; vertical-align: middle;
+  user-select: none; opacity: 0.7; transition: opacity 0.2s, transform 0.2s;
+}
+.voice-mic-btn:hover { opacity: 1; transform: scale(1.15); }
+.voice-mic-btn.recording { background: #e11d48; animation: pulse 1s infinite; opacity: 1; }
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+/* OCULTAR MICRÓFONOS EN VISTA PREVIA E IMPRESIÓN */
+.preview-mode .voice-mic-btn, @media print { .voice-mic-btn { display: none !important; } }
+
+/* WATERMARK VISTA PREVIA */
 .watermark {
   position: absolute; inset: 0; pointer-events: none; z-index: 90;
   display: flex; align-items: center; justify-content: center;
-  font-size: 42pt; font-weight: 900; color: rgba(189, 129, 144, 0.18);
-  transform: rotate(-35deg); text-transform: uppercase; letter-spacing: 4px;
-  user-select: none;
+  font-size: 42pt; font-weight: 900; color: rgba(189, 129, 144, 0.16);
+  transform: rotate(-35deg); text-transform: uppercase; letter-spacing: 4px; user-select: none;
 }
 .sheet.paid .watermark { display: none !important; }
 
-/* ESTILOS DE FOTO SELECCIONABLE */
-.photo-frame {
-  display: inline-block; overflow: hidden; background: #e0e0e0; transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
+/* CONTENEDOR Y FORMATOS DE FOTO */
+.photo-frame { display: inline-block; overflow: hidden; background: #e0e0e0; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
 .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* FORMALIDADES DE FOTO (REDONDA / CUADRADA / RECTANGULAR) */
 .shape-round { border-radius: 50% !important; aspect-ratio: 1 / 1 !important; }
 .shape-square { border-radius: 8px !important; aspect-ratio: 1 / 1 !important; }
 .shape-rect { border-radius: 6px !important; aspect-ratio: 3 / 4 !important; }
 
-/* SECCIONES Y SANGRÍAS CORREGIDAS (SANGRIAS / PADDING GENERAL) */
 .section { margin-bottom: 16px; }
 .entry { margin-bottom: 12px; }
-.entry .sub { font-weight: 600; margin: 3px 0; }
 .entry p { font-size: 9pt; color: #555; }
 .rule { height: 2px; background: currentColor; margin: 10px 0 14px; opacity: 0.8; }
 .contact-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 9.2pt; }
 .icon { width: 20px; height: 20px; background: currentColor; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
 
-/* ==========================================
-   MODELOS VISUALES - CORRECCIÓN DE ERRORES DE DISEÑO
-   ========================================== */
-
-/* MODELO 1: Blanco y Negro */
+/* MODELOS VISUALES */
 .design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 14mm 12mm; gap: 6mm; }
 .design1 .left { padding-right: 4mm; }
 .design1 h1 { font-size: 24pt; text-transform: uppercase; margin-top: 6mm; }
-.design1 .role { font-size: 12pt; letter-spacing: 2px; text-transform: uppercase; border-y: 2px solid #222; padding: 6px 0; margin: 10px 0 18px; }
 
-/* MODELO 2: Rosa Elegante */
 .design2 { padding: 0 0 12mm; }
 .design2 .top { height: 58mm; background: #bd8190; color: white; padding: 14mm 14mm 8mm 56mm; }
 .design2 .top h1 { font-size: 28pt; margin-bottom: 2px; }
@@ -110,13 +121,11 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .design2 .body { display: grid; grid-template-columns: 42% 58%; padding: 8mm 14mm; gap: 8mm; }
 .design2 .left { padding-top: 14mm; padding-right: 4mm; }
 
-/* MODELO 3: Rosa Suave y Cursiva */
 .design3 { display: grid; grid-template-columns: 44% 56%; padding: 0; min-height: 297mm; }
 .design3 .left { background: #f0dedb; padding: 16mm 10mm 12mm 12mm; }
 .design3 .right { padding: 18mm 12mm 12mm 10mm; }
 .design3 h1 { font-family: "Brush Script MT", cursive; font-size: 32pt; }
 
-/* MODELO 4: Azul Petróleo - CORREGIDO SUPERPOSICIÓN DE SOMBRA SOBRE NOMBRE */
 .design4 { display: grid; grid-template-columns: 44% 56%; padding: 14mm 12mm; gap: 8mm; color: #124b5b; position: relative; }
 .design4::before {
   content: ""; position: absolute; left: 0; top: 0; width: 42%; height: 52mm;
@@ -125,35 +134,29 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .design4 .left, .design4 .right { position: relative; z-index: 1; }
 .design4 .photo-container { margin: 4mm 0 10mm; width: 42mm; }
 .design4 h1 { font-size: 24pt; text-transform: uppercase; color: #0a313c; margin-top: 4px; line-height: 1.1; }
-.design4 h2 { border-bottom: 2px solid #1d5e72; padding-bottom: 4px; }
 
-/* MODELO 5: Azul Moderno */
 .design5 { display: grid; grid-template-columns: 42% 58%; padding: 0; }
 .design5 .banner { grid-column: 1/3; background: #4b75a0; color: white; min-height: 52mm; padding: 10mm 12mm 8mm 54mm; position: relative; }
 .design5 .photo-container { position: absolute; left: 12mm; top: 8mm; width: 38mm; }
 .design5 .left { background: #e8edf6; padding: 12mm 10mm 12mm 12mm; }
 .design5 .right { padding: 12mm 12mm 12mm 10mm; }
 
-/* MODELO 6: Violeta Oscuro */
 .design6 { display: grid; grid-template-columns: 40% 60%; padding: 0; }
 .design6 .banner { grid-column: 1/3; height: 54mm; background: #302c3a; color: white; padding: 12mm 12mm 8mm 54mm; position: relative; }
 .design6 .photo-container { position: absolute; left: 12mm; top: 8mm; width: 38mm; }
 .design6 .left { padding: 14mm 10mm 12mm 12mm; background: #f8f7f9; }
 .design6 .right { padding: 14mm 12mm 12mm 10mm; }
 
-/* MODELO 7: Verde Elegante */
 .design7 { color: #244b3c; }
 .design7 .banner { background: #2f6b55 !important; }
 .design7 .left { background: #e7f0e9 !important; }
 
-/* MODELO 8: Beige y Dorado - CORREGIDO HEADER Y ARTE ARTÍSTICO Y GIRASOLES */
 .design8 { color: #4a4034; }
 .design8 .banner {
   background: linear-gradient(135deg, #b69a65 0%, #8c713f 100%) !important; color: white !important;
-  min-height: 62mm !important; padding: 10mm 14mm 8mm 14mm !important; display: flex; justify-space-between; align-items: center;
+  min-height: 62mm !important; padding: 10mm 14mm 8mm 14mm !important; display: flex; justify-content: space-between; align-items: center;
   position: relative; overflow: hidden;
 }
-/* Detalle artístico sutil de girasoles */
 .design8 .banner::after {
   content: "🌻 🌻 🌻"; position: absolute; right: 10px; bottom: -5px; font-size: 28px; opacity: 0.25; filter: sepia(1); pointer-events: none;
 }
@@ -161,26 +164,38 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .design8 .left { background: #f4eee2 !important; padding: 12mm 10mm 12mm 12mm !important; }
 .design8 .right { padding: 12mm 12mm 12mm 10mm !important; }
 
-/* MODAL DE CAMARA Y PAGO */
+/* MODAL CÁMARA */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
   display: flex; align-items: center; justify-content: center; padding: 16px;
 }
 .modal-overlay[hidden] { display: none; }
-.modal-card { background: white; border-radius: 14px; padding: 22px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.modal-card { background: white; border-radius: 14px; padding: 22px; max-width: 480px; width: 100%; text-align: center; }
 .modal-card video { width: 100%; max-height: 50vh; background: #111; border-radius: 8px; object-fit: cover; }
 
-/* BOTÓN FLOTANTE DE SOPORTE WHATSAPP */
+/* MODO VISTA PREVIA MÓVIL PANTALLA COMPLETA */
+.preview-mode .toolbar > *:not(#editBtn) { display: none !important; }
+.preview-mode .toolbar { justify-content: flex-end; }
+.preview-mode #editBtn { display: inline-flex !important; }
+.preview-mode .sheet-container { margin: 0 auto; width: 100% !important; }
+.preview-mode .sheet { transform: none !important; zoom: 1 !important; box-shadow: none; margin: 0 auto; }
+
+@media(max-width: 850px) {
+  .sheet { transform-origin: top left; zoom: calc((100vw - 24px) / 793.7); margin: 12px auto; }
+  .preview-mode .sheet { zoom: calc((100vw - 10px) / 793.7); margin: 0 auto; }
+}
+
+/* BOTÓN FLOTANTE SOPORTE WHATSAPP */
 .whatsapp-float {
   position: fixed; bottom: 18px; right: 18px; z-index: 99; background: #25d366; color: white;
   border-radius: 50px; padding: 10px 18px; font-weight: bold; font-size: 13px; text-decoration: none;
   display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.25); transition: transform 0.2s;
 }
-.whatsapp-float:hover { transform: scale(1.05); background: #20ba5a; }
+.whatsapp-float:hover { transform: scale(1.05); }
 
 @media print {
   body { background: white; }
-  .toolbar, .action-bar, .whatsapp-float { display: none !important; }
+  .toolbar, .whatsapp-float { display: none !important; }
   .sheet-container { margin: 0; width: 210mm; }
   .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; }
   .watermark { display: none !important; }
@@ -189,10 +204,11 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 </head>
 <body>
 
-<!-- BARRA PRINCIPAL -->
+<!-- BARRA DE HERRAMIENTAS REINVENTADA CON ESTILO SOBRIO Y ELEGANTE -->
 <div class="toolbar">
   <strong>CV Nexus Studio</strong>
-  <label for="design">Modelo:</label>
+  
+  <label for="design" class="model-label">Elegí modelo:</label>
   <select id="design">
     <option value="design1">1 · Blanco y negro</option>
     <option value="design2">2 · Rosa elegante</option>
@@ -209,26 +225,22 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   <input id="photoInput" type="file" accept="image/*" hidden>
   <input id="cameraCaptureInput" type="file" accept="image/*" capture="user" hidden>
 
-  <button class="success" id="payDownloadBtn">💳 Descargar PDF ($ Pago MP)</button>
-  <button id="whatsappBtn">Compartir por WhatsApp</button>
+  <button class="primary" id="payDownloadBtn">Imprimir / Guardar PDF</button>
+  <button id="whatsappBtn">Compartir CV por WhatsApp</button>
+  <button id="previewBtn">👁 Ver CV completo</button>
+  <button id="editBtn" style="display:none;">✏️ Volver a editar</button>
   <button id="reset">Restaurar ejemplo</button>
-</div>
 
-<!-- BARRA DE AJUSTES DE FOTO Y VOZ -->
-<div class="action-bar">
-  <label>Forma de Foto:</label>
-  <div class="btn-group">
-    <button id="btnShapeRound" class="active" onclick="setPhotoShape('shape-round')">🔴 Redonda</button>
-    <button id="btnShapeSquare" onclick="setPhotoShape('shape-square')">🔳 Cuadrada</button>
-    <button id="btnShapeRect" onclick="setPhotoShape('shape-rect')">📱 Rectangular</button>
+  <!-- SELECTOR DE FORMA DE FOTO DISCRETO -->
+  <div class="photo-shape-selector">
+    <span>Forma Foto:</span>
+    <button id="btnShapeRound" class="active" onclick="setPhotoShape('shape-round')">Redonda</button>
+    <button id="btnShapeSquare" onclick="setPhotoShape('shape-square')">Cuadrada</button>
+    <button id="btnShapeRect" onclick="setPhotoShape('shape-rect')">Rectangular</button>
   </div>
-
-  <label style="margin-left: 15px;">Dictado por Voz:</label>
-  <button id="voiceBtn" class="toolbar-btn" style="background: #ef4444; color: white;" onclick="toggleVoiceDictation()">🎙️ Iniciar Dictado</button>
-  <span id="voiceStatus" style="font-size: 11px; opacity: 0.8; color: #a7f3d0;"></span>
 </div>
 
-<!-- HOJA DEL CV CON MARCA DE AGUA Y MEMORIA LOCAL -->
+<!-- HOJA DEL CV CON MARCA DE AGUA Y MICRÓFONOS INDIVIDUALES -->
 <div class="sheet-container">
   <main id="cv" class="sheet design1">
     <div class="watermark">VISTA PREVIA — CV NEXUS</div>
@@ -324,7 +336,7 @@ const cv = document.getElementById('cv');
 const selector = document.getElementById('design');
 let currentPhotoShape = 'shape-round';
 
-// 1. REVISAR ESTADO DE PAGO Y REDIRECCIÓN DESDE MERCADO PAGO
+// 1. REVISAR ESTADO DE PAGO (LOCALSTORAGE)
 function checkPaymentStatus() {
   const urlParams = new URLSearchParams(window.location.search);
   const status = urlParams.get('status') || urlParams.get('collection_status');
@@ -340,13 +352,14 @@ selector.addEventListener('change', () => {
   const isPaid = cv.classList.contains('paid');
   cv.className = 'sheet ' + selector.value + (isPaid ? ' paid' : '');
   applyPhotoShape();
+  attachVoiceMics();
   saveCvToStorage();
 });
 
-// 3. CAMBIO DE FORMA REAL DE FOTO (REDONDA, CUADRADA, RECTANGULAR)
+// 3. CAMBIO DE FORMA DE FOTO
 function setPhotoShape(shapeClass) {
   currentPhotoShape = shapeClass;
-  document.querySelectorAll('.btn-group button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.photo-shape-selector button').forEach(b => b.classList.remove('active'));
   if (shapeClass === 'shape-round') document.getElementById('btnShapeRound').classList.add('active');
   if (shapeClass === 'shape-square') document.getElementById('btnShapeSquare').classList.add('active');
   if (shapeClass === 'shape-rect') document.getElementById('btnShapeRect').classList.add('active');
@@ -360,7 +373,7 @@ function applyPhotoShape() {
   });
 }
 
-// 4. MEMORIA INDESTRUCTIBLE (LOCAL STORAGE)
+// 4. MEMORIA LOCAL
 function saveCvToStorage() {
   localStorage.setItem('cv_nexus_content', cv.innerHTML);
   localStorage.setItem('cv_nexus_design', selector.value);
@@ -378,12 +391,90 @@ function loadCvFromStorage() {
     cv.innerHTML = savedContent;
     checkPaymentStatus();
   }
+  attachVoiceMics();
 }
 
 cv.addEventListener('input', saveCvToStorage);
+
+// 5. ATACAR MICRÓFONOS PEQUEÑOS EN CADA CAMPO EDITABLE
+function attachVoiceMics() {
+  cv.querySelectorAll('.voice-mic-btn').forEach(m => m.remove());
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) return;
+
+  cv.querySelectorAll('[contenteditable="true"]').forEach(field => {
+    const micBtn = document.createElement('span');
+    micBtn.className = 'voice-mic-btn';
+    micBtn.innerHTML = '🎙️';
+    micBtn.title = 'Dictar por voz este campo';
+    micBtn.contentEditable = 'false';
+
+    let recognition = null;
+    let recording = false;
+
+    micBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      if (recording && recognition) {
+        recognition.stop();
+        recording = false;
+        micBtn.classList.remove('recording');
+        return;
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.lang = 'es-AR';
+      recognition.interimResults = false;
+
+      recognition.onstart = () => {
+        recording = true;
+        micBtn.classList.add('recording');
+      };
+
+      recognition.onresult = (event) => {
+        const text = event.results[0][0].transcript;
+        if (field.innerText.trim() === '' || field.innerText === 'TU NOMBRE\nY APELLIDO') {
+          field.innerText = text;
+        } else {
+          field.innerText += ' ' + text;
+        }
+        saveCvToStorage();
+      };
+
+      recognition.onerror = recognition.onend = () => {
+        recording = false;
+        micBtn.classList.remove('recording');
+      };
+
+      recognition.start();
+    });
+
+    field.appendChild(micBtn);
+  });
+}
+
 loadCvFromStorage();
 
-// 5. MANEJO DE FOTO (SUBIR Y CÁMARA)
+// 6. MANEJO DE VISTA PREVIA COMPLETA
+const previewBtn = document.getElementById('previewBtn');
+const editBtn = document.getElementById('editBtn');
+
+previewBtn.addEventListener('click', () => {
+  document.body.classList.add('preview-mode');
+  previewBtn.style.display = 'none';
+  editBtn.style.display = 'inline-flex';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+editBtn.addEventListener('click', () => {
+  document.body.classList.remove('preview-mode');
+  previewBtn.style.display = 'inline-flex';
+  editBtn.style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// 7. FOTO Y PASARELA DE PAGO
 const photoInput = document.getElementById('photoInput');
 document.getElementById('photoBtn').onclick = () => photoInput.click();
 photoInput.addEventListener('change', e => {
@@ -394,7 +485,6 @@ photoInput.addEventListener('change', e => {
   saveCvToStorage();
 });
 
-// 6. PASARELA DE PAGO / DESCARGA PDF PROTEGIDA
 document.getElementById('payDownloadBtn').onclick = () => {
   if (localStorage.getItem('cv_nexus_paid') === 'true') {
     window.print();
@@ -405,59 +495,57 @@ document.getElementById('payDownloadBtn').onclick = () => {
   }
 };
 
-// 7. DICTADO POR VOZ (WEB SPEECH API)
-let recognition = null;
-let isRecording = false;
-
-function toggleVoiceDictation() {
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    alert("El dictado por voz no está soportado en este navegador. Utilizá Google Chrome.");
-    return;
-  }
-  
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const statusSpan = document.getElementById('voiceStatus');
-  const voiceBtn = document.getElementById('voiceBtn');
-
-  if (isRecording) {
-    recognition.stop();
-    isRecording = false;
-    voiceBtn.textContent = "🎙️ Iniciar Dictado";
-    statusSpan.textContent = "";
-    return;
-  }
-
-  recognition = new SpeechRecognition();
-  recognition.lang = 'es-AR';
-  recognition.continuous = true;
-  recognition.interimResults = true;
-
-  recognition.onstart = () => {
-    isRecording = true;
-    voiceBtn.textContent = "⏹️ Detener Dictado";
-    statusSpan.textContent = "Escuchando... Seleccioná un texto en el CV y hablá.";
-  };
-
-  recognition.onresult = (event) => {
-    const activeEl = document.activeElement;
-    if (activeEl && activeEl.isContentEditable) {
-      let transcript = '';
-      for (let i = event.resultIndex; i < event.results.length; ++i) {
-        transcript += event.results[i][0].transcript;
+// 8. ENVÍO REAL DE LA IMAGEN DEL CV POR WHATSAPP
+async function makeCvImage() {
+  if (typeof window.html2canvas !== 'function') throw new Error('Cargando motor de imagen...');
+  const canvas = await window.html2canvas(cv, {
+    scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false,
+    windowWidth: 1200, windowHeight: 1600,
+    onclone: (doc) => {
+      const copy = doc.getElementById('cv');
+      if (copy) {
+        copy.querySelectorAll('.voice-mic-btn').forEach(m => m.remove());
+        copy.style.setProperty('zoom', '1', 'important');
+        copy.style.setProperty('transform', 'none', 'important');
+        copy.style.setProperty('width', '210mm', 'important');
+        copy.style.setProperty('min-height', '297mm', 'important');
       }
-      activeEl.innerText = transcript;
-      saveCvToStorage();
     }
-  };
-
-  recognition.onerror = () => {
-    isRecording = false;
-    voiceBtn.textContent = "🎙️ Iniciar Dictado";
-    statusSpan.textContent = "Error en dictado.";
-  };
-
-  recognition.start();
+  });
+  return await new Promise((resolve, reject) => canvas.toBlob(b => b ? resolve(b) : reject(new Error('Error al crear imagen.')), 'image/png'));
 }
+
+document.getElementById('whatsappBtn').onclick = async () => {
+  const btn = document.getElementById('whatsappBtn');
+  const name = cv.querySelector('h1')?.innerText.replace(/\s+/g, ' ').trim() || 'mi currículum';
+  btn.disabled = true; btn.textContent = 'Generando imagen HD…';
+  try {
+    const blob = await makeCvImage();
+    const file = new File([blob], `CV-${name.replace(/[^a-z0-9-]/gi, '-')}.png`, { type: 'image/png' });
+    
+    // Si el dispositivo/navegador permite compartir archivos nativamente
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({
+        files: [file],
+        title: `CV de ${name}`,
+        text: `Te comparto mi currículum de ${name}`
+      });
+    } else {
+      // Fallback para descarga e instrucción de adjunto
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = file.name; a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 15000);
+      alert(`La imagen de tu CV (${file.name}) se descargó en tu teléfono. Abrí WhatsApp y adjuntala con el ícono del clip.`);
+    }
+  } catch (err) {
+    if (err.name !== 'AbortError') {
+      alert('Se generó la descarga de la imagen de tu CV para que puedas enviarla adjunta por WhatsApp.');
+    }
+  } finally {
+    btn.disabled = false; btn.textContent = 'Compartir CV por WhatsApp';
+  }
+};
 </script>
 </body>
 </html>
+
