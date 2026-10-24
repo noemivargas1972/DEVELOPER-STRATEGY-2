@@ -17,7 +17,7 @@
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--ink); }
 
-/* BARRA DE HERRAMIENTAS INTERFAZ SOBRIA Y ELEGANTE ORIGINAL */
+/* BARRA DE HERRAMIENTAS SOBRIA Y ELEGANTE */
 .toolbar {
   position: sticky; top: 0; z-index: 100; background: #202124; color: white;
   padding: 12px 16px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
@@ -25,7 +25,6 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 }
 .toolbar strong { margin-right: 8px; font-size: 16px; color: #fff; letter-spacing: 0.5px; }
 
-/* ETIQUETA "ELEGÍ MODELO" RESALTADA Y EN NEGRITA */
 .toolbar label.model-label {
   font-size: 13px; font-weight: 800; color: #f3d5dc; text-transform: uppercase; letter-spacing: 0.8px; margin-left: 4px;
 }
@@ -42,7 +41,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .toolbar button.primary { background: #bd8190; color: white; }
 .toolbar button.primary:hover { background: #a86d7c; }
 
-/* SECTOR FORMA DE FOTO DISCRETO */
+/* SELECTOR DE FORMA DE FOTO DISCRETO */
 .photo-shape-selector {
   display: flex; align-items: center; gap: 8px; margin-left: auto; background: #2d2e32; padding: 4px 8px; border-radius: 8px; border: 1px solid #444;
 }
@@ -58,7 +57,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   width: 210mm; min-height: 297mm; background: white; box-shadow: 0 4px 18px rgba(0,0,0,0.15);
   overflow: hidden; position: relative; font-size: 9.8pt; line-height: 1.45;
 }
-.sheet [contenteditable="true"] { outline: 1px dashed transparent; cursor: text; border-radius: 3px; position: relative; }
+.sheet [contenteditable="true"] { outline: 1px dashed transparent; cursor: text; border-radius: 3px; position: relative; display: inline-block; width: 100%; }
 .sheet [contenteditable="true"]:focus { outline: 1.5px dashed #4c90d9; background: #fffde6; }
 .sheet h1, .sheet h2, .sheet h3, .sheet p { margin-top: 0; }
 .sheet h1 { font-size: 26pt; line-height: 1.05; margin-bottom: 8px; }
@@ -66,12 +65,15 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .sheet h3 { font-size: 10.5pt; margin-bottom: 3px; }
 .sheet p { margin-bottom: 8px; }
 
-/* MICRÓFONO INDIVIDUAL POR CAMPO EDITABLE */
+/* MICRÓFONO INDIVIDUAL SEPARADO Y PROLIJO */
+.voice-mic-container {
+  display: inline-flex; align-items: center; justify-content: flex-end; width: 100%; position: relative;
+}
 .voice-mic-btn {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 18px; height: 18px; font-size: 10px; background: #bd8190; color: white;
-  border-radius: 50%; cursor: pointer; margin-left: 5px; vertical-align: middle;
-  user-select: none; opacity: 0.7; transition: opacity 0.2s, transform 0.2s;
+  width: 22px; height: 22px; font-size: 11px; background: #bd8190; color: white;
+  border-radius: 50%; cursor: pointer; margin-left: 6px; vertical-align: middle;
+  user-select: none; opacity: 0.8; transition: opacity 0.2s, transform 0.2s; flex-shrink: 0;
 }
 .voice-mic-btn:hover { opacity: 1; transform: scale(1.15); }
 .voice-mic-btn.recording { background: #e11d48; animation: pulse 1s infinite; opacity: 1; }
@@ -82,7 +84,6 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   100% { transform: scale(1); }
 }
 
-/* OCULTAR MICRÓFONOS EN VISTA PREVIA E IMPRESIÓN */
 .preview-mode .voice-mic-btn, @media print { .voice-mic-btn { display: none !important; } }
 
 /* WATERMARK VISTA PREVIA */
@@ -94,7 +95,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 }
 .sheet.paid .watermark { display: none !important; }
 
-/* CONTENEDOR Y FORMATOS DE FOTO */
+/* FOTOS */
 .photo-frame { display: inline-block; overflow: hidden; background: #e0e0e0; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
 .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -109,7 +110,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .contact-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 9.2pt; }
 .icon { width: 20px; height: 20px; background: currentColor; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
 
-/* MODELOS VISUALES */
+/* DISEÑOS */
 .design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 14mm 12mm; gap: 6mm; }
 .design1 .left { padding-right: 4mm; }
 .design1 h1 { font-size: 24pt; text-transform: uppercase; margin-top: 6mm; }
@@ -173,7 +174,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 .modal-card { background: white; border-radius: 14px; padding: 22px; max-width: 480px; width: 100%; text-align: center; }
 .modal-card video { width: 100%; max-height: 50vh; background: #111; border-radius: 8px; object-fit: cover; }
 
-/* MODO VISTA PREVIA MÓVIL PANTALLA COMPLETA */
+/* VISTA PREVIA MÓVIL */
 .preview-mode .toolbar > *:not(#editBtn) { display: none !important; }
 .preview-mode .toolbar { justify-content: flex-end; }
 .preview-mode #editBtn { display: inline-flex !important; }
@@ -185,6 +186,14 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   .preview-mode .sheet { zoom: calc((100vw - 10px) / 793.7); margin: 0 auto; }
 }
 
+/* BOTÓN FLOTANTE PARA VOLVER ARRIBA / MENÚ */
+.scroll-top-float {
+  position: fixed; bottom: 76px; right: 18px; z-index: 98; background: #333; color: white;
+  border-radius: 50px; width: 44px; height: 44px; font-weight: bold; font-size: 16px; text-decoration: none;
+  display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.25); border: 2px solid #bd8190; cursor: pointer; transition: transform 0.2s;
+}
+.scroll-top-float:hover { transform: scale(1.1); background: #bd8190; }
+
 /* BOTÓN FLOTANTE SOPORTE WHATSAPP */
 .whatsapp-float {
   position: fixed; bottom: 18px; right: 18px; z-index: 99; background: #25d366; color: white;
@@ -195,7 +204,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 
 @media print {
   body { background: white; }
-  .toolbar, .whatsapp-float { display: none !important; }
+  .toolbar, .whatsapp-float, .scroll-top-float { display: none !important; }
   .sheet-container { margin: 0; width: 210mm; }
   .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; }
   .watermark { display: none !important; }
@@ -204,7 +213,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
 </head>
 <body>
 
-<!-- BARRA DE HERRAMIENTAS REINVENTADA CON ESTILO SOBRIO Y ELEGANTE -->
+<!-- BARRA DE HERRAMIENTAS -->
 <div class="toolbar">
   <strong>CV Nexus Studio</strong>
   
@@ -231,7 +240,6 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   <button id="editBtn" style="display:none;">✏️ Volver a editar</button>
   <button id="reset">Restaurar ejemplo</button>
 
-  <!-- SELECTOR DE FORMA DE FOTO DISCRETO -->
   <div class="photo-shape-selector">
     <span>Forma Foto:</span>
     <button id="btnShapeRound" class="active" onclick="setPhotoShape('shape-round')">Redonda</button>
@@ -240,7 +248,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   </div>
 </div>
 
-<!-- HOJA DEL CV CON MARCA DE AGUA Y MICRÓFONOS INDIVIDUALES -->
+<!-- HOJA DEL CV -->
 <div class="sheet-container">
   <main id="cv" class="sheet design1">
     <div class="watermark">VISTA PREVIA — CV NEXUS</div>
@@ -259,7 +267,7 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
         <div class="contact-item"><span class="icon">✉</span><span contenteditable="true">correo@ejemplo.com</span></div>
         <div class="contact-item"><span class="icon">☎</span><span contenteditable="true">+54 11 1234-5678</span></div>
         <div class="contact-item"><span class="icon">◎</span><span contenteditable="true">LinkedIn / Sitio Web</span></div>
-        <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true">Buenos Aires, Argentina</span></div>
+        <div class="contact-item"><span class="icon">⌖</span><span contenteditable="true">Dirección / Localidad, Buenos Aires</span></div>
       </div>
       
       <div class="section">
@@ -324,6 +332,11 @@ body { margin: 0; background: var(--bg); font-family: var(--font); color: var(--
   </div>
 </div>
 
+<!-- BOTÓN FLOTANTE PARA VOLVER ARRIBA -->
+<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-top-float" title="Volver arriba">
+  ▲
+</button>
+
 <!-- BOTÓN FLOTANTE SOPORTE WHATSAPP -->
 <a href="https://wa.me/5491131504886?text=Hola%20Noem%C3%AD,%20tengo%20una%20consulta%20sobre%20mi%20CV%20en%20Nexus%20Studio" target="_blank" class="whatsapp-float">
   💬 Soporte WhatsApp
@@ -336,7 +349,20 @@ const cv = document.getElementById('cv');
 const selector = document.getElementById('design');
 let currentPhotoShape = 'shape-round';
 
-// 1. REVISAR ESTADO DE PAGO (LOCALSTORAGE)
+// LISTA DE TEXTOS DE EJEMPLO PARA LIMPIAR AL DICTAR
+const SAMPLE_TEXTS = [
+  "TU NOMBRE\nY APELLIDO", "TU NOMBRE Y APELLIDO", "Puesto / Profesión",
+  "correo@ejemplo.com", "+54 11 1234-5678", "LinkedIn / Sitio Web",
+  "Dirección / Localidad, Buenos Aires", "Buenos Aires, Argentina",
+  "• Español — Nativo\n• Inglés — Intermedio",
+  "Profesional responsable y proactivo/a, con experiencia en organización, atención al cliente y resolución de problemas. Me adapto con facilidad y busco aportar valor al equipo.",
+  "Institución educativa", "Título o formación · 2020–2023", "Curso / especialización", "Institución · Año",
+  "Organización, comunicación, trabajo en equipo, herramientas informáticas.",
+  "Nombre de la empresa", "Puesto · 2022–Actualidad", "Descripción de responsabilidades, tareas principales y logros relevantes.",
+  "Empresa anterior", "Puesto · 2019–2022", "Descripción breve de las funciones realizadas y resultados obtenidos.",
+  "Disponibles a solicitud."
+];
+
 function checkPaymentStatus() {
   const urlParams = new URLSearchParams(window.location.search);
   const status = urlParams.get('status') || urlParams.get('collection_status');
@@ -347,7 +373,6 @@ function checkPaymentStatus() {
 }
 checkPaymentStatus();
 
-// 2. CAMBIO DE MODELO VISUAL
 selector.addEventListener('change', () => {
   const isPaid = cv.classList.contains('paid');
   cv.className = 'sheet ' + selector.value + (isPaid ? ' paid' : '');
@@ -356,7 +381,6 @@ selector.addEventListener('change', () => {
   saveCvToStorage();
 });
 
-// 3. CAMBIO DE FORMA DE FOTO
 function setPhotoShape(shapeClass) {
   currentPhotoShape = shapeClass;
   document.querySelectorAll('.photo-shape-selector button').forEach(b => b.classList.remove('active'));
@@ -373,7 +397,6 @@ function applyPhotoShape() {
   });
 }
 
-// 4. MEMORIA LOCAL
 function saveCvToStorage() {
   localStorage.setItem('cv_nexus_content', cv.innerHTML);
   localStorage.setItem('cv_nexus_design', selector.value);
@@ -396,17 +419,26 @@ function loadCvFromStorage() {
 
 cv.addEventListener('input', saveCvToStorage);
 
-// 5. ATACAR MICRÓFONOS PEQUEÑOS EN CADA CAMPO EDITABLE
 function attachVoiceMics() {
-  cv.querySelectorAll('.voice-mic-btn').forEach(m => m.remove());
+  cv.querySelectorAll('.voice-mic-container').forEach(c => {
+    const parent = c.parentNode;
+    parent.innerHTML = c.querySelector('[contenteditable]').outerHTML;
+  });
+
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRecognition) return;
 
   cv.querySelectorAll('[contenteditable="true"]').forEach(field => {
+    const wrapper = document.createElement('span');
+    wrapper.className = 'voice-mic-container';
+    
+    field.parentNode.insertBefore(wrapper, field);
+    wrapper.appendChild(field);
+
     const micBtn = document.createElement('span');
     micBtn.className = 'voice-mic-btn';
     micBtn.innerHTML = '🎙️';
-    micBtn.title = 'Dictar por voz este campo';
+    micBtn.title = 'Dictar por voz';
     micBtn.contentEditable = 'false';
 
     let recognition = null;
@@ -434,7 +466,12 @@ function attachVoiceMics() {
 
       recognition.onresult = (event) => {
         const text = event.results[0][0].transcript;
-        if (field.innerText.trim() === '' || field.innerText === 'TU NOMBRE\nY APELLIDO') {
+        const currentContent = field.innerText.trim();
+
+        // Si el campo tiene un texto de ejemplo de la lista, SE BORRA COMPLETO antes de colocar el dictado
+        const isSample = SAMPLE_TEXTS.some(sample => currentContent.toLowerCase() === sample.toLowerCase().trim());
+
+        if (currentContent === '' || isSample) {
           field.innerText = text;
         } else {
           field.innerText += ' ' + text;
@@ -450,13 +487,12 @@ function attachVoiceMics() {
       recognition.start();
     });
 
-    field.appendChild(micBtn);
+    wrapper.appendChild(micBtn);
   });
 }
 
 loadCvFromStorage();
 
-// 6. MANEJO DE VISTA PREVIA COMPLETA
 const previewBtn = document.getElementById('previewBtn');
 const editBtn = document.getElementById('editBtn');
 
@@ -474,7 +510,6 @@ editBtn.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// 7. FOTO Y PASARELA DE PAGO
 const photoInput = document.getElementById('photoInput');
 document.getElementById('photoBtn').onclick = () => photoInput.click();
 photoInput.addEventListener('change', e => {
@@ -495,7 +530,6 @@ document.getElementById('payDownloadBtn').onclick = () => {
   }
 };
 
-// 8. ENVÍO REAL DE LA IMAGEN DEL CV POR WHATSAPP
 async function makeCvImage() {
   if (typeof window.html2canvas !== 'function') throw new Error('Cargando motor de imagen...');
   const canvas = await window.html2canvas(cv, {
@@ -522,16 +556,9 @@ document.getElementById('whatsappBtn').onclick = async () => {
   try {
     const blob = await makeCvImage();
     const file = new File([blob], `CV-${name.replace(/[^a-z0-9-]/gi, '-')}.png`, { type: 'image/png' });
-    
-    // Si el dispositivo/navegador permite compartir archivos nativamente
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({
-        files: [file],
-        title: `CV de ${name}`,
-        text: `Te comparto mi currículum de ${name}`
-      });
+      await navigator.share({ files: [file], title: `CV de ${name}`, text: `Te comparto mi currículum de ${name}` });
     } else {
-      // Fallback para descarga e instrucción de adjunto
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a'); a.href = url; a.download = file.name; a.click();
       setTimeout(() => URL.revokeObjectURL(url), 15000);
