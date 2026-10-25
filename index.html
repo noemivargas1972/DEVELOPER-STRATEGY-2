@@ -19,7 +19,7 @@
 body { margin: 0; background: var(--bg); font-family: var(--font-print); color: var(--ink); }
 body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
-/* BARRA DE HERRAMIENTAS / MENÚ PRINCIPAL */
+/* BARRA DE HERRAMIENTAS ORIGINAL Y ORDENADA */
 .toolbar {
   position: sticky; top: 0; z-index: 1000; background: #202124; color: white;
   padding: 12px 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
@@ -35,7 +35,6 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   background: #333438; color: white; border: 1px solid #555; border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;
 }
 
-/* ORDEN ESTRICTO DE BOTONES PRINCIPALES (SECUENCIA BLANCO / ROSA) */
 .toolbar > button, .toolbar > a.toolbar-btn {
   font: inherit; border: 0; border-radius: 8px; padding: 10px 16px; cursor: pointer; font-size: 13px; font-weight: 600;
   display: inline-flex; align-items: center; gap: 6px; text-decoration: none; transition: all 0.2s ease;
@@ -84,13 +83,12 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .shape-preview-rect { width: 16px; height: 11px; background: #bd8190; border-radius: 2px; }
 
 /* HOJA DE CV Y MARCA DE AGUA */
-.sheet-container { position: relative; width: 210mm; margin: 20px auto; transition: all 0.3s ease; }
+.sheet-container { position: relative; width: 210mm; margin: 20px auto; }
 .sheet {
   width: 210mm; min-height: 297mm; background: white; box-shadow: 0 4px 18px rgba(0,0,0,0.15);
   overflow: hidden; position: relative; font-size: 9.8pt; line-height: 1.45;
 }
 
-/* SELLO DE ARTE EXCLUSIVO */
 .art-stamp {
   position: absolute; bottom: 12mm; right: 12mm; font-size: 24px; opacity: 0.25;
   pointer-events: none; user-select: none; z-index: 10; filter: sepia(0.3);
@@ -154,7 +152,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .contact-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 9.2pt; width: 100%; }
 .icon { width: 20px; height: 20px; background: currentColor; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
 
-/* DISEÑOS DEL CV */
+/* DISEÑOS DEL CV (ORIGINALES) */
 .design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 22mm 16mm; gap: 8mm; }
 .design1 .left { padding-right: 4mm; }
 .design1 .photo-container { width: 42mm; margin-bottom: 10px; }
@@ -233,70 +231,23 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .btn-capture { background: #22c55e; color: white; }
 .btn-close-modal { background: #ef4444; color: white; }
 
-/* VISTA PREVIA MÓVIL (OCULTA EL BOTÓN LATERAL Y MUESTRA EL CV COMPLETO) */
+/* VISTA PREVIA ORIGINAL */
 .preview-mode .toolbar > *:not(#editBtn) { display: none !important; }
 .preview-mode .toolbar { justify-content: space-between; }
 .preview-mode #editBtn { display: inline-flex !important; }
-.preview-mode #floatingMenuBtn { display: none !important; } 
-.preview-mode .sheet-container { 
-  margin: 10px auto; 
-  width: 95% !important; 
-  max-width: 95% !important; 
-}
-.preview-mode .sheet { 
-  transform: none !important; 
-  zoom: 1 !important; 
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2); 
-  margin: 0 auto; 
-  width: 100% !important; 
-  height: auto !important;
-  font-size: 7.2pt !important; 
-}
-
-/* BOTÓN FLOTANTE LATERAL DERECHO (ESTILO PESTAÑA VERTICAL QUE PEDISTE EN EL VIDEO) */
-#floatingMenuBtn {
-  position: fixed; 
-  top: 50%; 
-  right: 0; 
-  transform: translateY(-50%);
-  z-index: 999; 
-  background: #bd8190; 
-  color: white;
-  border-radius: 12px 0 0 12px; 
-  padding: 16px 10px; 
-  font-weight: bold; 
-  font-size: 14px;
-  writing-mode: vertical-lr;
-  text-orientation: mixed;
-  display: flex; 
-  align-items: center; 
-  justify-content: center;
-  gap: 6px; 
-  box-shadow: -3px 4px 16px rgba(0,0,0,0.4);
-  border: 1px solid rgba(255,255,255,0.4); 
-  cursor: pointer; 
-  transition: transform 0.2s, background 0.2s;
-}
-#floatingMenuBtn:hover { 
-  background: #a86d7c; 
-  transform: translateY(-50%) scale(1.05);
-}
+.preview-mode .sheet-container { margin: 0 auto; width: 100% !important; }
+.preview-mode .sheet { transform: none !important; zoom: 1 !important; box-shadow: none; margin: 0 auto; }
 
 @media print {
   body { background: white; }
-  .toolbar, #floatingMenuBtn, .modal-overlay { display: none !important; }
+  .toolbar, .modal-overlay { display: none !important; }
   .sheet-container { margin: 0; width: 210mm; }
-  .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; font-size: 9.8pt !important; }
+  .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; }
   .watermark { display: none !important; }
 }
 </style>
 </head>
 <body>
-
-<!-- BOTÓN FLOTANTE LATERAL DERECHO EXACTO COMO EN EL VIDEO -->
-<button id="floatingMenuBtn" onclick="scrollToMenu()" title="Volver al Menú Principal">
-  ☰ Menú principal
-</button>
 
 <!-- BARRA DE HERRAMIENTAS / MENÚ PRINCIPAL -->
 <div class="toolbar">
@@ -321,7 +272,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
     <button id="btnFontCursive" onclick="setFontMode('cursive')" style="font-family: var(--font-cursive);">Cursiva</button>
   </div>
   
-  <!-- BOTONES INTERCALADOS SECUENCIALES -->
+  <!-- BOTONES ORIGINALES ORDENADOS -->
   <button id="photoFileBtn">Subir foto</button>
   <button id="photoCamBtn">📸 Cámara</button>
   <button id="previewModeBtn">👁 Vista Previa</button>
@@ -432,11 +383,6 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-// FUNCIÓN PARA VOLVER AL MENÚ PRINCIPAL Y RESETEAR EL SCROLL
-function scrollToMenu() {
-  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-}
-
 const MP_PAYMENT_URL = "https://mpago.li/1YZVG9u";
 const cv = document.getElementById('cv');
 const selector = document.getElementById('design');
@@ -823,14 +769,14 @@ previewModeBtn.addEventListener('click', () => {
   document.body.classList.add('preview-mode');
   previewModeBtn.style.display = 'none';
   editBtn.style.display = 'inline-flex';
-  scrollToMenu();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 editBtn.addEventListener('click', () => {
   document.body.classList.remove('preview-mode');
   previewModeBtn.style.display = 'inline-flex';
   editBtn.style.display = 'none';
-  scrollToMenu();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 // SUBIR FOTO DESDE ARCHIVOS
@@ -949,4 +895,3 @@ document.getElementById('whatsappBtn').onclick = async () => {
 </script>
 </body>
 </html>
-     
