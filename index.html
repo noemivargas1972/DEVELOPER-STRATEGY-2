@@ -41,9 +41,6 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 }
 .toolbar > button:hover, .toolbar > a.toolbar-btn:hover { transform: translateY(-1px); }
 
-#photoFileBtn { background: #ffffff !important; color: #222 !important; }
-#photoCamBtn { background: #bd8190 !important; color: white !important; }
-
 /* BOTÓN EDITAR CV (EN ROSADO) */
 #previewModeBtn { background: #bd8190 !important; color: white !important; }
 
@@ -66,6 +63,15 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 #supportBtn { background: #bd8190 !important; color: white !important; }
 #reset { background: #ffffff !important; color: #222 !important; }
 #editBtn { background: #bd8190 !important; color: white !important; }
+
+/* BOTÓN FLOTANTE MENÚ PRINCIPAL (PARA CELULAR) */
+.float-menu-btn {
+  position: fixed; top: 12px; right: 12px; z-index: 1500;
+  background: #bd8190; color: white; border: none; border-radius: 20px;
+  padding: 8px 14px; font-size: 12px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3); display: none;
+}
+.preview-mode .float-menu-btn { display: inline-flex !important; align-items: center; gap: 4px; }
 
 /* BOTONES DE TIPOGRAFÍA ROSAS (IMPRENTA Y CURSIVA) */
 .font-btn {
@@ -92,6 +98,20 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .shape-preview-square { width: 13px; height: 13px; background: #bd8190; border-radius: 2px; }
 .shape-preview-rect { width: 16px; height: 11px; background: #bd8190; border-radius: 2px; }
 
+/* CONTENEDOR DE FOTO Y BOTONES DE FOTO INTEGRADOS */
+.photo-box-wrapper {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; width: max-content;
+}
+.photo-action-buttons {
+  display: flex; gap: 4px; justify-content: center; width: 100%;
+}
+.photo-action-btn {
+  background: rgba(255, 255, 255, 0.9); color: #333; border: 1px solid #ccc; border-radius: 4px;
+  font-size: 9pt; font-weight: 600; padding: 3px 8px; cursor: pointer; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.photo-action-btn:hover { background: #ffffff; transform: translateY(-1px); }
+
 /* HOJA DE CV Y MARCA DE AGUA */
 .sheet-container { position: relative; width: 210mm; margin: 20px auto; }
 .sheet {
@@ -117,7 +137,6 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   position: relative; display: flex; align-items: center; width: 100%; margin-bottom: 6px; z-index: 5;
 }
 
-/* CORRECCIÓN CLAVE: EVITAR CAJA BLANCA Y ASEGURAR VISIBILIDAD AL EDITAR EN BANNERS */
 .sheet [contenteditable="true"] {
   outline: none; cursor: text; border-radius: 3px; min-height: 1.2em; flex-grow: 1;
   position: relative; z-index: 6; caret-color: #bd8190; background: transparent !important;
@@ -125,7 +144,6 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .sheet [contenteditable="true"]:focus {
   outline: none !important; background: rgba(255, 255, 255, 0.95) !important; color: #222 !important; padding: 2px 6px;
 }
-/* Si está dentro de un banner con fondo de color, al enfocar se pone claro con texto oscuro legible */
 .banner [contenteditable="true"]:focus, .top [contenteditable="true"]:focus {
   background: rgba(255, 255, 255, 0.95) !important; color: #111 !important;
 }
@@ -135,7 +153,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 }
 
 .sheet h1, .sheet h2, .sheet h3, .sheet p { margin-top: 0; position: relative; z-index: 5; }
-.sheet h1 { font-size: 24pt; line-height: 1.1; margin-bottom: 6px; }
+.sheet h1 { font-size: 22pt; line-height: 1.1; margin-bottom: 6px; }
 .sheet h2 { font-size: 12pt; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 6px; }
 .sheet h3 { font-size: 10.5pt; margin-bottom: 3px; }
 .sheet p { margin-bottom: 8px; }
@@ -160,9 +178,10 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .photo-frame { display: inline-block; overflow: hidden; background: #e0e0e0; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
 .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.shape-round { border-radius: 50% !important; aspect-ratio: 1 / 1 !important; }
-.shape-square { border-radius: 8px !important; aspect-ratio: 1 / 1 !important; }
-.shape-rect { border-radius: 6px !important; aspect-ratio: 3 / 4 !important; }
+/* TAMAÑO DE FOTO MEJORADO Y PROPORCIONADO */
+.shape-round { border-radius: 50% !important; width: 44mm !important; height: 44mm !important; aspect-ratio: 1 / 1 !important; }
+.shape-square { border-radius: 8px !important; width: 44mm !important; height: 44mm !important; aspect-ratio: 1 / 1 !important; }
+.shape-rect { border-radius: 6px !important; width: 38mm !important; height: 50mm !important; aspect-ratio: 3 / 4 !important; }
 
 .section { margin-bottom: 18px; }
 .entry { margin-bottom: 12px; }
@@ -173,22 +192,22 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 /* DISEÑOS DEL CV */
 .design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 22mm 16mm; gap: 8mm; }
 .design1 .left { padding-right: 4mm; }
-.design1 .photo-container { width: 42mm; margin-bottom: 10px; }
+.design1 .photo-container { margin-bottom: 10px; }
 
 .design2 { padding: 0 0 14mm; }
 .design2 .top {
-  min-height: 52mm; background: #bd8190 !important; color: white !important; padding: 18mm 16mm 10mm 16mm;
+  min-height: 54mm; background: #bd8190 !important; color: white !important; padding: 18mm 16mm 10mm 16mm;
   display: flex; justify-content: space-between; align-items: center; position: relative; -webkit-print-color-adjust: exact; print-color-adjust: exact;
 }
-.design2 .top-info { max-width: 58%; }
-.design2 .photo-container { width: 44mm; flex-shrink: 0; margin-left: auto; }
+.design2 .top-info { max-width: 54%; }
+.design2 .photo-container { flex-shrink: 0; margin-left: auto; }
 .design2 .body { display: grid; grid-template-columns: 42% 58%; padding: 16mm 16mm 14mm; gap: 10mm; }
 .design2 .left { padding-top: 6mm; padding-right: 6mm; }
 .design2 .right { padding-top: 6mm; padding-left: 6mm; }
 
 .design3 { display: grid; grid-template-columns: 42% 58%; padding: 0; min-height: 297mm; }
 .design3 .left { background: #f0dedb !important; padding: 22mm 14mm 14mm 14mm; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-.design3 .left .photo-container { width: 42mm; margin-bottom: 10px; }
+.design3 .left .photo-container { margin-bottom: 10px; }
 .design3 .right { padding: 22mm 14mm 14mm 12mm; }
 
 .design4 { display: grid; grid-template-columns: 42% 58%; padding: 20mm 14mm; gap: 10mm; color: #124b5b; position: relative; }
@@ -197,42 +216,42 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   background: #1d5e72 !important; clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%); z-index: 0; opacity: 0.15; -webkit-print-color-adjust: exact; print-color-adjust: exact;
 }
 .design4 .left, .design4 .right { position: relative; z-index: 1; }
-.design4 .photo-container { margin: 4mm 0 10mm; width: 42mm; }
+.design4 .photo-container { margin: 4mm 0 10mm; }
 
 .design5 { display: grid; grid-template-columns: 42% 58%; padding: 0; }
 .design5 .banner {
-  grid-column: 1/3; background: #4b75a0 !important; color: white !important; min-height: 48mm; padding: 12mm 16mm 10mm 16mm;
+  grid-column: 1/3; background: #4b75a0 !important; color: white !important; min-height: 50mm; padding: 12mm 16mm 10mm 16mm;
   display: flex; justify-content: space-between; align-items: center; position: relative; -webkit-print-color-adjust: exact; print-color-adjust: exact;
 }
-.design5 .photo-container { width: 42mm; flex-shrink: 0; }
+.design5 .photo-container { flex-shrink: 0; }
 .design5 .left { background: #e8edf6 !important; padding: 18mm 14mm 14mm 14mm; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .design5 .right { padding: 18mm 14mm 14mm 12mm; }
 
 .design6 { display: grid; grid-template-columns: 40% 60%; padding: 0; }
 .design6 .banner {
-  grid-column: 1/3; min-height: 48mm; background: #302c3a !important; color: white !important; padding: 12mm 16mm 10mm 16mm;
+  grid-column: 1/3; min-height: 50mm; background: #302c3a !important; color: white !important; padding: 12mm 16mm 10mm 16mm;
   display: flex; justify-content: space-between; align-items: center; position: relative; -webkit-print-color-adjust: exact; print-color-adjust: exact;
 }
-.design6 .photo-container { width: 42mm; flex-shrink: 0; }
+.design6 .photo-container { flex-shrink: 0; }
 .design6 .left { padding: 18mm 14mm 14mm 14mm; background: #f8f7f9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .design6 .right { padding: 18mm 14mm 14mm 12mm; }
 
 .design7 { display: grid; grid-template-columns: 42% 58%; padding: 0; color: #244b3c; }
 .design7 .banner {
-  grid-column: 1/3; background: #2f6b55 !important; color: white !important; min-height: 48mm; padding: 12mm 16mm 10mm 16mm;
+  grid-column: 1/3; background: #2f6b55 !important; color: white !important; min-height: 50mm; padding: 12mm 16mm 10mm 16mm;
   display: flex; justify-content: space-between; align-items: center; position: relative; -webkit-print-color-adjust: exact; print-color-adjust: exact;
 }
-.design7 .photo-container { width: 42mm; flex-shrink: 0; }
+.design7 .photo-container { flex-shrink: 0; }
 .design7 .left { background: #e7f0e9 !important; padding: 18mm 14mm 14mm 14mm; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .design7 .right { padding: 18mm 14mm 14mm 12mm; }
 
 .design8 { display: grid; grid-template-columns: 42% 58%; padding: 0; color: #4a4034; }
 .design8 .banner {
   grid-column: 1/3; background: linear-gradient(135deg, #b69a65 0%, #8c713f 100%) !important; color: white !important;
-  min-height: 50mm !important; padding: 10mm 16mm 8mm 16mm !important; display: flex; justify-content: space-between; align-items: center;
+  min-height: 52mm !important; padding: 10mm 16mm 8mm 16mm !important; display: flex; justify-content: space-between; align-items: center;
   position: relative; overflow: hidden; -webkit-print-color-adjust: exact; print-color-adjust: exact;
 }
-.design8 .photo-container { width: 44mm; flex-shrink: 0; margin-left: auto; }
+.design8 .photo-container { flex-shrink: 0; margin-left: auto; }
 .design8 .left { background: #f4eee2 !important; padding: 18mm 14mm 14mm 14mm !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .design8 .right { padding: 18mm 14mm 14mm 12mm !important; }
 
@@ -268,6 +287,9 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 </head>
 <body>
 
+<!-- BOTÓN FLOTANTE PARA RESTABLECER MENÚ EN CELULAR -->
+<button class="float-menu-btn" id="floatMenuBtn" onclick="backToEditMode()">☰ Menú Principal</button>
+
 <!-- BARRA DE HERRAMIENTAS / MENÚ PRINCIPAL -->
 <div class="toolbar">
   <strong>CV Nexus Studio</strong>
@@ -288,9 +310,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   <button id="btnFontPrint" class="font-btn active" onclick="setFontMode('print')">Imprenta</button>
   <button id="btnFontCursive" class="font-btn" onclick="setFontMode('cursive')" style="font-family: var(--font-cursive); font-size: 14px;">Cursiva</button>
   
-  <!-- BOTONES DE ACCIÓN -->
-  <button id="photoFileBtn">Subir foto</button>
-  <button id="photoCamBtn">📸 Cámara</button>
+  <!-- BOTONES DE ACCIÓN (SIN BOTONES DE FOTO AQUÍ, AHORA ESTÁN EN EL CUADRO DE FOTO) -->
   <button id="previewModeBtn">✏️ Editar CV</button>
   <button id="pdfPrintBtn" onclick="window.print()">🖨️ Descargar / Imprimir PDF</button>
   <button id="payDownloadBtn">
@@ -335,8 +355,14 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
     
     <div class="left">
       <div class="photo-container">
-        <div class="photo-frame shape-round" id="mainPhotoFrame">
-          <img class="main-photo" alt="Foto de perfil" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24' fill='%23bbb'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>">
+        <div class="photo-box-wrapper">
+          <div class="photo-frame shape-round" id="mainPhotoFrame">
+            <img class="main-photo" alt="Foto de perfil" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24' fill='%23bbb'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>">
+          </div>
+          <div class="photo-action-buttons">
+            <button class="photo-action-btn" id="photoFileBtnInline">📁 Importar</button>
+            <button class="photo-action-btn" id="photoCamBtnInline">📷 Cámara</button>
+          </div>
         </div>
       </div>
       <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">TU NOMBRE Y APELLIDO</h1>
@@ -492,10 +518,22 @@ function renderCurrentDesign() {
   let html = `<div class="watermark">VISTA PREVIA — CV NEXUS</div>`;
   html += `<div class="art-stamp" title="Sello de Arte Nexus">${artStamps[design] || '🎨'}</div>`;
 
+  const photoBlockHtml = `
+    <div class="photo-box-wrapper">
+      <div class="photo-frame ${currentPhotoShape}" id="mainPhotoFrame">
+        <img class="main-photo" src="${currentPhotoSrc}" alt="Foto de perfil">
+      </div>
+      <div class="photo-action-buttons">
+        <button class="photo-action-btn" onclick="triggerPhotoFile()">📁 Importar</button>
+        <button class="photo-action-btn" onclick="triggerPhotoCamera()">📷 Cámara</button>
+      </div>
+    </div>
+  `;
+
   if (design === 'design1') {
     html += `
       <div class="left">
-        <div class="photo-container"><div class="photo-frame ${currentPhotoShape}" id="mainPhotoFrame"><img class="main-photo" src="${currentPhotoSrc}" alt="Foto"></div></div>
+        <div class="photo-container">${photoBlockHtml}</div>
         <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">${name}</h1>
         <div class="role" contenteditable="true" data-placeholder="Puesto al que aspirás" data-key="role">${role}</div>
         <div class="section">
@@ -530,7 +568,7 @@ function renderCurrentDesign() {
           <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">${name}</h1>
           <div class="role" contenteditable="true" data-placeholder="Puesto al que aspirás" data-key="role">${role}</div>
         </div>
-        <div class="photo-container"><div class="photo-frame ${currentPhotoShape}" id="mainPhotoFrame"><img class="main-photo" src="${currentPhotoSrc}" alt="Foto"></div></div>
+        <div class="photo-container">${photoBlockHtml}</div>
       </div>
       <div class="body">
         <div class="left">
@@ -564,7 +602,7 @@ function renderCurrentDesign() {
           <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">${name}</h1>
           <div class="role" contenteditable="true" data-placeholder="Puesto al que aspirás" data-key="role">${role}</div>
         </div>
-        <div class="photo-container"><div class="photo-frame ${currentPhotoShape}" id="mainPhotoFrame"><img class="main-photo" src="${currentPhotoSrc}" alt="Foto"></div></div>
+        <div class="photo-container">${photoBlockHtml}</div>
       </div>
       <div class="left">
         <div class="section">
@@ -596,7 +634,7 @@ function renderCurrentDesign() {
           <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">${name}</h1>
           <div class="role" contenteditable="true" data-placeholder="Puesto al que aspirás" data-key="role">${role}</div>
         </div>
-        <div class="photo-container"><div class="photo-frame ${currentPhotoShape}" id="mainPhotoFrame"><img class="main-photo" src="${currentPhotoSrc}" alt="Foto"></div></div>
+        <div class="photo-container">${photoBlockHtml}</div>
       </div>
       <div class="left">
         <section class="section"><h2>Contacto</h2>
@@ -623,7 +661,7 @@ function renderCurrentDesign() {
   } else {
     html += `
       <div class="left">
-        <div class="photo-container"><div class="photo-frame ${currentPhotoShape}" id="mainPhotoFrame"><img class="main-photo" src="${currentPhotoSrc}" alt="Foto"></div></div>
+        <div class="photo-container">${photoBlockHtml}</div>
         <h1 contenteditable="true" data-placeholder="Nombre y Apellido" data-key="name">${name}</h1>
         <div class="role" contenteditable="true" data-placeholder="Puesto al que aspirás" data-key="role">${role}</div>
         <div class="section">
@@ -766,11 +804,10 @@ function setupProtectedMics() {
           const currentText = field.innerText.trim();
           const defaultPlaceholder = field.getAttribute('data-placeholder') || '';
 
-          // Si el texto actual está vacío o tiene el placeholder por defecto, lo reemplaza directamente.
           if (currentText === '' || currentText.toLowerCase() === defaultPlaceholder.toLowerCase()) {
             field.innerText = text;
           } else {
-            field.innerText = text; // Reemplaza para evitar duplicaciones extrañas al dictar
+            field.innerText = text;
           }
           saveCvToStorage();
         };
@@ -803,21 +840,26 @@ previewModeBtn.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-editBtn.addEventListener('click', () => {
+editBtn.addEventListener('click', backToEditMode);
+
+function backToEditMode() {
   document.body.classList.remove('preview-mode');
   previewModeBtn.style.display = 'inline-flex';
   editBtn.style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+}
 
-// SUBIR FOTO DESDE ARCHIVOS
+// SUBIR FOTO DESDE ARCHIVOS Y CÁMARA
 const photoInput = document.createElement('input');
 photoInput.type = 'file';
 photoInput.accept = 'image/*';
 photoInput.hidden = true;
 document.body.appendChild(photoInput);
 
-document.getElementById('photoFileBtn').onclick = () => photoInput.click();
+function triggerPhotoFile() {
+  photoInput.click();
+}
+
 photoInput.addEventListener('change', e => {
   const f = e.target.files[0];
   if (!f) return;
@@ -827,21 +869,22 @@ photoInput.addEventListener('change', e => {
   saveCvToStorage();
 });
 
-// CÁMARA EN VIVO (MODAL)
 const cameraModal = document.getElementById('cameraModal');
 const cameraStream = document.getElementById('cameraStream');
 const cameraCanvas = document.getElementById('cameraCanvas');
 
-document.getElementById('photoCamBtn').onclick = async () => {
+function triggerPhotoCamera() {
   cameraModal.hidden = false;
-  try {
-    mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
-    cameraStream.srcObject = mediaStream;
-  } catch (err) {
-    alert("No se pudo acceder a la cámara. Verificá los permisos de tu navegador.");
-    cameraModal.hidden = true;
-  }
-};
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false })
+    .then(stream => {
+      mediaStream = stream;
+      cameraStream.srcObject = mediaStream;
+    })
+    .catch(err => {
+      alert("No se pudo acceder a la cámara. Verificá los permisos de tu navegador.");
+      cameraModal.hidden = true;
+    });
+}
 
 document.getElementById('closeCameraBtn').onclick = () => {
   if (mediaStream) {
