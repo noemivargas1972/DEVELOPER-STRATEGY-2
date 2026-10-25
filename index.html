@@ -19,7 +19,7 @@
 body { margin: 0; background: var(--bg); font-family: var(--font-print); color: var(--ink); }
 body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
-/* BARRA DE HERRAMIENTAS ORIGINAL Y ORDENADA */
+/* BARRA DE HERRAMIENTAS / MENÚ PRINCIPAL */
 .toolbar {
   position: sticky; top: 0; z-index: 1000; background: #202124; color: white;
   padding: 12px 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
@@ -45,7 +45,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 #photoCamBtn { background: #bd8190 !important; color: white !important; }
 #previewModeBtn { background: #ffffff !important; color: #222 !important; }
 
-/* BOTÓN MERCADO PAGO EXACTO CON ICONO REDONDO Y MANITOS */
+/* BOTÓN MERCADO PAGO */
 #payDownloadBtn { 
   background: #bd8190 !important; 
   color: white !important; 
@@ -55,7 +55,12 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   display: inline-flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0;
 }
 
-#whatsappBtn { background: #ffffff !important; color: #222 !important; }
+/* BOTÓN DESCARGAR / IMPRIMIR PDF */
+#pdfPrintBtn { background: #ffffff !important; color: #222 !important; }
+
+/* BOTÓN ENVIAR WHATSAPP */
+#whatsappBtn { background: #25d366 !important; color: white !important; }
+
 #supportBtn { background: #bd8190 !important; color: white !important; }
 #reset { background: #ffffff !important; color: #222 !important; }
 #editBtn { background: #bd8190 !important; color: white !important; }
@@ -152,7 +157,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .contact-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 9.2pt; width: 100%; }
 .icon { width: 20px; height: 20px; background: currentColor; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
 
-/* DISEÑOS DEL CV (ORIGINALES) */
+/* DISEÑOS DEL CV */
 .design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 22mm 16mm; gap: 8mm; }
 .design1 .left { padding-right: 4mm; }
 .design1 .photo-container { width: 42mm; margin-bottom: 10px; }
@@ -231,7 +236,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .btn-capture { background: #22c55e; color: white; }
 .btn-close-modal { background: #ef4444; color: white; }
 
-/* VISTA PREVIA ORIGINAL */
+/* VISTA PREVIA */
 .preview-mode .toolbar > *:not(#editBtn) { display: none !important; }
 .preview-mode .toolbar { justify-content: space-between; }
 .preview-mode #editBtn { display: inline-flex !important; }
@@ -239,10 +244,11 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .preview-mode .sheet { transform: none !important; zoom: 1 !important; box-shadow: none; margin: 0 auto; }
 
 @media print {
-  body { background: white; }
+  @page { size: A4; margin: 0; }
+  body { background: white; margin: 0; }
   .toolbar, .modal-overlay { display: none !important; }
   .sheet-container { margin: 0; width: 210mm; }
-  .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; }
+  .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; width: 210mm !important; min-height: 297mm !important; }
   .watermark { display: none !important; }
 }
 </style>
@@ -272,14 +278,15 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
     <button id="btnFontCursive" onclick="setFontMode('cursive')" style="font-family: var(--font-cursive);">Cursiva</button>
   </div>
   
-  <!-- BOTONES ORIGINALES ORDENADOS -->
+  <!-- BOTONES DE ACCIÓN -->
   <button id="photoFileBtn">Subir foto</button>
   <button id="photoCamBtn">📸 Cámara</button>
   <button id="previewModeBtn">👁 Vista Previa</button>
+  <button id="pdfPrintBtn" onclick="window.print()">🖨️ Descargar / Imprimir PDF</button>
   <button id="payDownloadBtn">
     <span class="mp-icon">🤝</span> Sin marca de agua · $2000 Mercado Pago
   </button>
-  <button id="whatsappBtn">WhatsApp</button>
+  <button id="whatsappBtn">Enviar 💬</button>
   <button id="supportBtn" onclick="window.open('https://wa.me/5491131504886?text=Hola%20Noem%C3%AD,%20tengo%20una%20consulta%20sobre%20el%20pago%20o%20descarga%20de%20mi%20CV', '_blank')">
     <span style="width:16px; height:16px; background:#25d366; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:10px; color:#fff;">☎</span> Soporte
   </button>
@@ -841,7 +848,7 @@ document.getElementById('capturePhotoBtn').onclick = () => {
 // MERCADO PAGO
 document.getElementById('payDownloadBtn').onclick = () => {
   if (localStorage.getItem('cv_nexus_paid') === 'true') {
-    alert("¡Tu CV ya está desbloqueado! Podés imprimirlo sin marca de agua.");
+    alert("¡Tu CV ya está desbloqueado! Podés imprimirlo o descargarlo sin marca de agua.");
     window.print();
   } else {
     if (confirm("Serás redirigido al pago seguro de Mercado Pago por $2000 para eliminar la marca de agua y descargar tu CV. ¿Deseas continuar?")) {
@@ -889,7 +896,7 @@ document.getElementById('whatsappBtn').onclick = async () => {
       alert('Se generó la descarga de la imagen de tu CV para que puedas enviarla adjunta por WhatsApp.');
     }
   } finally {
-    btn.disabled = false; btn.textContent = 'WhatsApp';
+    btn.disabled = false; btn.textContent = 'Enviar 💬';
   }
 };
 </script>
