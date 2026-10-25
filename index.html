@@ -19,7 +19,7 @@
 body { margin: 0; background: var(--bg); font-family: var(--font-print); color: var(--ink); }
 body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
-/* BARRA DE HERRAMIENTAS / MENÚ PRINCIPAL (IZQUIERDA) */
+/* BARRA DE HERRAMIENTAS / MENÚ PRINCIPAL */
 .toolbar {
   position: sticky; top: 0; z-index: 1000; background: #202124; color: white;
   padding: 12px 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
@@ -45,7 +45,17 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 #photoFileBtn { background: #ffffff !important; color: #222 !important; }
 #photoCamBtn { background: #bd8190 !important; color: white !important; }
 #previewModeBtn { background: #ffffff !important; color: #222 !important; }
-#payDownloadBtn { background: #bd8190 !important; color: white !important; }
+
+/* BOTÓN MERCADO PAGO EXACTO CON ICONO REDONDO Y MANITOS */
+#payDownloadBtn { 
+  background: #bd8190 !important; 
+  color: white !important; 
+}
+#payDownloadBtn .mp-icon {
+  width: 18px; height: 18px; background: white; border-radius: 50%; 
+  display: inline-flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0;
+}
+
 #whatsappBtn { background: #ffffff !important; color: #222 !important; }
 #supportBtn { background: #bd8190 !important; color: white !important; }
 #reset { background: #ffffff !important; color: #222 !important; }
@@ -74,7 +84,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .shape-preview-rect { width: 16px; height: 11px; background: #bd8190; border-radius: 2px; }
 
 /* HOJA DE CV Y MARCA DE AGUA */
-.sheet-container { position: relative; width: 210mm; margin: 20px auto; }
+.sheet-container { position: relative; width: 210mm; margin: 20px auto; transition: all 0.3s ease; }
 .sheet {
   width: 210mm; min-height: 297mm; background: white; box-shadow: 0 4px 18px rgba(0,0,0,0.15);
   overflow: hidden; position: relative; font-size: 9.8pt; line-height: 1.45;
@@ -223,51 +233,68 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .btn-capture { background: #22c55e; color: white; }
 .btn-close-modal { background: #ef4444; color: white; }
 
-/* VISTA PREVIA MÓVIL (AJUSTA EL CONTENEDOR PARA VER TODO ENTERO) */
+/* VISTA PREVIA MÓVIL (OCULTA EL BOTÓN LATERAL Y MUESTRA EL CV COMPLETO) */
 .preview-mode .toolbar > *:not(#editBtn) { display: none !important; }
 .preview-mode .toolbar { justify-content: space-between; }
 .preview-mode #editBtn { display: inline-flex !important; }
-.preview-mode .sheet-container { margin: 0 auto; width: 100% !important; max-width: 100% !important; }
-.preview-mode .sheet { transform: none !important; zoom: 1 !important; box-shadow: none; margin: 0 auto; width: 100% !important; height: auto !important; }
+.preview-mode #floatingMenuBtn { display: none !important; } 
+.preview-mode .sheet-container { 
+  margin: 10px auto; 
+  width: 95% !important; 
+  max-width: 95% !important; 
+}
+.preview-mode .sheet { 
+  transform: none !important; 
+  zoom: 1 !important; 
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2); 
+  margin: 0 auto; 
+  width: 100% !important; 
+  height: auto !important;
+  font-size: 7.2pt !important; 
+}
 
-/* BOTÓN FLOTANTE EN EL ESPACIO GRIS SUPERIOR DERECHO */
-.scroll-top-float {
+/* BOTÓN FLOTANTE LATERAL DERECHO (ESTILO PESTAÑA VERTICAL QUE PEDISTE EN EL VIDEO) */
+#floatingMenuBtn {
   position: fixed; 
-  top: 14px; 
-  right: 14px; 
-  z-index: 9999; 
+  top: 50%; 
+  right: 0; 
+  transform: translateY(-50%);
+  z-index: 999; 
   background: #bd8190; 
   color: white;
-  border-radius: 20px; 
-  padding: 8px 14px; 
+  border-radius: 12px 0 0 12px; 
+  padding: 16px 10px; 
   font-weight: bold; 
-  font-size: 12px;
+  font-size: 14px;
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
   display: flex; 
   align-items: center; 
+  justify-content: center;
   gap: 6px; 
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  border: 1px solid rgba(255,255,255,0.5); 
+  box-shadow: -3px 4px 16px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.4); 
   cursor: pointer; 
   transition: transform 0.2s, background 0.2s;
 }
-.scroll-top-float:hover { 
+#floatingMenuBtn:hover { 
   background: #a86d7c; 
-  transform: scale(1.05);
+  transform: translateY(-50%) scale(1.05);
 }
 
 @media print {
   body { background: white; }
-  .toolbar, .scroll-top-float, .modal-overlay { display: none !important; }
+  .toolbar, #floatingMenuBtn, .modal-overlay { display: none !important; }
   .sheet-container { margin: 0; width: 210mm; }
-  .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; }
+  .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; font-size: 9.8pt !important; }
   .watermark { display: none !important; }
 }
 </style>
 </head>
 <body>
 
-<!-- BOTÓN FLOTANTE EN EL ESPACIO GRIS SUPERIOR DERECHO -->
-<button onclick="scrollToMenu()" class="scroll-top-float" title="Volver al Menú Principal">
+<!-- BOTÓN FLOTANTE LATERAL DERECHO EXACTO COMO EN EL VIDEO -->
+<button id="floatingMenuBtn" onclick="scrollToMenu()" title="Volver al Menú Principal">
   ☰ Menú principal
 </button>
 
@@ -298,7 +325,9 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   <button id="photoFileBtn">Subir foto</button>
   <button id="photoCamBtn">📸 Cámara</button>
   <button id="previewModeBtn">👁 Vista Previa</button>
-  <button id="payDownloadBtn">Sin marca de agua · $2000 🤝 Mercado Pago</button>
+  <button id="payDownloadBtn">
+    <span class="mp-icon">🤝</span> Sin marca de agua · $2000 Mercado Pago
+  </button>
   <button id="whatsappBtn">WhatsApp</button>
   <button id="supportBtn" onclick="window.open('https://wa.me/5491131504886?text=Hola%20Noem%C3%AD,%20tengo%20una%20consulta%20sobre%20el%20pago%20o%20descarga%20de%20mi%20CV', '_blank')">
     <span style="width:16px; height:16px; background:#25d366; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:10px; color:#fff;">☎</span> Soporte
@@ -403,7 +432,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-// FUNCIÓN PARA VOLVER AL MENÚ PRINCIPAL Y RESETEAR EL SCROLL HORIZONTAL Y VERTICAL
+// FUNCIÓN PARA VOLVER AL MENÚ PRINCIPAL Y RESETEAR EL SCROLL
 function scrollToMenu() {
   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 }
@@ -920,3 +949,4 @@ document.getElementById('whatsappBtn').onclick = async () => {
 </script>
 </body>
 </html>
+     
