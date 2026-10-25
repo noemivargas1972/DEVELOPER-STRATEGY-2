@@ -43,7 +43,9 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 
 #photoFileBtn { background: #ffffff !important; color: #222 !important; }
 #photoCamBtn { background: #bd8190 !important; color: white !important; }
-#previewModeBtn { background: #ffffff !important; color: #222 !important; }
+
+/* BOTÓN EDITAR CV / VISTA PREVIA (AHORA ROSA) */
+#previewModeBtn { background: #bd8190 !important; color: white !important; }
 
 /* BOTÓN MERCADO PAGO */
 #payDownloadBtn { 
@@ -58,21 +60,24 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 /* BOTÓN DESCARGAR / IMPRIMIR PDF */
 #pdfPrintBtn { background: #ffffff !important; color: #222 !important; }
 
-/* BOTÓN ENVIAR WHATSAPP */
-#whatsappBtn { background: #25d366 !important; color: white !important; }
+/* BOTÓN ENVIAR WHATSAPP (BLANCO CON ICONO VERDE) */
+#whatsappBtn { background: #ffffff !important; color: #222 !important; }
 
 #supportBtn { background: #bd8190 !important; color: white !important; }
 #reset { background: #ffffff !important; color: #222 !important; }
 #editBtn { background: #bd8190 !important; color: white !important; }
 
-.font-toggle-box {
-  display: flex; align-items: center; gap: 6px; background: #ffffff; padding: 6px 10px; border-radius: 8px; border: 1px solid #ccc; margin-left: 4px;
+/* BOTONES DE TIPOGRAFÍA ROSAS (SIN CONTENEDOR "LETRA") */
+.font-btn {
+  background: #bd8190 !important; color: white !important; border: 1px solid #a86d7c !important;
 }
-.font-toggle-box span { font-size: 12px; font-weight: 700; color: #444; }
-.font-toggle-box button {
-  padding: 6px 12px; font-size: 12px; font-weight: 600; background: #f0f0f0; color: #333; border-radius: 6px; border: 1px solid #ddd; cursor: pointer;
+.font-btn.active {
+  background: #a86d7c !important; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
-.font-toggle-box button.active { background: #bd8190; color: white; border-color: #a86d7c; }
+#btnFontCursive {
+  font-family: var(--font-cursive);
+  font-size: 14px;
+}
 
 .photo-shape-selector {
   display: flex; align-items: center; gap: 8px; margin-left: auto; background: #ffffff; padding: 6px 10px; border-radius: 8px; border: 1px solid #ccc;
@@ -94,7 +99,6 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   overflow: hidden; position: relative; font-size: 9.8pt; line-height: 1.45;
 }
 
-/* MARCA DE AGUA (POR DEFECTO SE MUESTRA, SOLO DESAPARECE SI TIENE LA CLASE .paid) */
 .watermark {
   position: absolute; inset: 0; pointer-events: none; z-index: 90;
   display: flex; align-items: center; justify-content: center;
@@ -158,7 +162,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .contact-item { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 9.2pt; width: 100%; }
 .icon { width: 20px; height: 20px; background: currentColor; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; }
 
-/* DISEÑOS DEL CV (ASEGURANDO COLORES VIVOS EN TODOS) */
+/* DISEÑOS DEL CV */
 .design1 { display: grid; grid-template-columns: 34% 33% 33%; padding: 22mm 16mm; gap: 8mm; }
 .design1 .left { padding-right: 4mm; }
 .design1 .photo-container { width: 42mm; margin-bottom: 10px; }
@@ -250,7 +254,6 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   .toolbar, .modal-overlay { display: none !important; }
   .sheet-container { margin: 0; width: 210mm; }
   .sheet { box-shadow: none; zoom: 1 !important; transform: none !important; width: 210mm !important; min-height: 297mm !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  /* LA MARCA DE AGUA SE IMPRIME/GUARDA EN PDF SI NO ESTÁ PAGO */
   .sheet.paid .watermark { display: none !important; }
 }
 </style>
@@ -273,12 +276,9 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
     <option value="design8">8 · Beige y dorado (Arte 🌻)</option>
   </select>
 
-  <!-- BLOQUE DE LETRAS -->
-  <div class="font-toggle-box">
-    <span>Letra:</span>
-    <button id="btnFontPrint" class="active" onclick="setFontMode('print')">A imprenta</button>
-    <button id="btnFontCursive" onclick="setFontMode('cursive')" style="font-family: var(--font-cursive);">Cursiva</button>
-  </div>
+  <!-- BOTONES DE TIPOGRAFÍA (IMPRENTA Y CURSIVA EN ROSA) -->
+  <button id="btnFontPrint" class="font-btn active" onclick="setFontMode('print')">Imprenta</button>
+  <button id="btnFontCursive" class="font-btn" onclick="setFontMode('cursive')">Cursiva</button>
   
   <!-- BOTONES DE ACCIÓN -->
   <button id="photoFileBtn">Subir foto</button>
@@ -288,12 +288,14 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   <button id="payDownloadBtn">
     <span class="mp-icon">🤝</span> Sin marca de agua · $2000 Mercado Pago
   </button>
-  <button id="whatsappBtn">Enviar 💬</button>
+  <button id="whatsappBtn">
+    <span style="width:16px; height:16px; background:#25d366; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:10px; color:#fff;">💬</span> Enviar
+  </button>
   <button id="supportBtn" onclick="window.open('https://wa.me/5491131504886?text=Hola%20Noem%C3%AD,%20tengo%20una%20consulta%20sobre%20el%20pago%20o%20descarga%20de%20mi%20CV', '_blank')">
     <span style="width:16px; height:16px; background:#25d366; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:10px; color:#fff;">☎</span> Soporte
   </button>
   <button id="reset">Restaurar ejemplo</button>
-  <button id="editBtn" style="display:none;">✏️ Editar</button>
+  <button id="editBtn" style="display:none;">✏️ Editar CV</button>
 
   <!-- BLOQUE DE MARCOS GRÁFICOS -->
   <div class="photo-shape-selector">
@@ -861,7 +863,7 @@ document.getElementById('payDownloadBtn').onclick = () => {
     alert("¡Tu CV ya está desbloqueado! Podés imprimirlo o descargarlo sin marca de agua.");
     window.print();
   } else {
-    if (confirm("Serás redirigido al pago seguro de Mercado Pago por $2000 para eliminar la marca de agua y descargar tu CV. ¿Deseas deseas continuar?")) {
+    if (confirm("Serás redirigido al pago seguro de Mercado Pago por $2000 para eliminar la marca de agua y descargar tu CV. ¿Deseas continuar?")) {
       window.location.href = MP_PAYMENT_URL;
     }
   }
@@ -906,7 +908,8 @@ document.getElementById('whatsappBtn').onclick = async () => {
       alert('Se generó la descarga de la imagen de tu CV para que puedas enviarla adjunta por WhatsApp.');
     }
   } finally {
-    btn.disabled = false; btn.textContent = 'Enviar 💬';
+    btn.disabled = false; 
+    btn.innerHTML = `<span style="width:16px; height:16px; background:#25d366; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:10px; color:#fff;">💬</span> Enviar`;
   }
 };
 </script>
