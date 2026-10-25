@@ -31,9 +31,17 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   font-size: 13px; font-weight: 800; color: #f3d5dc; text-transform: uppercase; letter-spacing: 0.8px; margin-left: 4px;
 }
 
-.toolbar select {
-  background: #333438; color: white; border: 1px solid #555; border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;
+/* SELECTOR DE MODELOS MÁS COMPACTO Y ORDENADO */
+.design-select-wrapper {
+  display: inline-flex; align-items: center; gap: 6px; background: #333438; border: 1px solid #555; border-radius: 8px; padding: 4px 8px;
 }
+.design-color-indicator {
+  width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); flex-shrink: 0;
+}
+.toolbar select {
+  background: transparent; color: white; border: none; outline: none; font-size: 13px; font-weight: 600; cursor: pointer; max-width: 170px;
+}
+.toolbar select option { background: #333438; color: white; }
 
 .toolbar > button, .toolbar > a.toolbar-btn {
   font: inherit; border: 0; border-radius: 8px; padding: 10px 16px; cursor: pointer; font-size: 13px; font-weight: 600;
@@ -53,7 +61,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 #reset { background: #ffffff !important; color: #222 !important; }
 #editBtn { background: #bd8190 !important; color: white !important; }
 
-/* BOTÓN FLOTANTE MENÚ PRINCIPAL (MÁS ABAJO, NEGRO CON DETALLE ROSA Y BLANCO) */
+/* BOTÓN FLOTANTE MENÚ PRINCIPAL */
 .float-menu-btn {
   position: fixed; top: 16px; right: 16px; z-index: 1500;
   background: #202124; color: white; border: 2px solid #bd8190; border-radius: 20px;
@@ -278,7 +286,7 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 .preview-mode .sheet-container { margin: 0 auto; width: 100% !important; }
 .preview-mode .sheet { transform: none !important; zoom: 1 !important; box-shadow: none; margin: 0 auto; }
 
-/* FILTRO ABSOLUTO PARA IMPRESIÓN Y PDF (OCULTA MICRÓFONOS Y BOTONES DE FOTO) */
+/* FILTRO ABSOLUTO PARA IMPRESIÓN Y PDF */
 @media print {
   @page { size: A4; margin: 0; }
   body { background: white; margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -292,23 +300,26 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 <body>
 
 <!-- BOTÓN FLOTANTE PARA VOLVER AL MENÚ PRINCIPAL -->
-<button class="float-menu-btn" onclick="scrollToMainMenu()">☰ Menú Principal</button>
+<button class="float-menu-btn" id="floatMenuBtn">☰ Menú Principal</button>
 
 <!-- BARRA DE HERRAMIENTAS / MENÚ PRINCIPAL -->
 <div class="toolbar">
   <strong>CV Nexus Studio</strong>
   
-  <label for="design" class="model-label">Modelos:</label>
-  <select id="design">
-    <option value="design1">1 · Blanco y negro</option>
-    <option value="design2">2 · Rosa elegante</option>
-    <option value="design3">3 · Rosa suave y cursiva</option>
-    <option value="design4">4 · Azul petróleo</option>
-    <option value="design5">5 · Azul moderno</option>
-    <option value="design6">6 · Violeta oscuro</option>
-    <option value="design7">7 · Verde elegante</option>
-    <option value="design8">8 · Beige y dorado (Arte 🌻)</option>
-  </select>
+  <label for="design" class="model-label">Modelo:</label>
+  <div class="design-select-wrapper">
+    <div class="design-color-indicator" id="designColorIndicator" style="background: #262626;"></div>
+    <select id="design">
+      <option value="design1">1 · Blanco y negro</option>
+      <option value="design2">2 · Rosa elegante</option>
+      <option value="design3">3 · Rosa suave y cursiva</option>
+      <option value="design4">4 · Azul petróleo</option>
+      <option value="design5">5 · Azul moderno</option>
+      <option value="design6">6 · Violeta oscuro</option>
+      <option value="design7">7 · Verde elegante</option>
+      <option value="design8">8 · Beige y dorado (Arte 🌻)</option>
+    </select>
+  </div>
 
   <!-- BOTONES DE TIPOGRAFÍA -->
   <button id="btnFontPrint" class="font-btn active" onclick="setFontMode('print')">Imprenta</button>
@@ -436,12 +447,20 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
 const MP_PAYMENT_URL = "https://mpago.li/1YZVG9u";
 const cv = document.getElementById('cv');
 const selector = document.getElementById('design');
+const floatMenuBtn = document.getElementById('floatMenuBtn');
+const designColorIndicator = document.getElementById('designColorIndicator');
+
 let currentPhotoShape = 'shape-round';
 let currentPhotoSrc = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24' fill='%23bbb'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
 
 let activeRecognition = null;
 let activeMicBtn = null;
 let mediaStream = null;
+
+// CONEXIÓN DIRECTA Y ROBUSTA PARA EL BOTÓN FLOTANTE
+floatMenuBtn.addEventListener('click', () => {
+  window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
+});
 
 function setFontMode(mode) {
   if (mode === 'cursive') {
@@ -484,12 +503,23 @@ function applyPhotoShape() {
   });
 }
 
-function scrollToMainMenu() {
-  window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
+function updateDesignColorIndicator(design) {
+  const colors = {
+    design1: '#262626',
+    design2: '#bd8190',
+    design3: '#f0dedb',
+    design4: '#1d5e72',
+    design5: '#4b75a0',
+    design6: '#302c3a',
+    design7: '#2f6b55',
+    design8: '#b69a65'
+  };
+  designColorIndicator.style.background = colors[design] || '#bd8190';
 }
 
 function renderCurrentDesign() {
   const design = selector.value;
+  updateDesignColorIndicator(design);
   const isPaid = localStorage.getItem('cv_nexus_paid') === 'true' || cv.classList.contains('paid');
   cv.className = 'sheet ' + design + (isPaid ? ' paid' : '');
   
@@ -977,4 +1007,3 @@ document.getElementById('whatsappBtn').onclick = async () => {
 </script>
 </body>
 </html>
-
