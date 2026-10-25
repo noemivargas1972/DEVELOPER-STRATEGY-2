@@ -117,15 +117,21 @@ body.font-mode-cursive .sheet { font-family: var(--font-cursive) !important; }
   position: relative; display: flex; align-items: center; width: 100%; margin-bottom: 6px; z-index: 5;
 }
 
-/* CORRECCIÓN DE CURSOR Y VISIBILIDAD AL EDITAR */
+/* CORRECCIÓN CLAVE: EVITAR CAJA BLANCA Y ASEGURAR VISIBILIDAD AL EDITAR EN BANNERS */
 .sheet [contenteditable="true"] {
-  outline: 1px dashed transparent; cursor: text; border-radius: 3px; min-height: 1.2em; flex-grow: 1;
-  position: relative; z-index: 6; caret-color: #bd8190;
+  outline: none; cursor: text; border-radius: 3px; min-height: 1.2em; flex-grow: 1;
+  position: relative; z-index: 6; caret-color: #bd8190; background: transparent !important;
 }
-.sheet [contenteditable="true"]:focus { outline: 1.5px dashed #4c90d9; background: #fffde6; }
+.sheet [contenteditable="true"]:focus {
+  outline: none !important; background: rgba(255, 255, 255, 0.95) !important; color: #222 !important; padding: 2px 6px;
+}
+/* Si está dentro de un banner con fondo de color, al enfocar se pone claro con texto oscuro legible */
+.banner [contenteditable="true"]:focus, .top [contenteditable="true"]:focus {
+  background: rgba(255, 255, 255, 0.95) !important; color: #111 !important;
+}
 
 .sheet [contenteditable="true"]:empty:not(:focus)::before {
-  content: attr(data-placeholder); color: #aaa; font-style: italic; opacity: 0.7; pointer-events: none;
+  content: attr(data-placeholder); color: inherit; opacity: 0.6; font-style: italic; pointer-events: none;
 }
 
 .sheet h1, .sheet h2, .sheet h3, .sheet p { margin-top: 0; position: relative; z-index: 5; }
@@ -629,7 +635,7 @@ function renderCurrentDesign() {
         </div>
         <div class="section"><h2>Idiomas</h2><p contenteditable="true" data-placeholder="Idiomas" data-key="languages">${languages}</p></div>
       </div>
-      <div class="right">
+      <div class="middle">
         <section class="section"><h2>Sobre mí</h2><p contenteditable="true" data-placeholder="Resumen..." data-key="about">${about}</p></section>
         <section class="section"><h2>Formación profesional</h2>
           <div class="entry"><h3 contenteditable="true" data-placeholder="Institución" data-key="edu1Title">${edu1Title}</h3><p contenteditable="true" data-placeholder="Título" data-key="edu1Desc">${edu1Desc}</p></div>
@@ -760,10 +766,11 @@ function setupProtectedMics() {
           const currentText = field.innerText.trim();
           const defaultPlaceholder = field.getAttribute('data-placeholder') || '';
 
+          // Si el texto actual está vacío o tiene el placeholder por defecto, lo reemplaza directamente.
           if (currentText === '' || currentText.toLowerCase() === defaultPlaceholder.toLowerCase()) {
             field.innerText = text;
           } else {
-            field.innerText += ' ' + text;
+            field.innerText = text; // Reemplaza para evitar duplicaciones extrañas al dictar
           }
           saveCvToStorage();
         };
